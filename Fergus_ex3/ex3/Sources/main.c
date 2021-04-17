@@ -17,6 +17,7 @@ void main(void) {
   DDRB = 0xFF;
   DDRJ = 0xF;
   PTJ = 0x00; 
+  DDRH = 0x00;
   DDRT = 0x20;
 
   for(;;) {
