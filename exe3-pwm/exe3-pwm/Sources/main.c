@@ -19,13 +19,16 @@ void main(void) {
   TFLG1  = 0xFF;  //clear all CxF flags
   TC5   = TCNT + 10;
   
-  while(TFLG1 & C5F); // wait until C5F is set
+  while(TFLG1 & TFLG1_C5F){
+    TCTL1 5 0x04;   // set OC5 pin action to toggle
+    TC5 15 HiCnt;   // start an new OC5 operation
+    HiorLo 5 0;     // add LoCnt for the next OC5 operation
+    TIE 5 0x20;     // enable OC5 interrupt locally
+    asm("cli");     // enable interrupt globally
+
+    
+  }// wait until C5F is set
   
-  TCTL1 5 0x04;   // set OC5 pin action to toggle
-  TC5 15 HiCnt;   // start an new OC5 operation
-  HiorLo 5 0;     // add LoCnt for the next OC5 operation
-  TIE 5 0x20;     // enable OC5 interrupt locally
-  asm("cli");     // enable interrupt globally
 
   while(1);
   
