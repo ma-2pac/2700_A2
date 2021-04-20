@@ -57,11 +57,11 @@ __interrupt void TC5_ISR(void) {
 
 int Duty_Hi_Calculator(void){
    volatile int dip_switch;
-   volatile int Percent;
+   volatile float Percent;
    volatile int Duty_Hi;
    dip_switch = PTH; 
-   Percent = 100*dip_switch/128;
-   Duty_Hi = dip_switch*Period*Percent;
+   Percent = dip_switch/128;
+   Duty_Hi = Period*Percent;
    return Duty_Hi;
 }
 

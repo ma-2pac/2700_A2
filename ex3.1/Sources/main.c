@@ -12,9 +12,14 @@ void main(void) {
 
   //call the timer function
   
+  //enable led 
+  DDRB = 0xFF;
+  DDRJ = 0xF;
+  PTJ = 0x00; 
   DDRH = 0x00;
   while(1){
     Hi_count = Duty_Hi_Calculator();
+  
   }
 
   
@@ -22,10 +27,7 @@ void main(void) {
 
 	EnableInterrupts;
 
-  //enable led 
-  DDRB = 0xFF;
-  DDRJ = 0xF;
-  PTJ = 0x00; 
+
   
   
   //DDRT = 0x20;
