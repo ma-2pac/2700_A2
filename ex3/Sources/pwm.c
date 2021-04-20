@@ -2,9 +2,9 @@
 
 // include the register/pin definitions
 #include "derivative.h"      /* derivative-specific definitions */
-#define Period 1886
-#define Hi 50
-#define Lo 1200
+const int Period = 1886;
+#define Hi 1200
+#define Lo 50
 char HiorLo;
 
 //need to creae an over flow time of one hz 
@@ -15,14 +15,7 @@ void Init_TC5 (void) {
    TSCR1 = 0x90; // enable TCNT and fast timer flag clear
    TSCR2 = 0x07; // disable TCNT interrupt, set prescaler to 128
    
-   //TIOS = 0x20;
-   //TCTL1 = 0x04;
-   //TIE = 0x20;
-   //HiorLo = 0;
-   //TC5 = TCNT + Hi;
-   
-   
-   
+
    //configure 05c
    TIOS = 0x20; // enable OC5 function
    TCTL1 = 0x04; //change pin action to toggle
@@ -42,8 +35,11 @@ void Init_TC5 (void) {
 #pragma CODE_SEG __NEAR_SEG NON_BANKED /* Interrupt section for this module. Placement will be in NON_BANKED area. */
 __interrupt void TC5_ISR(void) { 
   //need to add an interrupt section in here that counts and resets
-  int Hi_count = Duty_Hi_Calculator();
-  int Lo_count = Period - Hi_count; 
+   int Hi_count;
+   int Lo_count;
+   //int Hi_count = read_analog();
+   Hi_count = Duty_Hi_Calculator();
+   Lo_count = Period - Hi_count; 
   if(HiorLo){
    //delay??
    TC5 = TC5 + Hi_count;
@@ -60,9 +56,12 @@ __interrupt void TC5_ISR(void) {
 }
 
 int Duty_Hi_Calculator(void){
-   int dip_switch = PTH;
-   int Percent = 100*dip_switch/128;
-   int Duty_Hi = Percent*Period/100;
+   volatile int dip_switch;
+   volatile int Percent;
+   volatile int Duty_Hi;
+   dip_switch = PTH; 
+   Percent = 100*dip_switch/128;
+   Duty_Hi = dip_switch*Period*Percent;
    return Duty_Hi;
 }
 

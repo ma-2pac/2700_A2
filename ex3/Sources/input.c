@@ -10,7 +10,7 @@ void read_analog(void){
     int analog_input;
 
     
-    DDRB = 0xFF;    //PORTB as output
+    //DDRB = 0xFF;    //PORTB as output
     
     //DDRJ = 0xFF;    //PTJ as output for Dragon12+ LEDs
     //PTJ=0x0;        //Allow the LEDs to display data on PORTB pins

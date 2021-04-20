@@ -7,13 +7,18 @@
 
 
 void main(void) {
-
+  int Hi_count;
   //int analog_input;
 
   //call the timer function
   
+  DDRH = 0x00;
+  while(1){
+    Hi_count = Duty_Hi_Calculator();
+  }
+
   
-  //Init_TC5();
+  Init_TC5();
 
 	EnableInterrupts;
 
@@ -21,11 +26,12 @@ void main(void) {
   DDRB = 0xFF;
   DDRJ = 0xF;
   PTJ = 0x00; 
-  DDRH = 0x00;
-  DDRT = 0x20;
   
-  read_analog();
   
+  //DDRT = 0x20;
+  
+  //read_analog();
+
   
 
   for(;;) {
