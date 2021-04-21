@@ -65,6 +65,30 @@ int Duty_Hi_Calculator(void){
    return Duty_Hi;
 }
 
+//module to run PWM for any output
+int run_PWM(int Hi_count, char enable_port[5], char output_port[5]){
+  
+  int Lo_count;
+  
+  Lo_count= Period - Hi_count;
+  
+  if(HiorLo){
+   //delay??
+   TC5 = TC5 + Hi_count;    //TC5 is chosen interrupt pin
+   HiorLo = 0;
+   PTJ = 0x00;
+   PORTB = 0x00;
+  }
+  else{
+   TC5 = TC5 + Lo_count;
+   HiorLo = 1;
+   PTJ = 0x00;
+   PORTB = 0xFF;  
+  }
+  
+}
+
+
 //might be best to use ch7
 
 // how to set break points in an interrupt routine?
