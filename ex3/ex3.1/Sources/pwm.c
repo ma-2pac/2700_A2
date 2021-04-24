@@ -11,8 +11,8 @@ char HiorLo;
 char re[100];
 volatile int re_place;
 volatile int test;
-unsigned char SCIString[12]={'F','R','E','E','S','C','A','L','E',0xa,0xd,'\0'};
-
+//unsigned char SCIString[12]={'F','R','E','E','S','C','A','L','E',0xa,0xd,'\0'};
+unsigned char SCIString[12];
 
 
 //need to creae an over flow time of one hz 
@@ -47,28 +47,53 @@ void Init_sci(void){
   test = 1;
   SCI1BDH = 0x00;             // Set the baud rate at 9600
   SCI1BDL = 156; 
-  SCI1CR2 = 0x2c;
+  SCI1CR2 = 0x2c; //re te and rtede
+  //SCI1CR2 = 0x8c; //re te and rtde
+  
   re_place = 0;
-  SCI1CR2 |= 0x80; //enable to tdre intterupt
-  SCI1DRL = SCIString[re_place]; 
-  re_place = re_place+1;  
+  ///SCI1CR2 |= 0x80; //enable to tdre intterupt
+  SCI1CR2 |= 0x20; //enable to rdte intterupt
+  //SCI1CR2 = 0x0c;    // te and re
+  //SCI1CR2 |= 0x10; //enable receive
+  //SCI1DRL = SCIString[re_place]; 
+  //re_place = re_place+1;  
 }
 
 #pragma CODE_SEG __NEAR_SEG NON_BANKED /* Interrupt section for this module. Placement will be in NON_BANKED area. */
 __interrupt void RE_ISR(void) {
 
   
-  if (SCI1SR1 & 0x80){ /*If transmission flag is set*/
+    if(SCI1SR1 & 0x20 && SCI1CR2 & 0x20){ /*If reception flag is set*/
+    SCI1SR1;
+      if(SCI1DRL != 13){
+        SCIString[re_place] = SCI1DRL;
+       re_place = re_place +1;
+      }
+      else{
+        SCIString[re_place] = 10;
+        re_place = re_place +1;
+        SCIString[re_place] = 13;
+        re_place = 0; 
+        SCI1CR2 |= 0x80; //enable tranmit interupt
+      }
+   }
+  
+  if (SCI1SR1 & 0x80 && SCI1CR2 & 0x80 ){ /*If transmission flag is set*/
     SCI1SR1;
     
-    if(SCIString[re_place] != '\0'){
+    if(SCIString[re_place] != 13 ){
       SCI1DRL = SCIString[re_place];
       re_place = re_place +1;
     }
     else{
+    SCI1DRL = 13;
+    re_place = 0;
     SCI1CR2 &= 0x7F; /*Disable TDRE interrupt*/
+    //SCI1CR2 |= 0x10;
     }
-  }  
+  } 
+  
+
   return;
 }
  

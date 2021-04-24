@@ -31,7 +31,7 @@ _startupData is allocated at 0xC00B and uses 6 Bytes
 extern struct _tagStartup {
   unsigned nofZeroOut     1
   _Range   pZeroOut       0x1100     17
-  _Copy    *toCopyDownBeg 0xC249
+  _Copy    *toCopyDownBeg 0xC294
 } _startupData;
 
 *********************************************************************************************
@@ -40,11 +40,10 @@ Section Name                    Size  Type     From       To       Segment
 ---------------------------------------------------------------------------------------------
 .init                             11     R     0xC000     0xC00A   ROM_C000
 .startData                        10     R     0xC00B     0xC014   ROM_C000
-NON_BANKED                       564     R     0xC015     0xC248   ROM_C000
-.copy                             17     R     0xC249     0xC259   ROM_C000
-.text                            110     R   0x308000   0x30806D   PAGE_30
+NON_BANKED                       639     R     0xC015     0xC293   ROM_C000
+.copy                              2     R     0xC294     0xC295   ROM_C000
+.text                             94     R   0x308000   0x30805D   PAGE_30
 .stack                           256   R/W     0x1000     0x10FF   RAM
-.data                             12   R/W     0x1100     0x110B   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
 .abs_section_9                     1   N/I        0x9        0x9   .absSeg1
 .abs_section_a                     1   N/I        0xA        0xA   .absSeg2
@@ -387,11 +386,11 @@ NON_BANKED                       564     R     0xC015     0xC248   ROM_C000
 .abs_section_2ae                   2   N/I      0x2AE      0x2AF   .absSeg339
 .abs_section_2be                   2   N/I      0x2BE      0x2BF   .absSeg340
 .abs_section_ff80                124     R     0xFF80     0xFFFB   .absSeg341
-.common                            5   R/W     0x110C     0x1110   RAM
+.common                           17   R/W     0x1100     0x1110   RAM
 .vectSeg342_vect                   2     R     0xFFFE     0xFFFF   .vectSeg342
 
 Summary of section sizes per section type:
-READ_ONLY (R):         346 (dec:      838)
+READ_ONLY (R):         372 (dec:      882)
 READ_WRITE (R/W):      111 (dec:      273)
 NO_INIT (N/I):         190 (dec:      400)
 
@@ -490,11 +489,11 @@ MODULE:                 -- mc9s12dg256.c.o --
      _SCI0DRH                                    CE       1       1       0   .abs_section_ce
      _SCI0DRL                                    CF       1       1       0   .abs_section_cf
      _SCI1CR1                                    D2       1       1       0   .abs_section_d2
-     _SCI1CR2                                    D3       1       1       3   .abs_section_d3
-     _SCI1SR1                                    D4       1       1       2   .abs_section_d4
+     _SCI1CR2                                    D3       1       1       6   .abs_section_d3
+     _SCI1SR1                                    D4       1       1       4   .abs_section_d4
      _SCI1SR2                                    D5       1       1       0   .abs_section_d5
      _SCI1DRH                                    D6       1       1       0   .abs_section_d6
-     _SCI1DRL                                    D7       1       1       2   .abs_section_d7
+     _SCI1DRL                                    D7       1       1       4   .abs_section_d7
      _SPI0CR1                                    D8       1       1       0   .abs_section_d8
      _SPI0CR2                                    D9       1       1       0   .abs_section_d9
      _SPI0BR                                     DA       1       1       0   .abs_section_da
@@ -800,15 +799,15 @@ MODULE:                 -- main.c.o --
 - VARIABLES:
 MODULE:                 -- pwm.c.o --
 - PROCEDURES:
-     Init_sci                                308046      28      40       2   .text       
-     RE_ISR                                    C1B6      24      36       1   NON_BANKED  
-     TC5_ISR                                   C1DA      39      57       1   NON_BANKED  
-     Duty_Hi_Calculator                        C213      36      54       2   NON_BANKED  
+     Init_sci                                308046      18      24       2   .text       
+     RE_ISR                                    C1B6      6F     111       1   NON_BANKED  
+     TC5_ISR                                   C225      39      57       1   NON_BANKED  
+     Duty_Hi_Calculator                        C25E      36      54       2   NON_BANKED  
 - VARIABLES:
-     SCIString                                 1100       C      12       3   .data       
-     HiorLo                                    110C       1       1       3   .common     
-     re_place                                  110D       2       2       8   .common     
-     test                                      110F       2       2       1   .common     
+     HiorLo                                    1100       1       1       3   .common     
+     re_place                                  1101       2       2      10   .common     
+     test                                      1103       2       2       1   .common     
+     SCIString                                 1105       C      12       5   .common     
 
 *********************************************************************************************
 MODULE STATISTIC
@@ -823,16 +822,14 @@ MODULE STATISTIC
   VREGS.C.o (ansib.lib)                        0     25      0
   isr_vectors.c.o                              0      2    124
   main.c.o                                     0     29      0
-  pwm.c.o                                     17    187      0
-  other                                      256     12     17
+  pwm.c.o                                     17    246      0
+  other                                      256     12      2
 
 *********************************************************************************************
 SECTION USE IN OBJECT-ALLOCATION SECTION
 ---------------------------------------------------------------------------------------------
 SECTION: ".text"
   Init main Init_sci 
-SECTION: ".data"
-  SCIString 
 SECTION: ".init"
   _Startup 
 SECTION: "NON_BANKED"
@@ -1522,7 +1519,7 @@ SECTION: ".abs_section_2ae"
 SECTION: ".abs_section_2be"
   _CAN4TXTSR 
 SECTION: ".common"
-  HiorLo re_place test 
+  HiorLo re_place test SCIString 
 SECTION: ".abs_section_ff80"
   _vect 
 
@@ -1657,11 +1654,11 @@ OBJECT LIST SORTED BY ADDRESS
      _SCI0DRL                                    CF       1       1       0   .abs_section_cf
      _SCI1BD                                     D0       2       2       2   .abs_section_d0
      _SCI1CR1                                    D2       1       1       0   .abs_section_d2
-     _SCI1CR2                                    D3       1       1       3   .abs_section_d3
-     _SCI1SR1                                    D4       1       1       2   .abs_section_d4
+     _SCI1CR2                                    D3       1       1       6   .abs_section_d3
+     _SCI1SR1                                    D4       1       1       4   .abs_section_d4
      _SCI1SR2                                    D5       1       1       0   .abs_section_d5
      _SCI1DRH                                    D6       1       1       0   .abs_section_d6
-     _SCI1DRL                                    D7       1       1       2   .abs_section_d7
+     _SCI1DRL                                    D7       1       1       4   .abs_section_d7
      _SPI0CR1                                    D8       1       1       0   .abs_section_d8
      _SPI0CR2                                    D9       1       1       0   .abs_section_d9
      _SPI0BR                                     DA       1       1       0   .abs_section_da
@@ -1871,10 +1868,10 @@ OBJECT LIST SORTED BY ADDRESS
      _CAN4TXDLR                                 2BC       1       1       0   .abs_section_2bc
      _CAN4TXTBPR                                2BD       1       1       0   .abs_section_2bd
      _CAN4TXTSR                                 2BE       2       2       0   .abs_section_2be
-     SCIString                                 1100       C      12       3   .data       
-     HiorLo                                    110C       1       1       3   .common     
-     re_place                                  110D       2       2       8   .common     
-     test                                      110F       2       2       1   .common     
+     HiorLo                                    1100       1       1       3   .common     
+     re_place                                  1101       2       2      10   .common     
+     test                                      1103       2       2       1   .common     
+     SCIString                                 1105       C      12       5   .common     
      _Startup                                  C000       B      11       0   .init       
      F_TOLONGK                                 C015      33      51       1   NON_BANKED  
      F_FRLONGK                                 C048      1F      31       1   NON_BANKED  
@@ -1894,13 +1891,13 @@ OBJECT LIST SORTED BY ADDRESS
      L_PSHK                                    C1A2       8       8       1   NON_BANKED  
      SL_PULK                                   C1AA       A      10       1   NON_BANKED  
      UnimplementedISR                          C1B4       2       2      60   NON_BANKED  
-     RE_ISR                                    C1B6      24      36       1   NON_BANKED  
-     TC5_ISR                                   C1DA      39      57       1   NON_BANKED  
-     Duty_Hi_Calculator                        C213      36      54       2   NON_BANKED  
+     RE_ISR                                    C1B6      6F     111       1   NON_BANKED  
+     TC5_ISR                                   C225      39      57       1   NON_BANKED  
+     Duty_Hi_Calculator                        C25E      36      54       2   NON_BANKED  
      _vect                                     FF80      7C     124       0   .abs_section_ff80
      Init                                    308000      29      41       2   .text       
      main                                    308029      1D      29       2   .text       
-     Init_sci                                308046      28      40       2   .text       
+     Init_sci                                308046      18      24       2   .text       
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
@@ -1932,13 +1929,7 @@ pwm.c.o:
 *********************************************************************************************
 COPYDOWN SECTION
 ---------------------------------------------------------------------------------------------
-------- ROM-ADDRESS: 0xC249 ---- SIZE       4 ---
-Filling bytes inserted
- 000B1100
-------- ROM-ADDRESS: 0xC24D ---- RAM-ADDRESS: 0x1100 ---- SIZE      11 ---
-Name of initialized Object : SCIString
- 4652454553 43414C450A 0D
-------- ROM-ADDRESS: 0xC258 ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xC294 ---- SIZE       2 ---
 Filling bytes inserted
  0000
 
@@ -1955,14 +1946,13 @@ F_NORMK                   USES F_MAXK
 L_NEGK                    USES _NEG_P 
 L_PSHK                    USES L_NEGK 
 SL_PULK                   USES L_NEGK 
-RE_ISR                    USES _SCI1SR1 re_place SCIString _SCI1DRL _SCI1CR2 
+RE_ISR                    USES _SCI1SR1 _SCI1CR2 _SCI1DRL re_place SCIString 
 TC5_ISR                   USES Duty_Hi_Calculator HiorLo _TC5 _PTJ _PORTAB 
 Duty_Hi_Calculator        USES _PTH _ILSEXT _FSFLOAT _FMUL _FSTRUNC 
 _vect                     USES UnimplementedISR RE_ISR TC5_ISR 
 Init                      USES _startupData 
 main                      USES _DDRAB _DDRJ _PTJ _DDRH Init_sci 
-Init_sci                  USES test _SCI1BD _SCI1CR2 re_place SCIString 
-                                _SCI1DRL 
+Init_sci                  USES test _SCI1BD _SCI1CR2 re_place 
 
 *********************************************************************************************
 DEPENDENCY TREE
@@ -2037,6 +2027,6 @@ STATISTIC SECTION
 
 ExeFile:
 --------
-Number of blocks to be downloaded: 6
-Total size of all blocks to be downloaded: 838
+Number of blocks to be downloaded: 7
+Total size of all blocks to be downloaded: 882
 
