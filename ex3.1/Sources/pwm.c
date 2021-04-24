@@ -1,0 +1,99 @@
+#include "pwm.h"
+
+// include the register/pin definitions
+#include "derivative.h"      /* derivative-specific definitions */
+const int Period = 1886;
+#define Hi 1200
+#define Lo 50
+char HiorLo;
+
+//need to creae an over flow time of one hz 
+
+void Init_TC5 (void) {
+
+//mainsection from book
+   TSCR1 = 0x90; // enable TCNT and fast timer flag clear
+   TSCR2 = 0x07; // disable TCNT interrupt, set prescaler to 128
+   
+
+   //configure 05c
+   TIOS = 0x20; // enable OC5 function
+   TCTL1 = 0x04; //change pin action to toggle
+   TFLG1 = 0xFF; // clear all cl flag
+   TIE = 0x20; //enable interrupt of channel 5
+   
+   TC5 = TCNT + 100;
+   while(TFLG1 & TFLG1_C5F); // wait until OC0 pin go high after counting 2100   //debug
+   TCTL1 = 0x04; // set OC5 pin action to toggle
+   TC5 = TC5 + 900;
+   HiorLo = 0;
+}
+
+
+// look at the isr_vectors.c for where this function is 
+//  added to the ISR vector table
+#pragma CODE_SEG __NEAR_SEG NON_BANKED /* Interrupt section for this module. Placement will be in NON_BANKED area. */
+__interrupt void TC5_ISR(void) { 
+  //need to add an interrupt section in here that counts and resets
+   int Hi_count;
+   int Lo_count;
+   //int Hi_count = read_analog();
+   Hi_count = Duty_Hi_Calculator();
+   Lo_count = Period - Hi_count; 
+  if(HiorLo){
+   //delay??
+   TC5 = TC5 + Hi_count;
+   HiorLo = 0;
+   PTJ = 0x00;
+   PORTB = 0x00;
+  }
+  else{
+   TC5 = TC5 + Lo_count;
+   HiorLo = 1;
+   PTJ = 0x00;
+   PORTB = 0xFF;  
+  }
+}
+
+int Duty_Hi_Calculator(void){
+   volatile int dip_switch;
+   volatile float Percent;
+   volatile int Duty_Hi;
+   dip_switch = PTH; 
+   Percent = dip_switch/128;
+   Duty_Hi = Period*Percent;
+   return Duty_Hi;
+}
+
+//module to run PWM for any output
+int run_PWM(int Hi_count, char enable_port[5], char output_port[5]){
+  
+  int Lo_count;
+  
+  Lo_count= Period - Hi_count;
+  
+  if(HiorLo){
+   //delay??
+   TC5 = TC5 + Hi_count;    //TC5 is chosen interrupt pin
+   HiorLo = 0;
+   PTJ = 0x00;
+   PORTB = 0x00;
+  }
+  else{
+   TC5 = TC5 + Lo_count;
+   HiorLo = 1;
+   PTJ = 0x00;
+   PORTB = 0xFF;  
+  }
+  
+}
+
+
+//might be best to use ch7
+
+// how to set break points in an interrupt routine?
+//how they tested 
+//how did they demo it 
+// 3.662109375
+//1886
+// float round to int later from input 
