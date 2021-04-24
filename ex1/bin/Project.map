@@ -1,5 +1,5 @@
 *** EVALUATION ***
-PROGRAM "C:\Users\Darragh\Desktop\Uni\MTRX2700\2700_A2\ex1\bin\Project.abs"
+PROGRAM "C:\Users\61415\Desktop\2700_A2\ex1\bin\Project.abs"
 
 *********************************************************************************************
 TARGET SECTION
@@ -50,7 +50,7 @@ Section Name                    Size  Type     From       To       Segment
 .rodata                           16     R     0xC015     0xC024   ROM_C000
 NON_BANKED                      2019     R     0xC025     0xC807   ROM_C000
 .copy                              2     R     0xC808     0xC809   ROM_C000
-.text                           2313     R   0x308000   0x308908   PAGE_30
+.text                           2293     R   0x308000   0x3088F4   PAGE_30
 .stack                           256   R/W     0x1000     0x10FF   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
 .abs_section_9                     1   N/I        0x9        0x9   .absSeg1
@@ -399,7 +399,7 @@ NON_BANKED                      2019     R     0xC025     0xC807   ROM_C000
 .vectSeg342_vect                   2     R     0xFFFE     0xFFFF   .vectSeg342
 
 Summary of section sizes per section type:
-READ_ONLY (R):        1193 (dec:     4499)
+READ_ONLY (R):        117F (dec:     4479)
 READ_WRITE (R/W):      104 (dec:      260)
 NO_INIT (N/I):         190 (dec:      400)
 
@@ -759,11 +759,11 @@ MODULE:                 -- mc9s12dg256.c.o --
      _CAN4TXTSR                                 2BE       2       2       0   .abs_section_2be
 MODULE:                 -- main.c.o --
 - PROCEDURES:
-     main                                    308000     149     329      16   .text       
+     main                                    308000     135     309      14   .text       
 - VARIABLES:
 MODULE:                 -- Start12.c.o --
 - PROCEDURES:
-     Init                                    308149      29      41       2   .text       
+     Init                                    308135      29      41       2   .text       
      _Startup                                  C000       B      11       0   .init       
 - VARIABLES:
      _startupData                              C00B       6       6       3   .startData  
@@ -771,12 +771,12 @@ MODULE:                 -- Start12.c.o --
      __SEG_END_SSTACK                          1100       0       0       1               
 MODULE:                 -- MATH.C.o (ansibf.lib) --
 - PROCEDURES:
-     fabs                                    308172      2C      44       2   .text       
-     is_special                              30819E      59      89       4   .text       
-     sincos                                  3081F7     3AF     943      28   .text       
-     sin                                     3085A6      C3     195       3   .text       
-     sqrt_r                                  308669     1F0     496      14   .text       
-     sqrt                                    308859      A2     162       3   .text       
+     fabs                                    30815E      2C      44       2   .text       
+     is_special                              30818A      59      89       4   .text       
+     sincos                                  3081E3     3AF     943      28   .text       
+     sin                                     308592      C3     195       3   .text       
+     sqrt_r                                  308655     1F0     496      14   .text       
+     sqrt                                    308845      A2     162       3   .text       
 - VARIABLES:
      infinity                                  C015       8       8       8   .rodata     
      nan_union                                 C01D       8       8       4   .rodata     
@@ -871,8 +871,8 @@ MODULE:                 -- isr_vectors.c.o --
      _vect                                     FF80      7E     126       0   .abs_section_ff80
 MODULE:                 -- timers.c.o --
 - PROCEDURES:
-     Init_TCNT                               3088FB       8       8       2   .text       
-     resetOF                                 308903       6       6       2   .text       
+     Init_TCNT                               3088E7       8       8       2   .text       
+     resetOF                                 3088EF       6       6       2   .text       
      TOF_ISR                                   C800       8       8       1   NON_BANKED  
 - VARIABLES:
      overFlows                                 1100       2       2       5   .bss        
@@ -882,7 +882,7 @@ MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
   mc9s12dg256.c.o                            400      0      0
-  main.c.o                                     0    329      0
+  main.c.o                                     0    309      0
   Start12.c.o                                  0     52      0
   MATH.C.o (ansibf.lib)                        0   1929     16
   DADD.C.o (ansibf.lib)                        0    306      0
@@ -2008,16 +2008,16 @@ OBJECT LIST SORTED BY ADDRESS
      UnimplementedISR                          C7FE       2       2      62   NON_BANKED  
      TOF_ISR                                   C800       8       8       1   NON_BANKED  
      _vect                                     FF80      7E     126       0   .abs_section_ff80
-     main                                    308000     149     329      16   .text       
-     Init                                    308149      29      41       2   .text       
-     fabs                                    308172      2C      44       2   .text       
-     is_special                              30819E      59      89       4   .text       
-     sincos                                  3081F7     3AF     943      28   .text       
-     sin                                     3085A6      C3     195       3   .text       
-     sqrt_r                                  308669     1F0     496      14   .text       
-     sqrt                                    308859      A2     162       3   .text       
-     Init_TCNT                               3088FB       8       8       2   .text       
-     resetOF                                 308903       6       6       2   .text       
+     main                                    308000     135     309      14   .text       
+     Init                                    308135      29      41       2   .text       
+     fabs                                    30815E      2C      44       2   .text       
+     is_special                              30818A      59      89       4   .text       
+     sincos                                  3081E3     3AF     943      28   .text       
+     sin                                     308592      C3     195       3   .text       
+     sqrt_r                                  308655     1F0     496      14   .text       
+     sqrt                                    308845      A2     162       3   .text       
+     Init_TCNT                               3088E7       8       8       2   .text       
+     resetOF                                 3088EF       6       6       2   .text       
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
@@ -2316,5 +2316,5 @@ STATISTIC SECTION
 ExeFile:
 --------
 Number of blocks to be downloaded: 7
-Total size of all blocks to be downloaded: 4499
+Total size of all blocks to be downloaded: 4479
 

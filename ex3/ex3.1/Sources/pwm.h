@@ -15,10 +15,14 @@ typedef struct{
 // function to initialise the timer
 void Init_TC5 (void);
 
+//function to initialise serial
+void Init_sci(void);
+
 // Timer interrupt definition
 __interrupt void TC5_ISR(void);
 
 
+__interrupt void RE_ISR(void);
 //calculate the duty cycle and return the number of timer cycles for Hi and Lo
 int Duty_Hi_Calculator(void);
 

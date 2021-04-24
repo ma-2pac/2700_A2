@@ -1,5 +1,5 @@
 *** EVALUATION ***
-PROGRAM "C:\Users\61415\Desktop\2700_A2\ex3.2\ex3\bin\Project.absHCS12_Serial_Monitor.abs"
+PROGRAM "C:\Users\61415\Desktop\2700_A2\ex3\ex 3 - fergus\ex3\bin\Project.absHCS12_Serial_Monitor.abs"
 
 *********************************************************************************************
 TARGET SECTION
@@ -27,23 +27,24 @@ pwm.c.o                                 Model: BANKED,        Lang: ANSI-C
 STARTUP SECTION
 ---------------------------------------------------------------------------------------------
 Entry point: 0xC000 (_Startup)
-_startupData is allocated at 0xC015 and uses 6 Bytes
+_startupData is allocated at 0xC00B and uses 6 Bytes
 extern struct _tagStartup {
   unsigned nofZeroOut     1
-  _Range   pZeroOut       0x1100     1
-  _Copy    *toCopyDownBeg 0xC22F
+  _Range   pZeroOut       0x1100     17
+  _Copy    *toCopyDownBeg 0xC249
 } _startupData;
 
 *********************************************************************************************
 SECTION-ALLOCATION SECTION
 Section Name                    Size  Type     From       To       Segment
 ---------------------------------------------------------------------------------------------
-.init                             21     R     0xC000     0xC014   ROM_C000
-.startData                        10     R     0xC015     0xC01E   ROM_C000
-NON_BANKED                       528     R     0xC01F     0xC22E   ROM_C000
-.copy                              2     R     0xC22F     0xC230   ROM_C000
-.text                             66     R   0x308000   0x308041   PAGE_30
+.init                             11     R     0xC000     0xC00A   ROM_C000
+.startData                        10     R     0xC00B     0xC014   ROM_C000
+NON_BANKED                       564     R     0xC015     0xC248   ROM_C000
+.copy                             17     R     0xC249     0xC259   ROM_C000
+.text                            110     R   0x308000   0x30806D   PAGE_30
 .stack                           256   R/W     0x1000     0x10FF   RAM
+.data                             12   R/W     0x1100     0x110B   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
 .abs_section_9                     1   N/I        0x9        0x9   .absSeg1
 .abs_section_a                     1   N/I        0xA        0xA   .absSeg2
@@ -385,13 +386,13 @@ NON_BANKED                       528     R     0xC01F     0xC22E   ROM_C000
 .abs_section_17e                   2   N/I      0x17E      0x17F   .absSeg338
 .abs_section_2ae                   2   N/I      0x2AE      0x2AF   .absSeg339
 .abs_section_2be                   2   N/I      0x2BE      0x2BF   .absSeg340
-.abs_section_ff80                126     R     0xFF80     0xFFFD   .absSeg341
-.common                            1   R/W     0x1100     0x1100   RAM
+.abs_section_ff80                124     R     0xFF80     0xFFFB   .absSeg341
+.common                            5   R/W     0x110C     0x1110   RAM
 .vectSeg342_vect                   2     R     0xFFFE     0xFFFF   .vectSeg342
 
 Summary of section sizes per section type:
-READ_ONLY (R):         2F3 (dec:      755)
-READ_WRITE (R/W):      101 (dec:      257)
+READ_ONLY (R):         346 (dec:      838)
+READ_WRITE (R/W):      111 (dec:      273)
 NO_INIT (N/I):         190 (dec:      400)
 
 *********************************************************************************************
@@ -489,11 +490,11 @@ MODULE:                 -- mc9s12dg256.c.o --
      _SCI0DRH                                    CE       1       1       0   .abs_section_ce
      _SCI0DRL                                    CF       1       1       0   .abs_section_cf
      _SCI1CR1                                    D2       1       1       0   .abs_section_d2
-     _SCI1CR2                                    D3       1       1       0   .abs_section_d3
-     _SCI1SR1                                    D4       1       1       0   .abs_section_d4
+     _SCI1CR2                                    D3       1       1       3   .abs_section_d3
+     _SCI1SR1                                    D4       1       1       2   .abs_section_d4
      _SCI1SR2                                    D5       1       1       0   .abs_section_d5
      _SCI1DRH                                    D6       1       1       0   .abs_section_d6
-     _SCI1DRL                                    D7       1       1       0   .abs_section_d7
+     _SCI1DRL                                    D7       1       1       2   .abs_section_d7
      _SPI0CR1                                    D8       1       1       0   .abs_section_d8
      _SPI0CR2                                    D9       1       1       0   .abs_section_d9
      _SPI0BR                                     DA       1       1       0   .abs_section_da
@@ -733,7 +734,7 @@ MODULE:                 -- mc9s12dg256.c.o --
      _PWMDTY45                                   C0       2       2       0   .abs_section_c0
      _PWMDTY67                                   C2       2       2       0   .abs_section_c2
      _SCI0BD                                     C8       2       2       0   .abs_section_c8
-     _SCI1BD                                     D0       2       2       0   .abs_section_d0
+     _SCI1BD                                     D0       2       2       2   .abs_section_d0
      _ATD1CTL23                                 122       2       2       0   .abs_section_122
      _ATD1CTL45                                 124       2       2       0   .abs_section_124
      _ATD1DR0                                   130       2       2       0   .abs_section_130
@@ -751,86 +752,93 @@ MODULE:                 -- mc9s12dg256.c.o --
 MODULE:                 -- Start12.c.o --
 - PROCEDURES:
      Init                                    308000      29      41       2   .text       
-     _Startup                                  C000      15      21       0   .init       
+     _Startup                                  C000       B      11       0   .init       
 - VARIABLES:
-     _startupData                              C015       6       6       3   .startData  
+     _startupData                              C00B       6       6       3   .startData  
 - LABELS:
      __SEG_END_SSTACK                          1100       0       0       1               
 MODULE:                 -- FCONV.C.o (ansib.lib) --
 - PROCEDURES:
-     F_TOLONGK                                 C01F      33      51       1   NON_BANKED  
-     F_FRLONGK                                 C052      1F      31       1   NON_BANKED  
-     _FSFLOAT                                  C071      12      18       1   NON_BANKED  
-     _FSTRUNC                                  C083      11      17       1   NON_BANKED  
+     F_TOLONGK                                 C015      33      51       1   NON_BANKED  
+     F_FRLONGK                                 C048      1F      31       1   NON_BANKED  
+     _FSFLOAT                                  C067      12      18       1   NON_BANKED  
+     _FSTRUNC                                  C079      11      17       1   NON_BANKED  
 - VARIABLES:
 MODULE:                 -- FMUL.C.o (ansib.lib) --
 - PROCEDURES:
-     F_MULKL                                   C094      58      88       1   NON_BANKED  
-     _FMUL                                     C0EC      14      20       1   NON_BANKED  
+     F_MULKL                                   C08A      58      88       1   NON_BANKED  
+     _FMUL                                     C0E2      14      20       1   NON_BANKED  
 - VARIABLES:
 MODULE:                 -- FREGS.C.o (ansib.lib) --
 - PROCEDURES:
-     F_PULK                                    C100      15      21       2   NON_BANKED  
-     F_PULL                                    C115      15      21       1   NON_BANKED  
-     F_PSHK                                    C12A      13      19       2   NON_BANKED  
-     F_CLRK                                    C13D       B      11       2   NON_BANKED  
-     F_MAXK                                    C148       9       9       1   NON_BANKED  
-     F_NORMK                                   C151      3E      62       1   NON_BANKED  
+     F_PULK                                    C0F6      15      21       2   NON_BANKED  
+     F_PULL                                    C10B      15      21       1   NON_BANKED  
+     F_PSHK                                    C120      13      19       2   NON_BANKED  
+     F_CLRK                                    C133       B      11       2   NON_BANKED  
+     F_MAXK                                    C13E       9       9       1   NON_BANKED  
+     F_NORMK                                   C147      3E      62       1   NON_BANKED  
 - VARIABLES:
 MODULE:                 -- rtshc12.c.o (ansib.lib) --
 - PROCEDURES:
-     _NEG_P                                    C18F       F      15       1   NON_BANKED  
-     _ILSEXT                                   C19E       7       7       1   NON_BANKED  
+     _NEG_P                                    C185       F      15       1   NON_BANKED  
+     _ILSEXT                                   C194       7       7       1   NON_BANKED  
 - VARIABLES:
 MODULE:                 -- VREGS.C.o (ansib.lib) --
 - PROCEDURES:
-     L_NEGK                                    C1A5       7       7       2   NON_BANKED  
-     L_PSHK                                    C1AC       8       8       1   NON_BANKED  
-     SL_PULK                                   C1B4       A      10       1   NON_BANKED  
+     L_NEGK                                    C19B       7       7       2   NON_BANKED  
+     L_PSHK                                    C1A2       8       8       1   NON_BANKED  
+     SL_PULK                                   C1AA       A      10       1   NON_BANKED  
 - VARIABLES:
 MODULE:                 -- isr_vectors.c.o --
 - PROCEDURES:
-     UnimplementedISR                          C1BE       2       2      62   NON_BANKED  
+     UnimplementedISR                          C1B4       2       2      60   NON_BANKED  
 - VARIABLES:
-     _vect                                     FF80      7E     126       0   .abs_section_ff80
+     _vect                                     FF80      7C     124       0   .abs_section_ff80
 MODULE:                 -- main.c.o --
 - PROCEDURES:
-     main                                    308029      19      25       2   .text       
+     main                                    308029      1D      29       2   .text       
 - VARIABLES:
 MODULE:                 -- pwm.c.o --
 - PROCEDURES:
-     TC5_ISR                                   C1C0      39      57       1   NON_BANKED  
-     Duty_Hi_Calculator                        C1F9      36      54       4   NON_BANKED  
+     Init_sci                                308046      28      40       2   .text       
+     RE_ISR                                    C1B6      24      36       1   NON_BANKED  
+     TC5_ISR                                   C1DA      39      57       1   NON_BANKED  
+     Duty_Hi_Calculator                        C213      36      54       2   NON_BANKED  
 - VARIABLES:
-     HiorLo                                    1100       1       1       3   .common     
+     SCIString                                 1100       C      12       3   .data       
+     HiorLo                                    110C       1       1       3   .common     
+     re_place                                  110D       2       2       8   .common     
+     test                                      110F       2       2       1   .common     
 
 *********************************************************************************************
 MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
   mc9s12dg256.c.o                            400      0      0
-  Start12.c.o                                  0     62      0
+  Start12.c.o                                  0     52      0
   FCONV.C.o (ansib.lib)                        0    117      0
   FMUL.C.o (ansib.lib)                         0    108      0
   FREGS.C.o (ansib.lib)                        0    143      0
   rtshc12.c.o (ansib.lib)                      0     22      0
   VREGS.C.o (ansib.lib)                        0     25      0
-  isr_vectors.c.o                              0      2    126
-  main.c.o                                     0     25      0
-  pwm.c.o                                      1    111      0
-  other                                      256     12      2
+  isr_vectors.c.o                              0      2    124
+  main.c.o                                     0     29      0
+  pwm.c.o                                     17    187      0
+  other                                      256     12     17
 
 *********************************************************************************************
 SECTION USE IN OBJECT-ALLOCATION SECTION
 ---------------------------------------------------------------------------------------------
 SECTION: ".text"
-  Init main 
+  Init main Init_sci 
+SECTION: ".data"
+  SCIString 
 SECTION: ".init"
   _Startup 
 SECTION: "NON_BANKED"
   F_TOLONGK F_FRLONGK _FSFLOAT _FSTRUNC F_MULKL _FMUL F_PULK F_PULL F_PSHK 
   F_CLRK F_MAXK F_NORMK _NEG_P _ILSEXT L_NEGK L_PSHK SL_PULK UnimplementedISR 
-  TC5_ISR Duty_Hi_Calculator 
+  RE_ISR TC5_ISR Duty_Hi_Calculator 
 SECTION: ".abs_section_8"
   _PORTE 
 SECTION: ".abs_section_9"
@@ -1514,7 +1522,7 @@ SECTION: ".abs_section_2ae"
 SECTION: ".abs_section_2be"
   _CAN4TXTSR 
 SECTION: ".common"
-  HiorLo 
+  HiorLo re_place test 
 SECTION: ".abs_section_ff80"
   _vect 
 
@@ -1647,13 +1655,13 @@ OBJECT LIST SORTED BY ADDRESS
      _SCI0SR2                                    CD       1       1       0   .abs_section_cd
      _SCI0DRH                                    CE       1       1       0   .abs_section_ce
      _SCI0DRL                                    CF       1       1       0   .abs_section_cf
-     _SCI1BD                                     D0       2       2       0   .abs_section_d0
+     _SCI1BD                                     D0       2       2       2   .abs_section_d0
      _SCI1CR1                                    D2       1       1       0   .abs_section_d2
-     _SCI1CR2                                    D3       1       1       0   .abs_section_d3
-     _SCI1SR1                                    D4       1       1       0   .abs_section_d4
+     _SCI1CR2                                    D3       1       1       3   .abs_section_d3
+     _SCI1SR1                                    D4       1       1       2   .abs_section_d4
      _SCI1SR2                                    D5       1       1       0   .abs_section_d5
      _SCI1DRH                                    D6       1       1       0   .abs_section_d6
-     _SCI1DRL                                    D7       1       1       0   .abs_section_d7
+     _SCI1DRL                                    D7       1       1       2   .abs_section_d7
      _SPI0CR1                                    D8       1       1       0   .abs_section_d8
      _SPI0CR2                                    D9       1       1       0   .abs_section_d9
      _SPI0BR                                     DA       1       1       0   .abs_section_da
@@ -1863,31 +1871,36 @@ OBJECT LIST SORTED BY ADDRESS
      _CAN4TXDLR                                 2BC       1       1       0   .abs_section_2bc
      _CAN4TXTBPR                                2BD       1       1       0   .abs_section_2bd
      _CAN4TXTSR                                 2BE       2       2       0   .abs_section_2be
-     HiorLo                                    1100       1       1       3   .common     
-     _Startup                                  C000      15      21       0   .init       
-     F_TOLONGK                                 C01F      33      51       1   NON_BANKED  
-     F_FRLONGK                                 C052      1F      31       1   NON_BANKED  
-     _FSFLOAT                                  C071      12      18       1   NON_BANKED  
-     _FSTRUNC                                  C083      11      17       1   NON_BANKED  
-     F_MULKL                                   C094      58      88       1   NON_BANKED  
-     _FMUL                                     C0EC      14      20       1   NON_BANKED  
-     F_PULK                                    C100      15      21       2   NON_BANKED  
-     F_PULL                                    C115      15      21       1   NON_BANKED  
-     F_PSHK                                    C12A      13      19       2   NON_BANKED  
-     F_CLRK                                    C13D       B      11       2   NON_BANKED  
-     F_MAXK                                    C148       9       9       1   NON_BANKED  
-     F_NORMK                                   C151      3E      62       1   NON_BANKED  
-     _NEG_P                                    C18F       F      15       1   NON_BANKED  
-     _ILSEXT                                   C19E       7       7       1   NON_BANKED  
-     L_NEGK                                    C1A5       7       7       2   NON_BANKED  
-     L_PSHK                                    C1AC       8       8       1   NON_BANKED  
-     SL_PULK                                   C1B4       A      10       1   NON_BANKED  
-     UnimplementedISR                          C1BE       2       2      62   NON_BANKED  
-     TC5_ISR                                   C1C0      39      57       1   NON_BANKED  
-     Duty_Hi_Calculator                        C1F9      36      54       4   NON_BANKED  
-     _vect                                     FF80      7E     126       0   .abs_section_ff80
+     SCIString                                 1100       C      12       3   .data       
+     HiorLo                                    110C       1       1       3   .common     
+     re_place                                  110D       2       2       8   .common     
+     test                                      110F       2       2       1   .common     
+     _Startup                                  C000       B      11       0   .init       
+     F_TOLONGK                                 C015      33      51       1   NON_BANKED  
+     F_FRLONGK                                 C048      1F      31       1   NON_BANKED  
+     _FSFLOAT                                  C067      12      18       1   NON_BANKED  
+     _FSTRUNC                                  C079      11      17       1   NON_BANKED  
+     F_MULKL                                   C08A      58      88       1   NON_BANKED  
+     _FMUL                                     C0E2      14      20       1   NON_BANKED  
+     F_PULK                                    C0F6      15      21       2   NON_BANKED  
+     F_PULL                                    C10B      15      21       1   NON_BANKED  
+     F_PSHK                                    C120      13      19       2   NON_BANKED  
+     F_CLRK                                    C133       B      11       2   NON_BANKED  
+     F_MAXK                                    C13E       9       9       1   NON_BANKED  
+     F_NORMK                                   C147      3E      62       1   NON_BANKED  
+     _NEG_P                                    C185       F      15       1   NON_BANKED  
+     _ILSEXT                                   C194       7       7       1   NON_BANKED  
+     L_NEGK                                    C19B       7       7       2   NON_BANKED  
+     L_PSHK                                    C1A2       8       8       1   NON_BANKED  
+     SL_PULK                                   C1AA       A      10       1   NON_BANKED  
+     UnimplementedISR                          C1B4       2       2      60   NON_BANKED  
+     RE_ISR                                    C1B6      24      36       1   NON_BANKED  
+     TC5_ISR                                   C1DA      39      57       1   NON_BANKED  
+     Duty_Hi_Calculator                        C213      36      54       2   NON_BANKED  
+     _vect                                     FF80      7C     124       0   .abs_section_ff80
      Init                                    308000      29      41       2   .text       
-     main                                    308029      19      25       2   .text       
+     main                                    308029      1D      29       2   .text       
+     Init_sci                                308046      28      40       2   .text       
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
@@ -1909,17 +1922,23 @@ rtshc12.c.o (ansib.lib):
 VREGS.C.o (ansib.lib):
   UL_PULK 
 pwm.c.o:
-  Init_TC5 
+  Init_TC5 run_PWM 
 NOT USED VARIABLES
 rtshc12.c.o (ansib.lib):
   _PowOfTwo_8 _PowOfTwo_16 _PowOfTwo_32 errno 
 pwm.c.o:
-  Period 
+  Period re 
 
 *********************************************************************************************
 COPYDOWN SECTION
 ---------------------------------------------------------------------------------------------
-------- ROM-ADDRESS: 0xC22F ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xC249 ---- SIZE       4 ---
+Filling bytes inserted
+ 000B1100
+------- ROM-ADDRESS: 0xC24D ---- RAM-ADDRESS: 0x1100 ---- SIZE      11 ---
+Name of initialized Object : SCIString
+ 4652454553 43414C450A 0D
+------- ROM-ADDRESS: 0xC258 ---- SIZE       2 ---
 Filling bytes inserted
  0000
 
@@ -1936,11 +1955,14 @@ F_NORMK                   USES F_MAXK
 L_NEGK                    USES _NEG_P 
 L_PSHK                    USES L_NEGK 
 SL_PULK                   USES L_NEGK 
+RE_ISR                    USES _SCI1SR1 re_place SCIString _SCI1DRL _SCI1CR2 
 TC5_ISR                   USES Duty_Hi_Calculator HiorLo _TC5 _PTJ _PORTAB 
 Duty_Hi_Calculator        USES _PTH _ILSEXT _FSFLOAT _FMUL _FSTRUNC 
-_vect                     USES UnimplementedISR TC5_ISR 
+_vect                     USES UnimplementedISR RE_ISR TC5_ISR 
 Init                      USES _startupData 
-main                      USES _DDRAB _DDRJ _PTJ _DDRH Duty_Hi_Calculator 
+main                      USES _DDRAB _DDRJ _PTJ _DDRH Init_sci 
+Init_sci                  USES test _SCI1BD _SCI1CR2 re_place SCIString 
+                                _SCI1DRL 
 
 *********************************************************************************************
 DEPENDENCY TREE
@@ -1949,50 +1971,8 @@ DEPENDENCY TREE
  | 
  +- main                
  |  | 
- |  +- Duty_Hi_Calculator  
- |     | 
- |     +- _ILSEXT             
- |     |    
- |     +- _FSFLOAT            
- |     |  | 
- |     |  +- SL_PULK             
- |     |  |  | 
- |     |  |  +- L_NEGK              
- |     |  |     | 
- |     |  |     +- _NEG_P              
- |     |  |          
- |     |  +- F_FRLONGK           
- |     |  |    
- |     |  +- F_PSHK              
- |     |       
- |     +- _FMUL               
- |     |  | 
- |     |  +- F_PULK              
- |     |  |    
- |     |  +- F_PULL              
- |     |  |    
- |     |  +- F_MULKL             
- |     |  |  | 
- |     |  |  +- F_CLRK              
- |     |  |  |    
- |     |  |  +- F_NORMK             
- |     |  |     | 
- |     |  |     +- F_MAXK              
- |     |  |        | 
- |     |  |        +- F_CLRK               (see above)
- |     |  |           
- |     |  +- F_PSHK               (see above)
- |     |     
- |     +- _FSTRUNC            
- |        | 
- |        +- F_PULK               (see above)
- |        |  
- |        +- F_TOLONGK           
- |        |    
- |        +- L_PSHK              
- |           | 
- |           +- L_NEGK               (see above)
- |              
+ |  +- Init_sci            
+ |       
  +- _Startup            
     | 
     +- Init                
@@ -2003,10 +1983,54 @@ DEPENDENCY TREE
  | 
  +- UnimplementedISR    
  |    
+ +- RE_ISR              
+ |    
  +- TC5_ISR             
     | 
-    +- Duty_Hi_Calculator   (see above)
-       
+    +- Duty_Hi_Calculator  
+       | 
+       +- _ILSEXT             
+       |    
+       +- _FSFLOAT            
+       |  | 
+       |  +- SL_PULK             
+       |  |  | 
+       |  |  +- L_NEGK              
+       |  |     | 
+       |  |     +- _NEG_P              
+       |  |          
+       |  +- F_FRLONGK           
+       |  |    
+       |  +- F_PSHK              
+       |       
+       +- _FMUL               
+       |  | 
+       |  +- F_PULK              
+       |  |    
+       |  +- F_PULL              
+       |  |    
+       |  +- F_MULKL             
+       |  |  | 
+       |  |  +- F_CLRK              
+       |  |  |    
+       |  |  +- F_NORMK             
+       |  |     | 
+       |  |     +- F_MAXK              
+       |  |        | 
+       |  |        +- F_CLRK               (see above)
+       |  |           
+       |  +- F_PSHK               (see above)
+       |     
+       +- _FSTRUNC            
+          | 
+          +- F_PULK               (see above)
+          |  
+          +- F_TOLONGK           
+          |    
+          +- L_PSHK              
+             | 
+             +- L_NEGK               (see above)
+                
 *********************************************************************************************
 STATISTIC SECTION
 ---------------------------------------------------------------------------------------------
@@ -2014,5 +2038,5 @@ STATISTIC SECTION
 ExeFile:
 --------
 Number of blocks to be downloaded: 6
-Total size of all blocks to be downloaded: 755
+Total size of all blocks to be downloaded: 838
 

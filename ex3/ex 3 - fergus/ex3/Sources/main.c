@@ -5,11 +5,14 @@
 #include "pwm.h"
 #include "input.h"
 
+#define START_CYCLE 1
+#define WAIT_CYCLE 0
 
 
 void main(void) {
   /* put your own code here */
   int Hi_count;
+  
   //int analog_input;
 
   //call the timer function
@@ -20,17 +23,11 @@ void main(void) {
   PTJ = 0x00; 
   DDRH = 0x00;
   
-  while(1){
-    Hi_count = Duty_Hi_Calculator();
+  Init_sci();
   
-  }
-
-  
-  Init_TC5();
+  //Init_TC5();
 
 	EnableInterrupts;
-
-
   
   
   //DDRT = 0x20;

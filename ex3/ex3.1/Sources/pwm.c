@@ -3,9 +3,17 @@
 // include the register/pin definitions
 #include "derivative.h"      /* derivative-specific definitions */
 const int Period = 1886;
+#define START_CYCLE 1
+#define WAIT_CYCLE 0
 #define Hi 1200
 #define Lo 50
 char HiorLo;
+char re[100];
+volatile int re_place;
+volatile int test;
+unsigned char SCIString[12]={'F','R','E','E','S','C','A','L','E',0xa,0xd,'\0'};
+
+
 
 //need to creae an over flow time of one hz 
 
@@ -28,6 +36,45 @@ void Init_TC5 (void) {
    TC5 = TC5 + 900;
    HiorLo = 0;
 }
+
+
+
+
+
+
+void Init_sci(void){
+  
+  test = 1;
+  SCI1BDH = 0x00;             // Set the baud rate at 9600
+  SCI1BDL = 156; 
+  SCI1CR2 = 0x2c;
+  re_place = 0;
+  SCI1CR2 |= 0x80; //enable to tdre intterupt
+  SCI1DRL = SCIString[re_place]; 
+  re_place = re_place+1;  
+}
+
+#pragma CODE_SEG __NEAR_SEG NON_BANKED /* Interrupt section for this module. Placement will be in NON_BANKED area. */
+__interrupt void RE_ISR(void) {
+
+  
+  if (SCI1SR1 & 0x80){ /*If transmission flag is set*/
+    SCI1SR1;
+    
+    if(SCIString[re_place] != '\0'){
+      SCI1DRL = SCIString[re_place];
+      re_place = re_place +1;
+    }
+    else{
+    SCI1CR2 &= 0x7F; /*Disable TDRE interrupt*/
+    }
+  }  
+  return;
+}
+ 
+
+
+
 
 
 // look at the isr_vectors.c for where this function is 
