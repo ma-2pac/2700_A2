@@ -2,55 +2,41 @@
 #include "derivative.h"      /* derivative-specific definitions */
 
 #include "timers.h"
+#include "timeFunc.h"
 
 void main(void) {
-
-  unsigned int time1, time2;
-  int a, b, c; // change these from int to desired datatype to test
-  long times[5];
-  float ns[5];
-  float timePerTick = 41.6; // time per tick in ns 41.6ns for prescaler = 1
-  long oFval = 65536; // time elapsed per time overflow
+  int i;
+  long ticks;
+  float timeInt[6];
+  float timeLong[6];
+  float timeFloat[6];
+  float timeDouble[6];
+  float timePerTick = 41.6; // time per tick in ns = 41.6ns for prescaler = 1
   
   Init_TCNT(); // initialise timer
   
-  a = 5;
-  b = 10;
-  resetOF();
-  time1 = TCNT; // save initial time
-  c = b + a;
-  time2 = TCNT;
-  times[0] = (time2 - time1) + (overFlows * oFval); //calculate period
   
-  resetOF();
-  time1 = TCNT; // save initial time
-  c = b * a;
-  time2 = TCNT;
-  times[1] = (time2 - time1) + (overFlows * oFval); //calculate period
-  
-  resetOF();
-  time1 = TCNT; // save initial time
-  c = b / a;
-  time2 = TCNT;
-  times[2] = (time2 - time1) + (overFlows * oFval); //calculate period
-  
-  resetOF();
-  time1 = TCNT; // save initial time
-  c = sqrt(b);
-  time2 = TCNT;
-  times[3] = (time2 - time1) + (overFlows * oFval); //calculate period
-  
-  resetOF();
-  time1 = TCNT; // save initial time
-  c = sin(b);
-  time2 = TCNT;
-  times[4] = (time2 - time1) + (overFlows * oFval); //calculate period
-  
-  // calculate time elapsed for each function
-  for(a = 0; a < 5; a++){
-    ns[a] = times[a] * timePerTick; 
+  for(i = 0; i < 6; i++){
+    ticks = timeFunc(i,0);
+    timeInt[i] = ticks * timePerTick;
   }
-
+  
+  for(i = 0; i < 6; i++){
+    ticks = timeFunc(i,1);
+    timeLong[i] = ticks * timePerTick;
+  }
+  
+  for(i = 0; i < 6; i++){
+    ticks = timeFunc(i,2);
+    timeFloat[i] = ticks * timePerTick;
+  }
+  
+  for(i = 0; i < 6; i++){
+    ticks = timeFunc(i,3);
+    timeDouble[i] = ticks * timePerTick;
+  }
+  
+    
   asm ("swi");
 
 	EnableInterrupts;
