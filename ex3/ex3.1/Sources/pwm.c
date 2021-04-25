@@ -2,18 +2,22 @@
 
 // include the register/pin definitions
 #include "derivative.h"      /* derivative-specific definitions */
-const int Period = 1886;
-#define START_CYCLE 1
-#define WAIT_CYCLE 0
-#define Hi 1200
-#define Lo 50
+volatile int Period = 1886;
 char HiorLo;
 char re[100];
 volatile int re_place;
 volatile int test;
 //unsigned char SCIString[12]={'F','R','E','E','S','C','A','L','E',0xa,0xd,'\0'};
 unsigned char SCIString[12];
+volatile int Hi_count=1500;
+volatile int Lo_count=200;
 
+volatile int dip_switch;
+volatile float Percent;
+volatile int Duty_Hi;
+
+const int Hi = 1500;
+const int Lo = 200;
 
 //need to creae an over flow time of one hz 
 
@@ -33,7 +37,6 @@ void Init_TC5 (void) {
    TC5 = TCNT + 100;
    while(TFLG1 & TFLG1_C5F); // wait until OC0 pin go high after counting 2100   //debug
    TCTL1 = 0x04; // set OC5 pin action to toggle
-   TC5 = TC5 + 900;
    HiorLo = 0;
 }
 
@@ -107,20 +110,18 @@ __interrupt void RE_ISR(void) {
 #pragma CODE_SEG __NEAR_SEG NON_BANKED /* Interrupt section for this module. Placement will be in NON_BANKED area. */
 __interrupt void TC5_ISR(void) { 
   //need to add an interrupt section in here that counts and resets
-   int Hi_count;
-   int Lo_count;
    //int Hi_count = read_analog();
    Hi_count = Duty_Hi_Calculator();
    Lo_count = Period - Hi_count; 
   if(HiorLo){
    //delay??
-   TC5 = TC5 + Hi_count;
+   TC5 = TC5 + Lo_count;
    HiorLo = 0;
    PTJ = 0x00;
    PORTB = 0x00;
   }
   else{
-   TC5 = TC5 + Lo_count;
+   TC5 = TC5 + Hi_count;
    HiorLo = 1;
    PTJ = 0x00;
    PORTB = 0xFF;  
@@ -128,11 +129,43 @@ __interrupt void TC5_ISR(void) {
 }
 
 int Duty_Hi_Calculator(void){
-   volatile int dip_switch;
-   volatile float Percent;
-   volatile int Duty_Hi;
-   dip_switch = PTH; 
-   Percent = dip_switch/128;
+
+   dip_switch = PTH;
+   
+   switch(dip_switch){
+    case 0:
+      Duty_Hi = 1;
+      return Duty_Hi;
+      break;
+    case 128:
+      Percent = 0.1;
+      break;
+    case 192:
+      Percent = 0.2;
+      break;
+    case 224:
+      Percent = 0.3;
+      break;
+    case 240:
+      Percent = 0.4;
+      break;
+    case 248:
+      Percent = 0.5;
+      break;
+    case 252:
+      Percent = 0.6;
+      break; 
+    case 254:
+      Percent = 0.7;
+      break;
+    case 255:
+      Percent = 0.8;
+      break;
+    default:
+      Percent = dip_switch/255;
+      break;
+  } 
+   
    Duty_Hi = Period*Percent;
    return Duty_Hi;
 }
