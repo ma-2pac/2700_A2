@@ -24,7 +24,7 @@ __interrupt void TC5_ISR(void);
 
 __interrupt void RE_ISR(void);
 //calculate the duty cycle and return the number of timer cycles for Hi and Lo
-int Duty_Hi_Calculator(void);
+long int Duty_Hi_Calculator(void);
 
 
 //module to run PWM for any output

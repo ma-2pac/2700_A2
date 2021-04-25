@@ -3,32 +3,27 @@
 
 // include the register/pin definitions
 #include "derivative.h"      /* derivative-specific definitions */
-volatile int Period = 1886;
+volatile long int Period;
+volatile int frequency;
 char HiorLo;
 char re[100];
 volatile int re_place;
 volatile int test;
 unsigned char SCIString[12];
-volatile int Hi_count=1500;
-volatile int Lo_count=200;
+volatile long int Hi_count;;
+volatile long int Lo_count;
 
 volatile int dip_switch;
-unsigned char P1[2];
-unsigned char P2[1];
+unsigned char Duty_Array[2];
+unsigned char Period_Array[6];
+unsigned char Frequency_Array[3];
 volatile float Percent;
-volatile int Duty_Hi;
+volatile float Frequency;
+volatile long int Duty_Hi;
 
-volatile int Int_Percent;;
-volatile float Percent_SCI;
-volatile float Period_SCI;
+volatile int Int_Percent;
 volatile int i = 0;
 
-
-
-
-
-const int Hi = 1500;
-const int Lo = 200;
 
 //need to creae an over flow time of one hz 
 
@@ -55,19 +50,13 @@ void Init_TC5 (int param) {
 
 void Init_sci(void){
   
-  test = 1;
   SCI1BDH = 0x00;             // Set the baud rate at 9600
   SCI1BDL = 156; 
   SCI1CR2 = 0x2c; //re te and rtede
   //SCI1CR2 = 0x8c; //re te and rtde
   
   re_place = 0;
-  ///SCI1CR2 |= 0x80; //enable to tdre intterupt
-  SCI1CR2 |= 0x20; //enable to rdte intterupt
-  //SCI1CR2 = 0x0c;    // te and re
-  //SCI1CR2 |= 0x10; //enable receive
-  //SCI1DRL = SCIString[re_place]; 
-  //re_place = re_place+1;  
+  SCI1CR2 |= 0x20; //enable to rdte intterupt  
 }
 
 #pragma CODE_SEG __NEAR_SEG NON_BANKED /* Interrupt section for this module. Placement will be in NON_BANKED area. */
@@ -123,12 +112,14 @@ __interrupt void TC5_ISR(void) {
    Lo_count = Period - Hi_count; 
   if(HiorLo){
    //delay??
+   //TC5 = TC5 + Lo;
    TC5 = TC5 + Lo_count;
    HiorLo = 0;
    PTJ = 0x00;
    PORTB = 0x00;
   }
   else{
+   //TC5 = TC5 + Hi;
    TC5 = TC5 + Hi_count;
    HiorLo = 1;
    PTJ = 0x00;
@@ -136,60 +127,78 @@ __interrupt void TC5_ISR(void) {
   }
 }
 
-int Duty_Hi_Calculator(void){
+long int Duty_Hi_Calculator(void){
 
    dip_switch = PTH;
-   Period = 1886;
+   
    
    switch(dip_switch){
     case 0:
       Duty_Hi = 1;
       return Duty_Hi;
+      Period = 1875;
       break;
     case 128:
       Percent = 0.1;
+      Period = 1875;
       break;
     case 192:
       Percent = 0.2;
+      Period = 1875;
       break;
     case 224:
       Percent = 0.3;
+      Period = 1875;
       break;
     case 240:
       Percent = 0.4;
+      Period = 1875;
       break;
     case 248:
       Percent = 0.5;
+      Period = 1875;
       break;
     case 252:
       Percent = 0.6;
+      Period = 1875;
       break; 
     case 254:
       Percent = 0.7;
+      Period = 1875;
       break;
     case 255:
       Percent = 0.8;
+      Period = 1875;
       break;
     
     case 127:
       if (strlen(SCIString)>0 && SCIString[0] == '!'){
         i = 0;
         while (SCIString[i] != 10){
-          P1[i] = SCIString[i+1];
+          Duty_Array[i] = SCIString[i+1];
           i++;
         }
+        sscanf(Duty_Array, "%d", &Int_Percent);
+        Percent = Int_Percent/100.00;
       }
-      //Int_Percent = boost::lexical_cast<int>(P1)
-      sscanf(P1, "%d", &Int_Percent);
-      Percent = Int_Percent/100.00;
-      Period = 1886;
       
+      if (strlen(SCIString)>0 && SCIString[0] == '@'){
+        i = 0;
+        while (SCIString[i] != 10){
+          Frequency_Array[i] = SCIString[i+1];
+          i++;
+        }
+        sscanf(Frequency_Array, "%f", &Frequency);
+        Period = Frequency/(10000*0.00000533);   //frquency is 
+      }
+    
       break;
       
-      default:
-      Percent = ((float) dip_switch)/255.00;
+    default:
+      //Percent = ((float) dip_switch)/255.00;
+      //Period = 187000;
       break;
-  } 
+   }
    
    Duty_Hi = Period*Percent;
    return Duty_Hi;
@@ -198,7 +207,7 @@ int Duty_Hi_Calculator(void){
 //module to run PWM for any output
 int run_PWM(int Hi_count, char enable_port[5], char output_port[5]){
   
-  int Lo_count;
+  //int Lo_count;
   
   Lo_count= Period - Hi_count;
   
