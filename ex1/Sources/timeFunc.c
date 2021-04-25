@@ -2,6 +2,7 @@
 #include "derivative.h"      /* derivative-specific definitions */
 
 #include "timers.h"
+#include "timeFunc.h"
 
 /* Takes inputs for function to run and datatype to use
   funcs:     0 = add, 1 = mult, 2 = divide, 3 = sqrt,  4 = sin, 5 = cos
@@ -14,9 +15,9 @@ long timeFunc(int func, int datatype){
   unsigned int time1, time2;
   long time;
   long OFticks = 65536;
-  long OFinterruptTicks = 24;
+  int OFinterruptTicks = 24;
   
-   
+  
   switch(datatype){
     
     case 0:{

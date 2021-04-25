@@ -15,7 +15,6 @@ void main(void) {
   
   Init_TCNT(); // initialise timer
   
-  
   for(i = 0; i < 6; i++){
     ticks = timeFunc(i,0);
     timeInt[i] = ticks * timePerTick;
@@ -36,10 +35,9 @@ void main(void) {
     timeDouble[i] = ticks * timePerTick;
   }
   
-    
-  asm ("swi");
+    asm ("swi");
 
-	EnableInterrupts;
+	EnableInterrupts;    
 
 
   for(;;) {

@@ -38,8 +38,8 @@ Entry point: 0xC000 (_Startup)
 _startupData is allocated at 0xC00B and uses 6 Bytes
 extern struct _tagStartup {
   unsigned nofZeroOut     1
-  _Range   pZeroOut       0x1100     4
-  _Copy    *toCopyDownBeg 0xC915
+  _Range   pZeroOut       0x1100     6
+  _Copy    *toCopyDownBeg 0xC949
 } _startupData;
 
 *********************************************************************************************
@@ -49,9 +49,9 @@ Section Name                    Size  Type     From       To       Segment
 .init                             11     R     0xC000     0xC00A   ROM_C000
 .startData                        10     R     0xC00B     0xC014   ROM_C000
 .rodata                           16     R     0xC015     0xC024   ROM_C000
-NON_BANKED                      2288     R     0xC025     0xC914   ROM_C000
-.copy                              2     R     0xC915     0xC916   ROM_C000
-.text                           2769     R   0x308000   0x308AD0   PAGE_30
+NON_BANKED                      2340     R     0xC025     0xC948   ROM_C000
+.copy                              2     R     0xC949     0xC94A   ROM_C000
+.text                           2861     R   0x308000   0x308B2C   PAGE_30
 .stack                           256   R/W     0x1000     0x10FF   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
 .abs_section_9                     1   N/I        0x9        0x9   .absSeg1
@@ -395,13 +395,13 @@ NON_BANKED                      2288     R     0xC025     0xC914   ROM_C000
 .abs_section_2ae                   2   N/I      0x2AE      0x2AF   .absSeg339
 .abs_section_2be                   2   N/I      0x2BE      0x2BF   .absSeg340
 .abs_section_ff80                126     R     0xFF80     0xFFFD   .absSeg341
-.bss                               2   R/W     0x1100     0x1101   RAM
-.common                            2   R/W     0x1102     0x1103   RAM
+.bss                               4   R/W     0x1100     0x1103   RAM
+.common                            2   R/W     0x1104     0x1105   RAM
 .vectSeg342_vect                   2     R     0xFFFE     0xFFFF   .vectSeg342
 
 Summary of section sizes per section type:
-READ_ONLY (R):        1468 (dec:     5224)
-READ_WRITE (R/W):      104 (dec:      260)
+READ_ONLY (R):        14F8 (dec:     5368)
+READ_WRITE (R/W):      106 (dec:      262)
 NO_INIT (N/I):         190 (dec:      400)
 
 *********************************************************************************************
@@ -760,11 +760,11 @@ MODULE:                 -- mc9s12dg256.c.o --
      _CAN4TXTSR                                 2BE       2       2       0   .abs_section_2be
 MODULE:                 -- main.c.o --
 - PROCEDURES:
-     main                                    308000      5B      91       2   .text       
+     main                                    308000      AE     174       3   .text       
 - VARIABLES:
 MODULE:                 -- Start12.c.o --
 - PROCEDURES:
-     Init                                    30805B      29      41       2   .text       
+     Init                                    3080AE      29      41       2   .text       
      _Startup                                  C000       B      11       0   .init       
 - VARIABLES:
      _startupData                              C00B       6       6       3   .startData  
@@ -772,13 +772,13 @@ MODULE:                 -- Start12.c.o --
      __SEG_END_SSTACK                          1100       0       0       1               
 MODULE:                 -- MATH.C.o (ansibf.lib) --
 - PROCEDURES:
-     fabs                                    308084      2C      44       4   .text       
-     is_special                              3080B0      59      89       6   .text       
-     sincos                                  308109     3AF     943      30   .text       
-     sin                                     3084B8      C3     195       5   .text       
-     cos                                     30857B      AC     172       5   .text       
-     sqrt_r                                  308627     1F0     496      14   .text       
-     sqrt                                    308817      A2     162       5   .text       
+     fabs                                    3080D7      2C      44       4   .text       
+     is_special                              308103      59      89       6   .text       
+     sincos                                  30815C     3AF     943      30   .text       
+     sin                                     30850B      C3     195       5   .text       
+     cos                                     3085CE      AC     172       5   .text       
+     sqrt_r                                  30867A     1F0     496      14   .text       
+     sqrt                                    30886A      A2     162       5   .text       
 - VARIABLES:
      infinity                                  C015       8       8       8   .rodata     
      nan_union                                 C01D       8       8       4   .rodata     
@@ -861,43 +861,45 @@ MODULE:                 -- rtshc12.c.o (ansibf.lib) --
 - PROCEDURES:
      _LCMP                                     C870      19      25       1   NON_BANKED  
      _LNEG                                     C889       D      13       1   NON_BANKED  
-     _LMULS16x32                               C896      1F      31       2   NON_BANKED  
-     _NEG_P                                    C8B5       F      15       1   NON_BANKED  
-     _ILSEXT                                   C8C4       7       7       2   NON_BANKED  
-     _COPY                                     C8CB       8       8      11   NON_BANKED  
-     _CASE_CHECKED                             C8D3       B      11       4   NON_BANKED  
-     _CASE_CHECKED_BYTE                        C8DE      14      20       4   NON_BANKED  
+     _LINC                                     C896       5       5       1   NON_BANKED  
+     _LMUL                                     C89B      27      39       1   NON_BANKED  
+     _LMULS16x32                               C8C2      1F      31       1   NON_BANKED  
+     _NEG_P                                    C8E1       F      15       1   NON_BANKED  
+     _ILSEXT                                   C8F0       7       7       2   NON_BANKED  
+     _COPY                                     C8F7       8       8      11   NON_BANKED  
+     _CASE_CHECKED                             C8FF       B      11       4   NON_BANKED  
+     _CASE_CHECKED_BYTE                        C90A      14      20       4   NON_BANKED  
 - VARIABLES:
-     errno                                     1102       2       2       2   .common     
+     errno                                     1104       2       2       2   .common     
 MODULE:                 -- VREGS.C.o (ansibf.lib) --
 - PROCEDURES:
-     L_NEGK                                    C8F2       7       7       2   NON_BANKED  
-     L_PSHK                                    C8F9       8       8       2   NON_BANKED  
-     SL_PULK                                   C901       A      10       2   NON_BANKED  
+     L_NEGK                                    C91E       7       7       2   NON_BANKED  
+     L_PSHK                                    C925       8       8       2   NON_BANKED  
+     SL_PULK                                   C92D       A      10       2   NON_BANKED  
 - VARIABLES:
 MODULE:                 -- isr_vectors.c.o --
 - PROCEDURES:
-     UnimplementedISR                          C90B       2       2      62   NON_BANKED  
+     UnimplementedISR                          C937       2       2      62   NON_BANKED  
 - VARIABLES:
      _vect                                     FF80      7E     126       0   .abs_section_ff80
 MODULE:                 -- timers.c.o --
 - PROCEDURES:
-     Init_TCNT                               3088B9       8       8       2   .text       
-     resetOF                                 3088C1       6       6       2   .text       
-     TOF_ISR                                   C90D       8       8       1   NON_BANKED  
+     Init_TCNT                               30890C       8       8       2   .text       
+     resetOF                                 308914       9       9       2   .text       
+     TOF_ISR                                   C939      10      16       1   NON_BANKED  
 - VARIABLES:
 MODULE:                 -- timeFunc.c.o --
 - PROCEDURES:
-     timeFunc                                3088C7     20A     522      56   .text       
+     timeFunc                                30891D     210     528      63   .text       
 - VARIABLES:
-     overFlows                                 1100       2       2       5   .bss        
+     overFlows                                 1100       4       4      10   .bss        
 
 *********************************************************************************************
 MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
   mc9s12dg256.c.o                            400      0      0
-  main.c.o                                     0     91      0
+  main.c.o                                     0    174      0
   Start12.c.o                                  0     52      0
   MATH.C.o (ansibf.lib)                        0   2101     16
   DADD.C.o (ansibf.lib)                        0    306      0
@@ -909,11 +911,11 @@ MODULE STATISTIC
   FCONV.C.o (ansibf.lib)                       0    117      0
   FMUL.C.o (ansibf.lib)                        0    108      0
   FREGS.C.o (ansibf.lib)                       0    143      0
-  rtshc12.c.o (ansibf.lib)                     2    130      0
+  rtshc12.c.o (ansibf.lib)                     2    174      0
   VREGS.C.o (ansibf.lib)                       0     25      0
   isr_vectors.c.o                              0      2    126
-  timers.c.o                                   0     22      0
-  timeFunc.c.o                                 2    522      0
+  timers.c.o                                   0     33      0
+  timeFunc.c.o                                 4    528      0
   other                                      256     12      2
 
 *********************************************************************************************
@@ -934,8 +936,9 @@ SECTION: "NON_BANKED"
   D_CLRK_UNARY D_MAXK_UNARY D_NORMK_UNARY D_DIVKL D_MULKL _DMUL _DDIV D_PULK 
   D_PULL D_PSHK D_STAL D_TKL D_XGKL D_CLRK D_CLRL D_MAXK D_NORMK F_TOLONGK 
   F_FRLONGK _FSFLOAT _FSTRUNC F_MULKL _FMUL F_PULK F_PULL F_PSHK F_CLRK F_MAXK 
-  F_NORMK _LCMP _LNEG _LMULS16x32 _NEG_P _ILSEXT _COPY _CASE_CHECKED 
-  _CASE_CHECKED_BYTE L_NEGK L_PSHK SL_PULK UnimplementedISR TOF_ISR 
+  F_NORMK _LCMP _LNEG _LINC _LMUL _LMULS16x32 _NEG_P _ILSEXT _COPY 
+  _CASE_CHECKED _CASE_CHECKED_BYTE L_NEGK L_PSHK SL_PULK UnimplementedISR 
+  TOF_ISR 
 SECTION: ".abs_section_8"
   _PORTE 
 SECTION: ".abs_section_9"
@@ -1968,8 +1971,8 @@ OBJECT LIST SORTED BY ADDRESS
      _CAN4TXDLR                                 2BC       1       1       0   .abs_section_2bc
      _CAN4TXTBPR                                2BD       1       1       0   .abs_section_2bd
      _CAN4TXTSR                                 2BE       2       2       0   .abs_section_2be
-     overFlows                                 1100       2       2       5   .bss        
-     errno                                     1102       2       2       2   .common     
+     overFlows                                 1100       4       4      10   .bss        
+     errno                                     1104       2       2       2   .common     
      _Startup                                  C000       B      11       0   .init       
      infinity                                  C015       8       8       8   .rodata     
      nan_union                                 C01D       8       8       4   .rodata     
@@ -2023,30 +2026,32 @@ OBJECT LIST SORTED BY ADDRESS
      F_NORMK                                   C832      3E      62       1   NON_BANKED  
      _LCMP                                     C870      19      25       1   NON_BANKED  
      _LNEG                                     C889       D      13       1   NON_BANKED  
-     _LMULS16x32                               C896      1F      31       2   NON_BANKED  
-     _NEG_P                                    C8B5       F      15       1   NON_BANKED  
-     _ILSEXT                                   C8C4       7       7       2   NON_BANKED  
-     _COPY                                     C8CB       8       8      11   NON_BANKED  
-     _CASE_CHECKED                             C8D3       B      11       4   NON_BANKED  
-     _CASE_CHECKED_BYTE                        C8DE      14      20       4   NON_BANKED  
-     L_NEGK                                    C8F2       7       7       2   NON_BANKED  
-     L_PSHK                                    C8F9       8       8       2   NON_BANKED  
-     SL_PULK                                   C901       A      10       2   NON_BANKED  
-     UnimplementedISR                          C90B       2       2      62   NON_BANKED  
-     TOF_ISR                                   C90D       8       8       1   NON_BANKED  
+     _LINC                                     C896       5       5       1   NON_BANKED  
+     _LMUL                                     C89B      27      39       1   NON_BANKED  
+     _LMULS16x32                               C8C2      1F      31       1   NON_BANKED  
+     _NEG_P                                    C8E1       F      15       1   NON_BANKED  
+     _ILSEXT                                   C8F0       7       7       2   NON_BANKED  
+     _COPY                                     C8F7       8       8      11   NON_BANKED  
+     _CASE_CHECKED                             C8FF       B      11       4   NON_BANKED  
+     _CASE_CHECKED_BYTE                        C90A      14      20       4   NON_BANKED  
+     L_NEGK                                    C91E       7       7       2   NON_BANKED  
+     L_PSHK                                    C925       8       8       2   NON_BANKED  
+     SL_PULK                                   C92D       A      10       2   NON_BANKED  
+     UnimplementedISR                          C937       2       2      62   NON_BANKED  
+     TOF_ISR                                   C939      10      16       1   NON_BANKED  
      _vect                                     FF80      7E     126       0   .abs_section_ff80
-     main                                    308000      5B      91       2   .text       
-     Init                                    30805B      29      41       2   .text       
-     fabs                                    308084      2C      44       4   .text       
-     is_special                              3080B0      59      89       6   .text       
-     sincos                                  308109     3AF     943      30   .text       
-     sin                                     3084B8      C3     195       5   .text       
-     cos                                     30857B      AC     172       5   .text       
-     sqrt_r                                  308627     1F0     496      14   .text       
-     sqrt                                    308817      A2     162       5   .text       
-     Init_TCNT                               3088B9       8       8       2   .text       
-     resetOF                                 3088C1       6       6       2   .text       
-     timeFunc                                3088C7     20A     522      56   .text       
+     main                                    308000      AE     174       3   .text       
+     Init                                    3080AE      29      41       2   .text       
+     fabs                                    3080D7      2C      44       4   .text       
+     is_special                              308103      59      89       6   .text       
+     sincos                                  30815C     3AF     943      30   .text       
+     sin                                     30850B      C3     195       5   .text       
+     cos                                     3085CE      AC     172       5   .text       
+     sqrt_r                                  30867A     1F0     496      14   .text       
+     sqrt                                    30886A      A2     162       5   .text       
+     Init_TCNT                               30890C       8       8       2   .text       
+     resetOF                                 308914       9       9       2   .text       
+     timeFunc                                30891D     210     528      63   .text       
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
@@ -2069,10 +2074,10 @@ FREGS.C.o (ansibf.lib):
   F_STAL F_TLK F_TKL F_XGKL F_CLRL 
 rtshc12.c.o (ansibf.lib):
   _BSHL _BSHRS _BSHRU _BDIVMODU _BDIVMODS _ISHL _ISHRU _ISHRS _LSHL _LSHRU 
-  _LSHRS _LADD _LSUB _LAND _LOR _LXOR _LCMP_P _LCMP_PP _LCOM _LINC _LDEC _LMUL 
-  _LMULU16x32 _lDivMod _LDIVU _LDIVS _LMODU _LMODS _CASE_DIRECT 
-  _CASE_DIRECT_BYTE _CASE_SEARCH _CASE_SEARCH_BYTE _CASE_SEARCH_8 
-  _CASE_SEARCH_8_BYTE _FCALL _FPCMP 
+  _LSHRS _LADD _LSUB _LAND _LOR _LXOR _LCMP_P _LCMP_PP _LCOM _LDEC _LMULU16x32 
+  _lDivMod _LDIVU _LDIVS _LMODU _LMODS _CASE_DIRECT _CASE_DIRECT_BYTE 
+  _CASE_SEARCH _CASE_SEARCH_BYTE _CASE_SEARCH_8 _CASE_SEARCH_8_BYTE _FCALL 
+  _FPCMP 
 VREGS.C.o (ansibf.lib):
   UL_PULK 
 NOT USED VARIABLES
@@ -2084,7 +2089,7 @@ rtshc12.c.o (ansibf.lib):
 *********************************************************************************************
 COPYDOWN SECTION
 ---------------------------------------------------------------------------------------------
-------- ROM-ADDRESS: 0xC915 ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xC949 ---- SIZE       2 ---
 Filling bytes inserted
  0000
 
@@ -2124,9 +2129,9 @@ _LMULS16x32               USES _LNEG
 L_NEGK                    USES _NEG_P 
 L_PSHK                    USES L_NEGK 
 SL_PULK                   USES L_NEGK 
-TOF_ISR                   USES overFlows 
+TOF_ISR                   USES overFlows _LINC 
 _vect                     USES UnimplementedISR TOF_ISR 
-main                      USES Init_TCNT timeFunc _FSFLOAT _FMUL 
+main                      USES Init_TCNT timeFunc main _FSFLOAT _FMUL 
 Init                      USES _startupData 
 is_special                USES _LCMP 
 sincos                    USES sincos _DADD _DMUL modf _DCMP _DINC _DUTRUNC 
@@ -2143,7 +2148,8 @@ Init_TCNT                 USES _TSCR1 _TSCR2
 resetOF                   USES overFlows 
 timeFunc                  USES _CASE_CHECKED timeFunc sqrt sin cos 
                                 _CASE_CHECKED_BYTE _DADD _DMUL _DDIV _ILSEXT _DSFLOAT _TCNT 
-                                overFlows _LMULS16x32 resetOF _COPY _DSTRUNC _FSTRUNC 
+                                overFlows _LMUL _LMULS16x32 resetOF _COPY _DSTRUNC 
+                                _FSTRUNC 
 
 *********************************************************************************************
 DEPENDENCY TREE
@@ -2344,6 +2350,8 @@ DEPENDENCY TREE
  |  |  |  |           
  |  |  |  +- D_PSHK_UNARY        
  |  |  |       
+ |  |  +- _LMUL               
+ |  |  |    
  |  |  +- _LMULS16x32         
  |  |  |  | 
  |  |  |  +- _LNEG               
@@ -2399,7 +2407,9 @@ DEPENDENCY TREE
  +- UnimplementedISR    
  |    
  +- TOF_ISR             
-      
+    | 
+    +- _LINC               
+         
 *********************************************************************************************
 STATISTIC SECTION
 ---------------------------------------------------------------------------------------------
@@ -2407,5 +2417,5 @@ STATISTIC SECTION
 ExeFile:
 --------
 Number of blocks to be downloaded: 6
-Total size of all blocks to be downloaded: 5224
+Total size of all blocks to be downloaded: 5368
 
