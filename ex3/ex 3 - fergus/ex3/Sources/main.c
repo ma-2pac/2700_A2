@@ -11,7 +11,7 @@
 
 void main(void) {
   /* put your own code here */
-  int Hi_count;
+  int param;
   
   //int analog_input;
 
@@ -25,7 +25,7 @@ void main(void) {
   
   Init_sci();
   
-  //Init_TC5();
+  Init_TC5(param);
 
 	EnableInterrupts;
   
