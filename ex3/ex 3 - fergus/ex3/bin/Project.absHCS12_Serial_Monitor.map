@@ -38,7 +38,7 @@ _startupData is allocated at 0xC00B and uses 6 Bytes
 extern struct _tagStartup {
   unsigned nofZeroOut     1
   _Range   pZeroOut       0x1100     52
-  _Copy    *toCopyDownBeg 0xC6CB
+  _Copy    *toCopyDownBeg 0xC6F2
 } _startupData;
 
 *********************************************************************************************
@@ -49,8 +49,8 @@ Section Name                    Size  Type     From       To       Segment
 .startData                        10     R     0xC00B     0xC014   ROM_C000
 .rodata                            4     R     0xC015     0xC018   ROM_C000
 .rodata1                           6     R     0xC019     0xC01E   ROM_C000
-NON_BANKED                      1708     R     0xC01F     0xC6CA   ROM_C000
-.copy                              2     R     0xC6CB     0xC6CC   ROM_C000
+NON_BANKED                      1747     R     0xC01F     0xC6F1   ROM_C000
+.copy                              2     R     0xC6F2     0xC6F3   ROM_C000
 .text                           2940     R   0x308000   0x308B7B   PAGE_30
 .stack                           256   R/W     0x1000     0x10FF   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
@@ -400,7 +400,7 @@ NON_BANKED                      1708     R     0xC01F     0xC6CA   ROM_C000
 .vectSeg342_vect                   2     R     0xFFFE     0xFFFF   .vectSeg342
 
 Summary of section sizes per section type:
-READ_ONLY (R):        12C7 (dec:     4807)
+READ_ONLY (R):        12EE (dec:     4846)
 READ_WRITE (R/W):      134 (dec:      308)
 NO_INIT (N/I):         190 (dec:      400)
 
@@ -817,7 +817,7 @@ MODULE:                 -- FMUL.C.o (ansib.lib) --
      F_DIVKL                                   C154      8E     142       1   NON_BANKED  
      F_MULKL                                   C1E2      58      88       1   NON_BANKED  
      _FMUL                                     C23A      14      20       4   NON_BANKED  
-     _FDIV                                     C24E      1E      30       6   NON_BANKED  
+     _FDIV                                     C24E      1E      30       7   NON_BANKED  
 - VARIABLES:
 MODULE:                 -- FREGS.C.o (ansib.lib) --
 - PROCEDURES:
@@ -863,21 +863,21 @@ MODULE:                 -- pwm.c.o --
      Init_sci                                308B69      13      19       2   .text       
      RE_ISR                                    C485      6F     111       1   NON_BANKED  
      TC5_ISR                                   C4F4      4C      76       1   NON_BANKED  
-     Duty_Hi_Calculator                        C540     18B     395      18   NON_BANKED  
+     Duty_Hi_Calculator                        C540     1B2     434      21   NON_BANKED  
 - VARIABLES:
      STRING..d.1                               C019       3       3       1   .rodata1    
      STRING..f.2                               C01C       3       3       1   .rodata1    
      i                                         1100       2       2       9   .bss        
-     Period                                    1104       4       4       8   .common     
+     Period                                    1104       4       4       9   .common     
      HiorLo                                    1108       1       1       4   .common     
      re_place                                  1109       2       2      10   .common     
      SCIString                                 110B       C      12      11   .common     
      Hi_count                                  1117       4       4       6   .common     
      Lo_count                                  111B       4       4       3   .common     
-     dip_switch                                111F       2       2       2   .common     
+     dip_switch                                111F       2       2       3   .common     
      Duty_Array                                1121       2       2       2   .common     
      Frequency_Array                           1123       3       3       2   .common     
-     Percent                                   1126       4       4       9   .common     
+     Percent                                   1126       4       4      11   .common     
      Frequency                                 112A       4       4       3   .common     
      Duty_Hi                                   112E       4       4       5   .common     
      Int_Percent                               1132       2       2       2   .common     
@@ -902,7 +902,7 @@ MODULE STATISTIC
   VREGS.C.o (ansib.lib)                        0     25      0
   isr_vectors.c.o                              0      2    124
   main.c.o                                     0     36      0
-  pwm.c.o                                     50    650      6
+  pwm.c.o                                     50    689      6
   other                                      256     12      2
 
 *********************************************************************************************
@@ -1960,16 +1960,16 @@ OBJECT LIST SORTED BY ADDRESS
      _CAN4TXTSR                                 2BE       2       2       0   .abs_section_2be
      i                                         1100       2       2       9   .bss        
      errno                                     1102       2       2       3   .common     
-     Period                                    1104       4       4       8   .common     
+     Period                                    1104       4       4       9   .common     
      HiorLo                                    1108       1       1       4   .common     
      re_place                                  1109       2       2      10   .common     
      SCIString                                 110B       C      12      11   .common     
      Hi_count                                  1117       4       4       6   .common     
      Lo_count                                  111B       4       4       3   .common     
-     dip_switch                                111F       2       2       2   .common     
+     dip_switch                                111F       2       2       3   .common     
      Duty_Array                                1121       2       2       2   .common     
      Frequency_Array                           1123       3       3       2   .common     
-     Percent                                   1126       4       4       9   .common     
+     Percent                                   1126       4       4      11   .common     
      Frequency                                 112A       4       4       3   .common     
      Duty_Hi                                   112E       4       4       5   .common     
      Int_Percent                               1132       2       2       2   .common     
@@ -1989,7 +1989,7 @@ OBJECT LIST SORTED BY ADDRESS
      F_DIVKL                                   C154      8E     142       1   NON_BANKED  
      F_MULKL                                   C1E2      58      88       1   NON_BANKED  
      _FMUL                                     C23A      14      20       4   NON_BANKED  
-     _FDIV                                     C24E      1E      30       6   NON_BANKED  
+     _FDIV                                     C24E      1E      30       7   NON_BANKED  
      F_PULK                                    C26C      15      21       4   NON_BANKED  
      F_PULL                                    C281      15      21       3   NON_BANKED  
      F_PSHK                                    C296      13      19       4   NON_BANKED  
@@ -2012,7 +2012,7 @@ OBJECT LIST SORTED BY ADDRESS
      UnimplementedISR                          C483       2       2      60   NON_BANKED  
      RE_ISR                                    C485      6F     111       1   NON_BANKED  
      TC5_ISR                                   C4F4      4C      76       1   NON_BANKED  
-     Duty_Hi_Calculator                        C540     18B     395      18   NON_BANKED  
+     Duty_Hi_Calculator                        C540     1B2     434      21   NON_BANKED  
      _vect                                     FF80      7C     124       0   .abs_section_ff80
      Init                                    308000      29      41       2   .text       
      isdigit                                 308029       E      14       4   .text       
@@ -2082,7 +2082,7 @@ pwm.c.o:
 *********************************************************************************************
 COPYDOWN SECTION
 ---------------------------------------------------------------------------------------------
-------- ROM-ADDRESS: 0xC6CB ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xC6F2 ---- SIZE       2 ---
 Filling bytes inserted
  0000
 
@@ -2111,9 +2111,9 @@ TC5_ISR                   USES Duty_Hi_Calculator Hi_count Period Lo_count
                                 HiorLo _TC5 _PTJ _PORTAB 
 Duty_Hi_Calculator        USES _PTH dip_switch Duty_Hi_Calculator 
                                 _CASE_SEARCH_8 Duty_Hi Percent Period SCIString strlen i 
-                                Duty_Array Int_Percent STRING..d.1 sscanf _ILSEXT 
-                                _FSFLOAT _FDIV Frequency_Array Frequency STRING..f.2 
-                                _FSTRUNC _FMUL 
+                                Duty_Array Int_Percent STRING..d.1 sscanf _FDIV 
+                                Frequency_Array Frequency STRING..f.2 _FSTRUNC _FSFLOAT _FMUL 
+                                _ILSEXT 
 _vect                     USES UnimplementedISR RE_ISR TC5_ISR 
 Init                      USES _startupData 
 vsscanf                   USES vsscanf _getNum _CASE_SEARCH_8 
@@ -2286,10 +2286,6 @@ DEPENDENCY TREE
        |        |     
        |        +- _LNEG                (see above)
        |           
-       +- _ILSEXT              (see above)
-       |  
-       +- _FSFLOAT             (see above)
-       |  
        +- _FDIV                (see above)
        |  
        +- _FSTRUNC            
@@ -2302,7 +2298,11 @@ DEPENDENCY TREE
        |     | 
        |     +- L_NEGK               (see above)
        |        
+       +- _FSFLOAT             (see above)
+       |  
        +- _FMUL                (see above)
+       |  
+       +- _ILSEXT              (see above)
           
 *********************************************************************************************
 STATISTIC SECTION
@@ -2310,6 +2310,6 @@ STATISTIC SECTION
 
 ExeFile:
 --------
-Number of blocks to be downloaded: 7
-Total size of all blocks to be downloaded: 4807
+Number of blocks to be downloaded: 8
+Total size of all blocks to be downloaded: 4846
 
