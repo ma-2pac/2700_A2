@@ -1,13 +1,18 @@
 #include "pwm.h"
+#include "pwm_ports.h"
 
 // include the register/pin definitions
 #include "derivative.h"      /* derivative-specific definitions */
+
+
 const int Period = 1886;
 #define START_CYCLE 1
 #define WAIT_CYCLE 0
 #define Hi 1200
 #define Lo 50
-char HiorLo;
+int HiorLo = 0;
+
+
 char re[100];
 volatile int re_place;
 volatile int test;
@@ -17,6 +22,7 @@ unsigned char SCIString[12];
 
 //need to creae an over flow time of one hz 
 
+/*
 void Init_TC5 (void) {
 
 //mainsection from book
@@ -34,12 +40,8 @@ void Init_TC5 (void) {
    while(TFLG1 & TFLG1_C5F); // wait until OC0 pin go high after counting 2100   //debug
    TCTL1 = 0x04; // set OC5 pin action to toggle
    TC5 = TC5 + 900;
-   HiorLo = 0;
 }
-
-
-
-
+*/
 
 
 void Init_sci(void){
@@ -97,15 +99,21 @@ __interrupt void RE_ISR(void) {
   return;
 }
  
+#pragma CODE_SEG __NEAR_SEG NON_BANKED /* Interrupt section for this module. Placement will be in NON_BANKED area. */
+__interrupt void TC1_ISR(void) {
 
-
-
-
+  output_PWM(TC1);
+  
+}
 
 // look at the isr_vectors.c for where this function is 
 //  added to the ISR vector table
 #pragma CODE_SEG __NEAR_SEG NON_BANKED /* Interrupt section for this module. Placement will be in NON_BANKED area. */
-__interrupt void TC5_ISR(void) { 
+__interrupt void TC5_ISR(void) {
+
+  output_PWM(TC5);
+
+/* 
   //need to add an interrupt section in here that counts and resets
    int Hi_count;
    int Lo_count;
@@ -125,7 +133,10 @@ __interrupt void TC5_ISR(void) {
    PTJ = 0x00;
    PORTB = 0xFF;  
   }
+  
+  */
 }
+
 
 int Duty_Hi_Calculator(void){
    volatile int dip_switch;
@@ -137,27 +148,29 @@ int Duty_Hi_Calculator(void){
    return Duty_Hi;
 }
 
-//module to run PWM for any output
-int run_PWM(int Hi_count, char enable_port[5], char output_port[5]){
-  
-  int Lo_count;
-  
-  Lo_count= Period - Hi_count;
-  
+void output_PWM(Word portName){
+
+  //need to add an interrupt section in here that counts and resets
+   int Hi_count;
+   int Lo_count;
+   //int Hi_count = read_analog();
+   Hi_count = Duty_Hi_Calculator();
+   Lo_count = Period - Hi_count; 
   if(HiorLo){
    //delay??
-   TC5 = TC5 + Hi_count;    //TC5 is chosen interrupt pin
+   portName = portName + Hi_count;
    HiorLo = 0;
    PTJ = 0x00;
    PORTB = 0x00;
   }
   else{
-   TC5 = TC5 + Lo_count;
+   portName = portName + Lo_count;
    HiorLo = 1;
    PTJ = 0x00;
    PORTB = 0xFF;  
   }
-  
+
+
 }
 
 

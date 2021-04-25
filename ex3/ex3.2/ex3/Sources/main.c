@@ -4,6 +4,8 @@
 
 #include "pwm.h"
 #include "input.h"
+#include "pwm_ports.h"
+
 
 
 
@@ -20,13 +22,15 @@ void main(void) {
   PTJ = 0x00; 
   DDRH = 0x00;
   
+  /*
   while(1){
     Hi_count = Duty_Hi_Calculator();
   
   }
+  */
 
+  enable_ports();
   
-  Init_TC5();
 
 	EnableInterrupts;
 
