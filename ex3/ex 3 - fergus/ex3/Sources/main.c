@@ -11,7 +11,7 @@
 
 void main(void) {
   /* put your own code here */
-  int Hi_count;
+  int param;
   
   //int analog_input;
 
@@ -23,9 +23,9 @@ void main(void) {
   PTJ = 0x00; 
   DDRH = 0x00;
   
-  //Init_sci();
+  Init_sci();
   
-  Init_TC5();
+  Init_TC5(param);
 
 	EnableInterrupts;
   

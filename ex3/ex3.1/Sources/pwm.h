@@ -13,7 +13,7 @@ typedef struct{
 
 
 // function to initialise the timer
-void Init_TC5 (void);
+void Init_TC5 (int);
 
 //function to initialise serial
 void Init_sci(void);

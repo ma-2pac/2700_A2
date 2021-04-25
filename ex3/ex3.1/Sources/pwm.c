@@ -1,4 +1,5 @@
 #include "pwm.h"
+#include <stdio.h>
 
 // include the register/pin definitions
 #include "derivative.h"      /* derivative-specific definitions */
@@ -7,21 +8,31 @@ char HiorLo;
 char re[100];
 volatile int re_place;
 volatile int test;
-//unsigned char SCIString[12]={'F','R','E','E','S','C','A','L','E',0xa,0xd,'\0'};
 unsigned char SCIString[12];
 volatile int Hi_count=1500;
 volatile int Lo_count=200;
 
 volatile int dip_switch;
+unsigned char P1[2];
+unsigned char P2[1];
 volatile float Percent;
 volatile int Duty_Hi;
+
+volatile int Int_Percent;;
+volatile float Percent_SCI;
+volatile float Period_SCI;
+volatile int i = 0;
+
+
+
+
 
 const int Hi = 1500;
 const int Lo = 200;
 
 //need to creae an over flow time of one hz 
 
-void Init_TC5 (void) {
+void Init_TC5 (int param) {
 
 //mainsection from book
    TSCR1 = 0x90; // enable TCNT and fast timer flag clear
@@ -39,9 +50,6 @@ void Init_TC5 (void) {
    TCTL1 = 0x04; // set OC5 pin action to toggle
    HiorLo = 0;
 }
-
-
-
 
 
 
@@ -131,6 +139,7 @@ __interrupt void TC5_ISR(void) {
 int Duty_Hi_Calculator(void){
 
    dip_switch = PTH;
+   Period = 1886;
    
    switch(dip_switch){
     case 0:
@@ -161,8 +170,24 @@ int Duty_Hi_Calculator(void){
     case 255:
       Percent = 0.8;
       break;
-    default:
-      Percent = dip_switch/255;
+    
+    case 127:
+      if (strlen(SCIString)>0 && SCIString[0] == '!'){
+        i = 0;
+        while (SCIString[i] != 10){
+          P1[i] = SCIString[i+1];
+          i++;
+        }
+      }
+      //Int_Percent = boost::lexical_cast<int>(P1)
+      sscanf(P1, "%d", &Int_Percent);
+      Percent = Int_Percent/100.00;
+      Period = 1886;
+      
+      break;
+      
+      default:
+      Percent = ((float) dip_switch)/255.00;
       break;
   } 
    
