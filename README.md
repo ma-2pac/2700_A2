@@ -10,7 +10,10 @@ There are two major sections which are the program overview and the testing proc
 - Assisted in the creation of exercise 3 and its testing
 - General debugging of overall system
 
-**Marco Tupaz** - 
+**Marco Tupaz** -
+- Assisted in the creation of exercise 3 and its testing
+- General debugging of exercise 1 and 2
+
 
 **Darragh McMullen** - 
 
@@ -20,13 +23,13 @@ There are two major sections which are the program overview and the testing proc
 # Program Overview
 
 ## Exercise 1
-input here
+The aim of this program was to record the time taken to perform different arithmetic functions on the HCS12 using different data types (int, float, long, double). The code would run through for loops for each data type performing the following operations, addition, multiplication, division, square root, sin and cos. The time taken for each operation would be measured and then stored in a designated location in an array. Upon running all loops, the results of these tests would be outputted to serial in a table format. 
 
 ## Exercise 2
-input here
+This program aimed to use interrupts in C to receive and transmit messages. The HCS12 would be constantly ready to receive information sent to it via the serial port from the computer. Each character typed into the terminal from the computer would trigger a receive interrupt, sending the information to the board. Upon receiving a carriage return character, it would trigger the transfer interrupt that sends the data stored on the board back to the computer terminal via serial. 
 
 ## Exercise 3
-input here
+This program takes a duty cycle specified by the configuration of the DIP switches on the HCS12 board and outputs a PWM signal to the onboard LEDs. Each switch is associated with a set duty cycle, such as (insert set duty cycle). The timer taken for the signal to be high is then calculated and sent to the outputting timer port. 
 
 # Instructions for User
 - For serial input and output, ensure a wire is connected to Serial Port 1 (right side of the HCS12)
