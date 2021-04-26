@@ -13,7 +13,7 @@ typedef struct serialParams
   unsigned char SCI_SR1;     // Status register 1 for any serial port
   unsigned char SCI_DRL;     // Data resgister low for any serial port
   volatile int portNumber;   // determine which port is used to receive and transmit signals
-
+ 
 }serialParam;
 */
 
