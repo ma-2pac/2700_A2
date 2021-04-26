@@ -6,10 +6,10 @@
 volatile int table_transmit = 1;
 volatile int i;
 volatile int end_string =0;
-char re[100];
-volatile int re_place;
-unsigned char SCIString[500];
+
+
 unsigned char table[100];
+
 
 
 
@@ -19,14 +19,13 @@ void Init_sci(char* start, char* add, char* mult,char* div,char* sqrt,char* sin,
   SCI1BDL = 156; 
   SCI1CR2 = 0x2c; //re te and rtede 
   re_place = 0;
-  //SCI1CR2 |= 0x20; //enable to rdte intterupt
-  //
+
+  
+  //print out timing results
   sprintf(SCIString, "%s%s%s%s%s%s%s", start, add, mult, div,sqrt,sin,cos);
   SCI1CR2 |= 0x80;
   //initialise
   //joined together string 
-
-
   
 }
 
@@ -84,6 +83,11 @@ __interrupt void RE_ISR(void) {
   
    
   return;
+}
+
+
+char * get_SCIString(void){
+  return SCIString;
 }
 
 

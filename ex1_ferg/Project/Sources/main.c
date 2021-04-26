@@ -2,19 +2,20 @@
 #include "derivative.h"      /* derivative-specific definitions */
 #include "stdlib.h"
 #include "timers.h"
+#include "pwm.h"
 #include "timeFunc.h"
 #include "serialPrint.h"
 #include <stdio.h>
 #include <string.h>
   
-volatile int pos;
-volatile int num;
-volatile int rem, len = 0, n;
+
 char str[500];
 
 void tostring(char [], int);
 
 void main(void) {
+  /******/
+  //ex 1
   int i;
   char start[100];
   char add[100];
@@ -68,10 +69,10 @@ void main(void) {
   cos,int[5],long[5],float[5],double[5]
   */
   sprintf(start, "Operation, Int, Long, Double, Float\n\r");
-  sprintf(add, "addition, %.2f,%.2f,%.2f,%.2f\n\r",timeInt[0],timeLong[0],timeFloat[0],timeDouble[0]);
-  sprintf(mult, "multiplication, %.2f,%.2f,%.2f,%.2f\n\r",timeInt[1],timeLong[1],timeFloat[1],timeDouble[1]);  
-  sprintf(div, "division, %.2f,%.2f,%.2f,%.2f\n\r",timeInt[2],timeLong[2],timeFloat[2],timeDouble[2]);
-  sprintf(sqrt, "square root, %.2f,%.2f,%.2f,%.2f\n\r",timeInt[3],timeLong[3],timeFloat[3],timeDouble[3]);
+  sprintf(add, "add, %.2f,%.2f,%.2f,%.2f\n\r",timeInt[0],timeLong[0],timeFloat[0],timeDouble[0]);
+  sprintf(mult, "mult, %.2f,%.2f,%.2f,%.2f\n\r",timeInt[1],timeLong[1],timeFloat[1],timeDouble[1]);  
+  sprintf(div, "div, %.2f,%.2f,%.2f,%.2f\n\r",timeInt[2],timeLong[2],timeFloat[2],timeDouble[2]);
+  sprintf(sqrt, "sqrt, %.2f,%.2f,%.2f,%.2f\n\r",timeInt[3],timeLong[3],timeFloat[3],timeDouble[3]);
   sprintf(sin, "sin, %.2f,%.2f,%.2f,%.2f\n\r",timeInt[4],timeLong[4],timeFloat[4],timeDouble[4]);
   sprintf(cos, "cos, %.2f,%.2f,%.2f,%.2f\n\r!",timeInt[5],timeLong[5],timeFloat[5],timeDouble[5]);
   
@@ -80,9 +81,29 @@ void main(void) {
   
   //initialise serial and print table for ex 1
   //use marcos code
+  
+  /**/
+  //ex 2
   Init_sci(start, add, mult, div, sqrt, sin, cos);
   
+  
+  
+   /*****/
+   //ex3 
+   //start with my code which I know works 
+   //then add marcos. 
+    
   //initialise timer output channels 
+  
+  //enable led 
+  DDRB = 0xFF;
+  DDRJ = 0xF;
+  PTJ = 0x00; 
+  DDRH = 0x00;
+  
+  Init_TC5();
+  
+  
   
   //enble interrupts
   EnableInterrupts;    
@@ -95,22 +116,6 @@ void main(void) {
 }
 
 
-
-void tostring(char str[], int num){
-    
-    n = num;
-    while (n != 0){
-        len++;
-        n /= 10;
-    }
-    for (pos = 0; pos < len; pos++){
-        rem = num % 10;
-        num = num / 10;
-        str[len - (pos + 1)] = rem + '0';
-    }
-    
-    str[len] = '\0';
-}
 
 
 
