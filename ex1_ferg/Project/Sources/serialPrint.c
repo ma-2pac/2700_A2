@@ -6,23 +6,25 @@
 volatile int table_transmit = 1;
 volatile int i;
 volatile int end_string =0;
-
-
 unsigned char table[100];
 
 
 
 
-void Init_sci(char* start, char* add, char* mult,char* div,char* sqrt,char* sin,char* cos){
+void Init_sci(char* start, char* add, char* mult,char* div,char* sqrt,char* sin,char* cos, char* bar){
 
   SCI1BDH = 0x00;             // Set the baud rate at 9600
   SCI1BDL = 156; 
   SCI1CR2 = 0x2c; //re te and rtede 
   re_place = 0;
+  SCI1CR2 |= 0x20; //enable to rdte intterupt
 
   
   //print out timing results
-  sprintf(SCIString, "%s%s%s%s%s%s%s", start, add, mult, div,sqrt,sin,cos);
+  sprintf(SCIString, "%s%s%s%s%s%s%s%s%s%s%s%s%s", start,bar,add, bar, mult,bar, div,bar,sqrt,bar,sin,bar,cos);
+  //sprintf(SCIString, "%s%s%s", sin,bar,cos);
+  //sprintf(SCIString, "%s%s%s%s%s%s%s", start,add, mult, div,sqrt,sin,cos);
+  //sprintf(SCIString, "hello\n\r!");
   SCI1CR2 |= 0x80;
   //initialise
   //joined together string 
@@ -76,7 +78,7 @@ __interrupt void RE_ISR(void) {
     SCI1DRL = 13;
     re_place = 0;
     SCI1CR2 &= 0x7F; /*Disable TDRE interrupt*/
-    //SCI1CR2 |= 0x10;
+    SCI1CR2 |= 0x10;
     }
   //
   }
@@ -89,10 +91,6 @@ __interrupt void RE_ISR(void) {
 char * get_SCIString(void){
   return SCIString;
 }
-
-
-
-
 
 
 
