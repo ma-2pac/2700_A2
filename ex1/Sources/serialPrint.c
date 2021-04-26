@@ -1,9 +1,10 @@
 #include <hidef.h>      /* common defines and macros */
 #include "derivative.h"      /* derivative-specific definitions */
 
+int i;
 
-void serialPrint(char* string){  
-
+void serialPrint(char* string){ 
+ 
   /****************************************************************
   * SCI Setup
   *****************************************************************/
@@ -34,16 +35,12 @@ void serialPrint(char* string){
   /****************************************************************
   * End of SCI Setup
   *****************************************************************/
-  SCI1DRL = 1; /* Send first byte */
-  while ((SCI1SR1 & 0x80) == 0) ; /* Wait for TDRE flag */
-  SCI1DRL = 2; /* Send next byte */
-  while ((SCI1SR1 & 0x80) == 0) ; /* Wait for TDRE flag */
-  SCI1DRL = 3; /* Send next byte */
-  while ((SCI1SR1 & 0x80) == 0) ; /* Wait for TDRE flag */
-  SCI1DRL = 4; /* Send next byte */
-  while ((SCI1SR1 & 0x80) == 0) ; /* Wait for TDRE flag */
-  SCI1DRL = 5; /* Send next byte */
-  while ((SCI1SR1 & 0x80) == 0) ; /* Wait for TDRE flag */  
+  
+  for(i = 0; i < 512; i++){
+    SCI1DRL = string[i]; /* Send first byte */
+    while ((SCI1SR1 & 0x80) == 0) ; /* Wait for TDRE flag */
+      
+  }
   
 }
 
