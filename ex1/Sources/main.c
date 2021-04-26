@@ -14,7 +14,7 @@ void main(void) {
   float timePerTick = 41.6; // time per tick in ns = 41.6ns for prescaler = 1
   
   Init_TCNT(); // initialise timer
-  
+    
   for(i = 0; i < 6; i++){
     ticks = timeFunc(i,0);
     timeInt[i] = ticks * timePerTick;
@@ -35,7 +35,7 @@ void main(void) {
     timeDouble[i] = ticks * timePerTick;
   }
   
-    asm ("swi");
+  asm ("swi");
 
 	EnableInterrupts;    
 

@@ -2,7 +2,6 @@
 #include "derivative.h"      /* derivative-specific definitions */
 
 #include "timers.h"
-#include "timeFunc.h"
 
 /* Takes inputs for function to run and datatype to use
   funcs:     0 = add, 1 = mult, 2 = divide, 3 = sqrt,  4 = sin, 5 = cos
@@ -21,15 +20,15 @@ long timeFunc(int func, int datatype){
   switch(datatype){
     
     case 0:{
-      int a, b, c;
-      a = 10;
-      b = 5;
+      volatile int ai, bi, ci;
+      ai = 10;
+      bi = 5;
       switch(func){
     
         case 0:{
           resetOF();
           time1 = TCNT;
-          c = b + a;
+          ci = bi + ai;
           time2 = TCNT;
           time = (time2 - time1) + (overFlows * OFticks) - (overFlows * OFinterruptTicks);
         break;
@@ -38,7 +37,7 @@ long timeFunc(int func, int datatype){
         case 1:{
           resetOF();
           time1 = TCNT;
-          c = b * a;
+          ci = bi * ai;
           time2 = TCNT;
           time = (time2 - time1) + (overFlows * OFticks) - (overFlows * OFinterruptTicks);
         break;
@@ -47,7 +46,7 @@ long timeFunc(int func, int datatype){
         case 2:{
           resetOF();
           time1 = TCNT;
-          c = b / a;
+          ci = bi / ai;
           time2 = TCNT;
           time = (time2 - time1) + (overFlows * OFticks) - (overFlows * OFinterruptTicks);
         break;
@@ -56,7 +55,7 @@ long timeFunc(int func, int datatype){
         case 3:{
           resetOF();
           time1 = TCNT;
-          c = sqrt(a);
+          ci = sqrt(ai);
           time2 = TCNT;
           time = (time2 - time1) + (overFlows * OFticks) - (overFlows * OFinterruptTicks);
         break;
@@ -65,7 +64,7 @@ long timeFunc(int func, int datatype){
         case 4:{
           resetOF();
           time1 = TCNT;
-          c = sin(a);
+          ci = sin(ai);
           time2 = TCNT;
           time = (time2 - time1) + (overFlows * OFticks) - (overFlows * OFinterruptTicks);
         break;
@@ -74,7 +73,7 @@ long timeFunc(int func, int datatype){
         case 5:{
           resetOF();
           time1 = TCNT;
-          c = cos(a);
+          ci = cos(ai);
           time2 = TCNT;
           time = (time2 - time1) + (overFlows * OFticks) - (overFlows * OFinterruptTicks);
         break;
@@ -84,15 +83,15 @@ long timeFunc(int func, int datatype){
     }
     
     case 1:{
-      long a, b, c;
-      a = 154;
-      b = 503;
+      volatile long al, bl, cl;
+      al = 154;
+      bl = 503;
       switch(func){
     
         case 0:{
           resetOF();
           time1 = TCNT;
-          c = b + a;
+          cl = bl + al;
           time2 = TCNT;
           time = (time2 - time1) + (overFlows * OFticks) - (overFlows * OFinterruptTicks);
         break;
@@ -101,7 +100,7 @@ long timeFunc(int func, int datatype){
         case 1:{
           resetOF();
           time1 = TCNT;
-          c = b * a;
+          cl = bl * al;
           time2 = TCNT;
           time = (time2 - time1) + (overFlows * OFticks) - (overFlows * OFinterruptTicks);
         break;
@@ -110,7 +109,7 @@ long timeFunc(int func, int datatype){
         case 2:{
           resetOF();
           time1 = TCNT;
-          c = b / a;
+          cl = bl / al;
           time2 = TCNT;
           time = (time2 - time1) + (overFlows * OFticks) - (overFlows * OFinterruptTicks);
         break;
@@ -119,7 +118,7 @@ long timeFunc(int func, int datatype){
         case 3:{
           resetOF();
           time1 = TCNT;
-          c = sqrt(a);
+          cl = sqrt(al);
           time2 = TCNT;
           time = (time2 - time1) + (overFlows * OFticks) - (overFlows * OFinterruptTicks);
         break;
@@ -128,7 +127,7 @@ long timeFunc(int func, int datatype){
         case 4:{
           resetOF();
           time1 = TCNT;
-          c = sin(a);
+          cl = sin(al);
           time2 = TCNT;
           time = (time2 - time1) + (overFlows * OFticks) - (overFlows * OFinterruptTicks);
         break;
@@ -137,7 +136,7 @@ long timeFunc(int func, int datatype){
         case 5:{
           resetOF();
           time1 = TCNT;
-          c = cos(a);
+          cl = cos(al);
           time2 = TCNT;
           time = (time2 - time1) + (overFlows * OFticks) - (overFlows * OFinterruptTicks);
         break;
@@ -147,15 +146,15 @@ long timeFunc(int func, int datatype){
     }
     
     case 2:{
-      float a, b, c;
-      a = 536.34;
-      b = 214.52;
+      volatile float af, bf, cf;
+      af = 536.34;
+      bf = 214.52;
       switch(func){
     
         case 0:{
           resetOF();
           time1 = TCNT;
-          c = b + a;
+          cf = bf + af;
           time2 = TCNT;
           time = (time2 - time1) + (overFlows * OFticks) - (overFlows * OFinterruptTicks);
         break;
@@ -164,7 +163,7 @@ long timeFunc(int func, int datatype){
         case 1:{
           resetOF();
           time1 = TCNT;
-          c = b * a;
+          cf = bf * af;
           time2 = TCNT;
           time = (time2 - time1) + (overFlows * OFticks) - (overFlows * OFinterruptTicks);
         break;
@@ -173,7 +172,7 @@ long timeFunc(int func, int datatype){
         case 2:{
           resetOF();
           time1 = TCNT;
-          c = b / a;
+          cf = bf / af;
           time2 = TCNT;
           time = (time2 - time1) + (overFlows * OFticks) - (overFlows * OFinterruptTicks);
         break;
@@ -182,7 +181,7 @@ long timeFunc(int func, int datatype){
         case 3:{
           resetOF();
           time1 = TCNT;
-          c = sqrt(a);
+          cf = sqrt(af);
           time2 = TCNT;
           time = (time2 - time1) + (overFlows * OFticks) - (overFlows * OFinterruptTicks);
         break;
@@ -191,7 +190,7 @@ long timeFunc(int func, int datatype){
         case 4:{
           resetOF();
           time1 = TCNT;
-          c = sin(a);
+          cf = sin(af);
           time2 = TCNT;
           time = (time2 - time1) + (overFlows * OFticks) - (overFlows * OFinterruptTicks);
         break;
@@ -200,7 +199,7 @@ long timeFunc(int func, int datatype){
         case 5:{
           resetOF();
           time1 = TCNT;
-          c = cos(a);
+          cf = cos(af);
           time2 = TCNT;
           time = (time2 - time1) + (overFlows * OFticks) - (overFlows * OFinterruptTicks);
         break;
@@ -210,15 +209,15 @@ long timeFunc(int func, int datatype){
     }
     
     case 3:{
-      double a, b, c;
-      a = 135.532;
-      b = 63.8539;
+      double ad, bd, cd;
+      ad = 135.532;
+      bd = 63.8539;
       switch(func){
     
         case 0:{
           resetOF();
           time1 = TCNT;
-          c = b + a;
+          cd = bd + ad;
           time2 = TCNT;
           time = (time2 - time1) + (overFlows * OFticks) - (overFlows * OFinterruptTicks);
         break;
@@ -227,7 +226,7 @@ long timeFunc(int func, int datatype){
         case 1:{
           resetOF();
           time1 = TCNT;
-          c = b * a;
+          cd = bd * ad;
           time2 = TCNT;
           time = (time2 - time1) + (overFlows * OFticks) - (overFlows * OFinterruptTicks);
         break;
@@ -236,7 +235,7 @@ long timeFunc(int func, int datatype){
         case 2:{
           resetOF();
           time1 = TCNT;
-          c = b / a;
+          cd = bd / ad;
           time2 = TCNT;
           time = (time2 - time1) + (overFlows * OFticks) - (overFlows * OFinterruptTicks);
         break;
@@ -245,7 +244,7 @@ long timeFunc(int func, int datatype){
         case 3:{
           resetOF();
           time1 = TCNT;
-          c = sqrt(a);
+          cd = sqrt(ad);
           time2 = TCNT;
           time = (time2 - time1) + (overFlows * OFticks) - (overFlows * OFinterruptTicks);
         break;
@@ -254,7 +253,7 @@ long timeFunc(int func, int datatype){
         case 4:{
           resetOF();
           time1 = TCNT;
-          c = sin(a);
+          cd = sin(ad);
           time2 = TCNT;
           time = (time2 - time1) + (overFlows * OFticks) - (overFlows * OFinterruptTicks);
         break;
@@ -263,7 +262,7 @@ long timeFunc(int func, int datatype){
         case 5:{
           resetOF();
           time1 = TCNT;
-          c = cos(a);
+          cd = cos(ad);
           time2 = TCNT;
           time = (time2 - time1) + (overFlows * OFticks) - (overFlows * OFinterruptTicks);
         break;
