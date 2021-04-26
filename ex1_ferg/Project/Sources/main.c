@@ -16,7 +16,7 @@ void tostring(char [], int);
 
 void main(void) {
   int i;
-  char start[] = "Operation, Int, Long, Double, Float\n";
+  char start[100];
   char add[100];
   char mult[100];
   char div[100];
@@ -67,7 +67,8 @@ void main(void) {
   sin,int[4],long[4],float[4],double[4]
   cos,int[5],long[5],float[5],double[5]
   */
-  sprintf(add, "addition%.2f,%.2f,%.2f,%.2f\n\r",timeInt[0],timeLong[0],timeFloat[0],timeDouble[0]);
+  sprintf(start, "Operation, Int, Long, Double, Float\n\r");
+  sprintf(add, "addition, %.2f,%.2f,%.2f,%.2f\n\r",timeInt[0],timeLong[0],timeFloat[0],timeDouble[0]);
   sprintf(mult, "multiplication, %.2f,%.2f,%.2f,%.2f\n\r",timeInt[1],timeLong[1],timeFloat[1],timeDouble[1]);  
   sprintf(div, "division, %.2f,%.2f,%.2f,%.2f\n\r",timeInt[2],timeLong[2],timeFloat[2],timeDouble[2]);
   sprintf(sqrt, "square root, %.2f,%.2f,%.2f,%.2f\n\r",timeInt[3],timeLong[3],timeFloat[3],timeDouble[3]);

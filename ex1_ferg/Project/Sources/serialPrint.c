@@ -13,7 +13,7 @@ unsigned char table[100];
 
 
 
-void Init_sci(char *start, char* add, char* mult,char* div,char* sqrt,char* sin,char* cos){
+void Init_sci(char* start, char* add, char* mult,char* div,char* sqrt,char* sin,char* cos){
 
   SCI1BDH = 0x00;             // Set the baud rate at 9600
   SCI1BDL = 156; 
@@ -45,7 +45,8 @@ __interrupt void RE_ISR(void) {
         SCIString[re_place] = 10;
         re_place = re_place +1;
         SCIString[re_place] = 13;
-        re_place = 0; 
+        re_place = 0;
+        table_transmit = 0; 
         SCI1CR2 |= 0x80; //enable tranmit interupt
       }
    }
@@ -78,7 +79,10 @@ __interrupt void RE_ISR(void) {
     SCI1CR2 &= 0x7F; /*Disable TDRE interrupt*/
     //SCI1CR2 |= 0x10;
     }
-  } 
+  //
+  }
+  
+   
   return;
 }
 
