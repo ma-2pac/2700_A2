@@ -1,8 +1,10 @@
 #include <hidef.h>      /* common defines and macros */
+#include <math.h>
 #include "derivative.h"      /* derivative-specific definitions */
 
 #include "timers.h"
 #include "timeFunc.h"
+
 
 /* Takes inputs for function to run and datatype to use
   funcs:     0 = add, 1 = mult, 2 = divide, 3 = sqrt,  4 = sin, 5 = cos
@@ -21,9 +23,9 @@ long timeFunc(int func, int datatype){
   switch(datatype){
     
     case 0:{
-      int a, b, c;
-      a = 10;
-      b = 5;
+      int a = 10;
+      int b = 5;
+      int c;
       switch(func){
     
         case 0:{
@@ -32,7 +34,7 @@ long timeFunc(int func, int datatype){
           c = b + a;
           time2 = TCNT;
           time = (time2 - time1) + (overFlows * OFticks) - (overFlows * OFinterruptTicks);
-        break;
+          break;
         }
         
         case 1:{
@@ -41,7 +43,7 @@ long timeFunc(int func, int datatype){
           c = b * a;
           time2 = TCNT;
           time = (time2 - time1) + (overFlows * OFticks) - (overFlows * OFinterruptTicks);
-        break;
+          break;
         }
         
         case 2:{
@@ -50,7 +52,7 @@ long timeFunc(int func, int datatype){
           c = b / a;
           time2 = TCNT;
           time = (time2 - time1) + (overFlows * OFticks) - (overFlows * OFinterruptTicks);
-        break;
+          break;
         }
         
         case 3:{
@@ -59,7 +61,7 @@ long timeFunc(int func, int datatype){
           c = sqrt(a);
           time2 = TCNT;
           time = (time2 - time1) + (overFlows * OFticks) - (overFlows * OFinterruptTicks);
-        break;
+          break;
         }
         
         case 4:{
@@ -68,7 +70,7 @@ long timeFunc(int func, int datatype){
           c = sin(a);
           time2 = TCNT;
           time = (time2 - time1) + (overFlows * OFticks) - (overFlows * OFinterruptTicks);
-        break;
+          break;
         }
         
         case 5:{
@@ -77,8 +79,10 @@ long timeFunc(int func, int datatype){
           c = cos(a);
           time2 = TCNT;
           time = (time2 - time1) + (overFlows * OFticks) - (overFlows * OFinterruptTicks);
-        break;
+          break;
         }
+        default:
+          break;
       }
       break;
     }
@@ -142,6 +146,10 @@ long timeFunc(int func, int datatype){
           time = (time2 - time1) + (overFlows * OFticks) - (overFlows * OFinterruptTicks);
         break;
         }
+        
+        default:
+          break;
+        
       } 
     break;
     }

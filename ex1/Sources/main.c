@@ -19,6 +19,7 @@ void main(void) {
     ticks = timeFunc(i,0);
     timeInt[i] = ticks * timePerTick;
   }
+  /*
   
   for(i = 0; i < 6; i++){
     ticks = timeFunc(i,1);
@@ -34,8 +35,9 @@ void main(void) {
     ticks = timeFunc(i,3);
     timeDouble[i] = ticks * timePerTick;
   }
+  */
   
-    asm ("swi");
+  asm ("swi");
 
 	EnableInterrupts;    
 

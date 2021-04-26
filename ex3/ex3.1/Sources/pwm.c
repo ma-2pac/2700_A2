@@ -27,6 +27,8 @@ volatile int i = 0;
 
 //need to creae an over flow time of one hz 
 
+/*
+
 void Init_TC5 (int param) {
 
 //mainsection from book
@@ -58,6 +60,8 @@ void Init_sci(void){
   re_place = 0;
   SCI1CR2 |= 0x20; //enable to rdte intterupt  
 }
+
+*/
 
 #pragma CODE_SEG __NEAR_SEG NON_BANKED /* Interrupt section for this module. Placement will be in NON_BANKED area. */
 __interrupt void RE_ISR(void) {
@@ -98,6 +102,14 @@ __interrupt void RE_ISR(void) {
 }
  
 
+/*
+#pragma CODE_SEG __NEAR_SEG NON_BANKED  Interrupt section for this module. Placement will be in NON_BANKED area. 
+__interrupt void TC1_ISR(void){
+
+}
+*/
+
+  
 
 
 
@@ -204,28 +216,28 @@ long int Duty_Hi_Calculator(void){
    return Duty_Hi;
 }
 
+
 //module to run PWM for any output
-int run_PWM(int Hi_count, char enable_port[5], char output_port[5]){
-  
-  //int Lo_count;
+void output_PWM(int portName){
   
   Lo_count= Period - Hi_count;
   
   if(HiorLo){
    //delay??
-   TC5 = TC5 + Hi_count;    //TC5 is chosen interrupt pin
+   portName = portName + Hi_count;    //portName is chosen interrupt pin
    HiorLo = 0;
    PTJ = 0x00;
    PORTB = 0x00;
   }
   else{
-   TC5 = TC5 + Lo_count;
+   portName = portName + Lo_count;
    HiorLo = 1;
    PTJ = 0x00;
    PORTB = 0xFF;  
   }
   
 }
+
 
 
 //might be best to use ch7
