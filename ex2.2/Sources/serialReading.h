@@ -1,13 +1,20 @@
-#ifndef TIMERS_HEADER
-#define TIMERS_HEADER
+#ifndef SERIAL_HEADER
+#define SERIAL_HEADER
 
 //defining a structure for the serial, what has to be defined
 //here: 
-/*typedef struct{
+
+/*
+typedef struct serialParams {
+  unsigned int SCI_BD;
+  unsigned char SCI_CR2;
+  unsigned char SCI_SR1;
+  unsigned char 
 
 
 
-}SerialPort*/
+} serialParam;
+*/
 
 
 //function to initialise serial
