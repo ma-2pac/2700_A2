@@ -1,7 +1,7 @@
 #ifndef TIMERS_HEADER
 #define TIMERS_HEADER
 
-extern volatile int overFlows;
+extern volatile long overFlows;
 
 // function to initialise the timer
 void Init_TCNT (void);
