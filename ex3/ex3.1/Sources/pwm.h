@@ -14,13 +14,13 @@ typedef struct{
 
 
 // function to initialise the timer
-void Init_TC5 (int);
+//void Init_TC5 (int);
 
 //function to initialise serial
 void Init_sci(void);
 
 //function to output a pwm signal to a given port
-void output_PWM(Word portName);
+void output_PWM(unsigned int portName);
 
 // Timer interrupt definition
 

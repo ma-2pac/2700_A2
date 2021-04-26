@@ -1,8 +1,8 @@
 #ifndef TIMEFUNC_HEADER
 #define TIMEFUNC_HEADER
 
-extern volatile long overFlows;
+//extern volatile long overFlows;
 
-long timeFunc(int,int);
+long timeFunc(int func, int datatype);
 
 #endif
