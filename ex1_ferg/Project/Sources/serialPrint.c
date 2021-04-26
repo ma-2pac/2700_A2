@@ -21,9 +21,9 @@ void Init_sci(char* start, char* add, char* mult,char* div,char* sqrt,char* sin,
 
   
   //print out timing results
-  sprintf(SCIString, "%s%s%s%s%s%s%s%s%s%s%s%s%s", start,bar,add, bar, mult,bar, div,bar,sqrt,bar,sin,bar,cos);
+  //sprintf(SCIString, "%s%s%s%s%s%s%s%s%s%s%s%s%s", start,bar,add, bar, mult,bar, div,bar,sqrt,bar,sin,bar,cos);
   //sprintf(SCIString, "%s%s%s", sin,bar,cos);
-  //sprintf(SCIString, "%s%s%s%s%s%s%s", start,add, mult, div,sqrt,sin,cos);
+  sprintf(SCIString, "%s%s%s%s%s%s%s", start,add, mult, div,sqrt,sin,cos);
   //sprintf(SCIString, "hello\n\r!");
   SCI1CR2 |= 0x80;
   //initialise
