@@ -1,14 +1,30 @@
 #include <hidef.h>      /* common defines and macros */
 #include "derivative.h"      /* derivative-specific definitions */
-
+#include "stdlib.h"
 #include "timers.h"
 #include "timeFunc.h"
 #include "serialPrint.h"
+#include <stdio.h>
+#include <string.h>
+  
+volatile int pos;
+volatile int num;
+volatile int rem, len = 0, n;
+char str[500];
 
+void tostring(char [], int);
 
 void main(void) {
   int i;
-  char outputstart[100] = "operation,int16,long32,float32,double64";
+  char start[] = "Operation, Int, Long, Double, Float";
+  char add[100];
+  char mult[100];
+  char div[100];
+  char sqrt[100];
+  char sin[100];
+  char cos[100];
+  
+  
   long ticks;
   float timeInt[6];
   float timeLong[6];
@@ -38,10 +54,11 @@ void main(void) {
     timeDouble[i] = ticks * timePerTick;
   }
   
-  
+  //stop the counter
   Stop_TCNT();
-  //asm ("swi");
- /* 
+
+  //build the table for serial
+   /* 
     operation,int16,long32,float32,double64
   add,int[0],long[0],float[0],double[0]
   mult,int[1],long[1],float[1],double[1]
@@ -50,10 +67,23 @@ void main(void) {
   sin,int[4],long[4],float[4],double[4]
   cos,int[5],long[5],float[5],double[5]
   */
- 
-
-  Init_sci(outputstart);
+  sprintf(add, "addition%.2f,%.2f,%.2f,%.2f\n",timeInt[0],timeLong[0],timeFloat[0],timeDouble[0]);
+  sprintf(mult, "multiplication, %.2f,%.2f,%.2f,%.2f\n",timeInt[1],timeLong[1],timeFloat[1],timeDouble[1]);  
+  sprintf(div, "division, %.2f,%.2f,%.2f,%.2f\n",timeInt[2],timeLong[2],timeFloat[2],timeDouble[2]);
+  sprintf(sqrt, "square root, %.2f,%.2f,%.2f,%.2f\n",timeInt[3],timeLong[3],timeFloat[3],timeDouble[3]);
+  sprintf(sin, "sin, %.2f,%.2f,%.2f,%.2f\n",timeInt[4],timeLong[4],timeFloat[4],timeDouble[4]);
+  sprintf(cos, "cos, %.2f,%.2f,%.2f,%.2f\n",timeInt[5],timeLong[5],timeFloat[5],timeDouble[5]);
   
+  
+  //function that builds serial table 
+  
+  //initialise serial and print table for ex 1
+  //use marcos code
+  Init_sci(start, add, mult, div, sqrt, sin, cos);
+  
+  //initialise timer output channels 
+  
+  //enble interrupts
   EnableInterrupts;    
 
 
@@ -61,6 +91,24 @@ void main(void) {
     _FEED_COP(); /* feeds the dog */
   } /* loop forever */
   /* please make sure that you never leave main */
+}
+
+
+
+void tostring(char str[], int num){
+    
+    n = num;
+    while (n != 0){
+        len++;
+        n /= 10;
+    }
+    for (pos = 0; pos < len; pos++){
+        rem = num % 10;
+        num = num / 10;
+        str[len - (pos + 1)] = rem + '0';
+    }
+    
+    str[len] = '\0';
 }
 
 

@@ -10,31 +10,87 @@ unsigned char table[100];
 
 
 
-void Init_sci(char* outputstart){
-  
+void Init_sci(char *start, char* add, char* mult,char* div,char* sqrt,char* sin,char* cos){
+
   SCI1BDH = 0x00;             // Set the baud rate at 9600
   SCI1BDL = 156; 
   SCI1CR2 = 0x2c; //re te and rtede 
   re_place = 0;
   SCI1CR2 |= 0x20; //enable to rdte intterupt
-  for(i=0; i<strlen(outputstart); i++){
-    table[i] = outputstart[i];
-  }
-  
-  table[i] = 10;
-  table[i+1] = 13;
-  
   SCI1CR2 |= 0x80;
-  i = 0;
-  if(table[i] != 13 ){
-    SCI1DRL = table[i];
-    i = i +1;
+  
+  //initialise
+  for(i=0; i<strlen(start); i++){ 
+    if(start[i] != 10 ){
+      SCI1DRL = start[i];
+      i = i +1;
+    }
+    else{
+     SCI1DRL = 13;
+    }
   }
-  else{
-   SCI1DRL = 13;
-   i = 0;
-   SCI1CR2 &= 0x7F;
+  //add
+  for(i=0; i<strlen(add); i++){ 
+    if(add[i] != 10 ){
+      SCI1DRL = add[i];
+      i = i +1;
+    }
+    else{
+     SCI1DRL = 13;
+    }
   }
+  
+  for(i=0; i<strlen(mult); i++){ 
+    if(mult[i] != 10 ){
+      SCI1DRL = mult[i];
+      i = i +1;
+    }
+    else{
+     SCI1DRL = 13;
+    }
+  }
+  
+  for(i=0; i<strlen(div); i++){ 
+    if(div[i] != 10 ){
+      SCI1DRL = div[i];
+      i = i +1;
+    }
+    else{
+     SCI1DRL = 13;
+    }
+  }
+  
+  
+  for(i=0; i<strlen(sqrt); i++){ 
+    if(sqrt[i] != 10 ){
+      SCI1DRL = sqrt[i];
+      i = i +1;
+    }
+    else{
+     SCI1DRL = 13;
+    }
+  }
+  
+  for(i=0; i<strlen(sin); i++){ 
+    if(sin[i] != 10 ){
+      SCI1DRL = sin[i];
+      i = i +1;
+    }
+    else{
+     SCI1DRL = 13;
+    }
+  }
+  
+  for(i=0; i<strlen(cos); i++){ 
+    if(cos[i] != 10 ){
+      SCI1DRL = cos[i];
+      i = i +1;
+    }
+    else{
+     SCI1DRL = 13;
+    }
+  }
+  
 }
 
 
@@ -73,6 +129,9 @@ __interrupt void RE_ISR(void) {
   } 
   return;
 }
+
+
+
 
 
 

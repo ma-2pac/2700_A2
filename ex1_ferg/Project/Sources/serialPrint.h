@@ -3,7 +3,7 @@
 
 
 //function to initialise serial
-void Init_sci(char*);
+void Init_sci(char*, char*, char*, char*, char*, char*, char*);
 
 __interrupt void RE_ISR(void);
 

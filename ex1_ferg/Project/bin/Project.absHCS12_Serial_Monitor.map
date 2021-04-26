@@ -20,6 +20,7 @@ timeFunc.c.o                            Model: BANKED,        Lang: ANSI-C
 timers.c.o                              Model: BANKED,        Lang: ANSI-C
 Start12.c.o                             Model: BANKED,        Lang: ANSI-C
 MATH.C.o (ansibf.lib)                   Model: BANKED,        Lang: ANSI-C
+PRINTF.C.o (ansibf.lib)                 Model: BANKED,        Lang: ANSI-C
 STRING.C.o (ansibf.lib)                 Model: BANKED,        Lang: ANSI-C
 DADD.C.o (ansibf.lib)                   Model: BANKED,        Lang: ANSI-C
 DANSI.C.o (ansibf.lib)                  Model: BANKED,        Lang: ANSI-C
@@ -42,8 +43,8 @@ Entry point: 0xC000 (_Startup)
 _startupData is allocated at 0xC015 and uses 6 Bytes
 extern struct _tagStartup {
   unsigned nofZeroOut     1
-  _Range   pZeroOut       0x2000     122
-  _Copy    *toCopyDownBeg 0xCC32
+  _Range   pZeroOut       0x2000     29
+  _Copy    *toCopyDownBeg 0xCE9E
 } _startupData;
 
 *********************************************************************************************
@@ -52,10 +53,11 @@ Section Name                    Size  Type     From       To       Segment
 ---------------------------------------------------------------------------------------------
 .init                             21     R     0xC000     0xC014   ROM_C000
 .startData                        10     R     0xC015     0xC01E   ROM_C000
-.rodata                           16     R     0xC01F     0xC02E   ROM_C000
-NON_BANKED                      3075     R     0xC02F     0xCC31   ROM_C000
-.copy                              2     R     0xCC32     0xCC33   ROM_C000
-.text                           3737     R   0x308000   0x308E98   PAGE_30
+.rodata                          324     R     0xC01F     0xC162   ROM_C000
+.rodata1                         183     R     0xC163     0xC219   ROM_C000
+NON_BANKED                      3204     R     0xC21A     0xCE9D   ROM_C000
+.copy                              2     R     0xCE9E     0xCE9F   ROM_C000
+.text                           7572     R   0x308000   0x309D93   PAGE_30
 .stack                          4096   R/W     0x1000     0x1FFF   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
 .abs_section_9                     1   N/I        0x9        0x9   .absSeg1
@@ -399,13 +401,13 @@ NON_BANKED                      3075     R     0xC02F     0xCC31   ROM_C000
 .abs_section_2ae                   2   N/I      0x2AE      0x2AF   .absSeg339
 .abs_section_2be                   2   N/I      0x2BE      0x2BF   .absSeg340
 .abs_section_ff80                126     R     0xFF80     0xFFFD   .absSeg341
-.bss                               4   R/W     0x2000     0x2003   RAM
-.common                          118   R/W     0x2004     0x2079   RAM
+.bss                              11   R/W     0x2000     0x200A   RAM
+.common                           18   R/W     0x200B     0x201C   RAM
 .vectSeg342_vect                   2     R     0xFFFE     0xFFFF   .vectSeg342
 
 Summary of section sizes per section type:
-READ_ONLY (R):        1B4D (dec:     6989)
-READ_WRITE (R/W):     107A (dec:     4218)
+READ_ONLY (R):        2CB4 (dec:    11444)
+READ_WRITE (R/W):     101D (dec:     4125)
 NO_INIT (N/I):         190 (dec:      400)
 
 *********************************************************************************************
@@ -503,7 +505,7 @@ MODULE:                 -- mc9s12dg256.c.o --
      _SCI0DRH                                    CE       1       1       0   .abs_section_ce
      _SCI0DRL                                    CF       1       1       0   .abs_section_cf
      _SCI1CR1                                    D2       1       1       0   .abs_section_d2
-     _SCI1CR2                                    D3       1       1       8   .abs_section_d3
+     _SCI1CR2                                    D3       1       1       7   .abs_section_d3
      _SCI1SR1                                    D4       1       1       4   .abs_section_d4
      _SCI1SR2                                    D5       1       1       0   .abs_section_d5
      _SCI1DRH                                    D6       1       1       0   .abs_section_d6
@@ -764,37 +766,42 @@ MODULE:                 -- mc9s12dg256.c.o --
      _CAN4TXTSR                                 2BE       2       2       0   .abs_section_2be
 MODULE:                 -- isr_vectors.c.o --
 - PROCEDURES:
-     UnimplementedISR                          C02F       2       2      61   NON_BANKED  
+     UnimplementedISR                          C21A       2       2      61   NON_BANKED  
 - VARIABLES:
      _vect                                     FF80      7E     126       0   .abs_section_ff80
 MODULE:                 -- main.c.o --
 - PROCEDURES:
-     main                                    308000     17B     379       3   .text       
+     main                                    308000     3E0     992      10   .text       
 - VARIABLES:
+     STRING.addition..2f...2f....2             C163      1D      29       1   .rodata1    
+     STRING.multiplication....2f.3             C180      25      37       1   .rodata1    
+     STRING.division....2f...2f..4             C1A5      1F      31       1   .rodata1    
+     STRING.square.root....2f....5             C1C4      22      34       1   .rodata1    
+     STRING.sin....2f...2f...2f..6             C1E6      1A      26       1   .rodata1    
+     STRING.cos....2f...2f...2f..7             C200      1A      26       1   .rodata1    
 MODULE:                 -- serialPrint.c.o --
 - PROCEDURES:
-     Init_sci                                30817B      6B     107       2   .text       
-     RE_ISR                                    C031      6F     111       1   NON_BANKED  
+     Init_sci                                3083E0     10D     269      17   .text       
+     RE_ISR                                    C21C      6F     111       1   NON_BANKED  
 - VARIABLES:
-     i                                         2004       2       2      10   .common     
-     re_place                                  2006       2       2      10   .common     
-     SCIString                                 2008       C      12       5   .common     
-     table                                     2014      64     100       4   .common     
+     i                                         200B       2       2      14   .common     
+     re_place                                  200D       2       2      10   .common     
+     SCIString                                 200F       C      12       5   .common     
 MODULE:                 -- timeFunc.c.o --
 - PROCEDURES:
-     timeFunc                                3081E6     421    1057     101   .text       
+     timeFunc                                3084ED     421    1057     101   .text       
 - VARIABLES:
 MODULE:                 -- timers.c.o --
 - PROCEDURES:
-     Init_TCNT                               308607       C      12       2   .text       
-     resetOF                                 308613       9       9       6   .text       
-     Stop_TCNT                               30861C       B      11       2   .text       
-     TOF_ISR                                   C0A0      10      16       1   NON_BANKED  
+     Init_TCNT                               30890E       C      12       2   .text       
+     resetOF                                 30891A       9       9       6   .text       
+     Stop_TCNT                               308923       B      11       2   .text       
+     TOF_ISR                                   C28B      10      16       1   NON_BANKED  
 - VARIABLES:
      overFlows                                 2000       4       4      10   .bss        
 MODULE:                 -- Start12.c.o --
 - PROCEDURES:
-     Init                                    308627      29      41       2   .text       
+     Init                                    30892E      29      41       2   .text       
      _Startup                                  C000      15      21       0   .init       
 - VARIABLES:
      _startupData                              C015       6       6       3   .startData  
@@ -802,129 +809,151 @@ MODULE:                 -- Start12.c.o --
      __SEG_END_SSTACK                          2000       0       0       1               
 MODULE:                 -- MATH.C.o (ansibf.lib) --
 - PROCEDURES:
-     fabs                                    308650      2C      44       4   .text       
-     is_special                              30867C      59      89       6   .text       
-     sincos                                  3086D5     3AF     943      30   .text       
-     sin                                     308A84      C3     195       9   .text       
-     cos                                     308B47      AC     172       9   .text       
-     sqrt_r                                  308BF3     1F0     496      14   .text       
-     sqrt                                    308DE3      A2     162       9   .text       
+     fabs                                    308957      2C      44       4   .text       
+     is_special                              308983      59      89       6   .text       
+     sincos                                  3089DC     3AF     943      30   .text       
+     sin                                     308D8B      C3     195       9   .text       
+     cos                                     308E4E      AC     172       9   .text       
+     sqrt_r                                  308EFA     1F0     496      14   .text       
+     sqrt                                    3090EA      A2     162       9   .text       
 - VARIABLES:
      infinity                                  C01F       8       8       8   .rodata     
      nan_union                                 C027       8       8       4   .rodata     
+MODULE:                 -- PRINTF.C.o (ansibf.lib) --
+- PROCEDURES:
+     Ten                                     30918C      F6     246      14   .text       
+     vprintf                                 309282     AB4    2740     155   .text       
+     _out                                    309D36       C      12       2   .text       
+     deposit_char                            309D42       F      15       3   .text       
+     sprintf                                 309D51      2F      47      12   .text       
+- VARIABLES:
+     pow10                                     C02F      28      40       6   .rodata     
+     pow16                                     C057      20      32       4   .rodata     
+     pow8                                      C077      2C      44       4   .rodata     
+     fpow10                                    C0A3      60      96       1   .rodata     
+     fpow_10                                   C103      60      96       1   .rodata     
+     pbuf                                      2004       7       7      16   .bss        
 MODULE:                 -- STRING.C.o (ansibf.lib) --
 - PROCEDURES:
-     strlen                                  308E85      14      20       2   .text       
+     strlen                                  309D80      14      20       2   .text       
 - VARIABLES:
 MODULE:                 -- DADD.C.o (ansibf.lib) --
 - PROCEDURES:
-     D_ADDKL                                   C0B0      BC     188       1   NON_BANKED  
-     _DADD                                     C16C      11      17      17   NON_BANKED  
-     _DSUB                                     C17D      19      25       1   NON_BANKED  
-     _DINC                                     C196      35      53       2   NON_BANKED  
-     _DNEG                                     C1CB      17      23       2   NON_BANKED  
+     D_ADDKL                                   C29B      BC     188       1   NON_BANKED  
+     _DADD                                     C357      11      17      19   NON_BANKED  
+     _DSUB                                     C368      19      25       2   NON_BANKED  
+     _DINC                                     C381      35      53       2   NON_BANKED  
+     _DNEG                                     C3B6      17      23       3   NON_BANKED  
 - VARIABLES:
 MODULE:                 -- DANSI.C.o (ansibf.lib) --
 - PROCEDURES:
-     D_MODF                                    C1E2      5D      93       1   NON_BANKED  
-     D_FREXP                                   C23F      20      32       1   NON_BANKED  
-     D_LDEXP                                   C25F      18      24       1   NON_BANKED  
-     modf                                      C277      1F      31       1   NON_BANKED  
-     frexp                                     C296      1F      31       1   NON_BANKED  
-     RetErrDom                                 C2B5      1F      31       1   NON_BANKED  
-     ldexp                                     C2D4      27      39       3   NON_BANKED  
+     D_MODF                                    C3CD      5D      93       1   NON_BANKED  
+     D_FREXP                                   C42A      20      32       1   NON_BANKED  
+     D_LDEXP                                   C44A      18      24       1   NON_BANKED  
+     modf                                      C462      1F      31       1   NON_BANKED  
+     frexp                                     C481      1F      31       2   NON_BANKED  
+     RetErrDom                                 C4A0      1F      31       1   NON_BANKED  
+     ldexp                                     C4BF      27      39       3   NON_BANKED  
 - VARIABLES:
 MODULE:                 -- DCMP.C.o (ansibf.lib) --
 - PROCEDURES:
-     _DCMP                                     C2FB      30      48       3   NON_BANKED  
+     _DCMP                                     C4E6      30      48       5   NON_BANKED  
 - VARIABLES:
 MODULE:                 -- DCONV.C.o (ansibf.lib) --
 - PROCEDURES:
-     D_TOLONGK                                 C32B      33      51       1   NON_BANKED  
-     D_FRLONGK                                 C35E      19      25       1   NON_BANKED  
-     _DSFLOAT                                  C377      14      20       6   NON_BANKED  
-     _DSTRUNC                                  C38B      19      25       2   NON_BANKED  
-     _DUTRUNC                                  C3A4       3       3       1   NON_BANKED  
-     D_PSHK_UNARY                              C3A7      1E      30       2   NON_BANKED  
-     D_CLRK_UNARY                              C3C5       D      13       2   NON_BANKED  
-     D_MAXK_UNARY                              C3D2       A      10       1   NON_BANKED  
-     D_NORMK_UNARY                             C3DC      5C      92       2   NON_BANKED  
+     D_TOLONGK                                 C516      33      51       1   NON_BANKED  
+     D_FRLONGK                                 C549      19      25       2   NON_BANKED  
+     _DSFLOAT                                  C562      14      20       6   NON_BANKED  
+     _DUFLOAT                                  C576      14      20       2   NON_BANKED  
+     _DSTRUNC                                  C58A      19      25       2   NON_BANKED  
+     _DUTRUNC                                  C5A3       3       3       5   NON_BANKED  
+     D_PSHK_UNARY                              C5A6      1E      30       3   NON_BANKED  
+     D_CLRK_UNARY                              C5C4       D      13       2   NON_BANKED  
+     D_MAXK_UNARY                              C5D1       A      10       1   NON_BANKED  
+     D_NORMK_UNARY                             C5DB      5C      92       2   NON_BANKED  
 - VARIABLES:
 MODULE:                 -- DFCONV.C.o (ansibf.lib) --
 - PROCEDURES:
-     D_TOFK                                    C438      3C      60       1   NON_BANKED  
-     D_FRFK                                    C474      10      16       1   NON_BANKED  
-     _DLONG                                    C484      17      23       3   NON_BANKED  
-     _DSHORT                                   C49B      15      21       3   NON_BANKED  
+     D_TOFK                                    C637      3C      60       1   NON_BANKED  
+     D_FRFK                                    C673      10      16       1   NON_BANKED  
+     _DLONG                                    C683      17      23      27   NON_BANKED  
+     _DSHORT                                   C69A      15      21       3   NON_BANKED  
 - VARIABLES:
 MODULE:                 -- DMUL.C.o (ansibf.lib) --
 - PROCEDURES:
-     D_DIVKL                                   C4B0      F5     245       2   NON_BANKED  
-     D_MULKL                                   C5A5      90     144       1   NON_BANKED  
-     _DMUL                                     C635      11      17       9   NON_BANKED  
-     _DDIV                                     C646      11      17       4   NON_BANKED  
+     D_DIVKL                                   C6AF      F5     245       2   NON_BANKED  
+     D_MULKL                                   C7A4      90     144       1   NON_BANKED  
+     _DMUL                                     C834      11      17      15   NON_BANKED  
+     _DDIV                                     C845      11      17       4   NON_BANKED  
 - VARIABLES:
 MODULE:                 -- DREGS.C.o (ansibf.lib) --
 - PROCEDURES:
-     D_PULK                                    C657      29      41       6   NON_BANKED  
-     D_PULL                                    C680      25      37       5   NON_BANKED  
-     D_PSHK                                    C6A5      23      35       3   NON_BANKED  
-     D_STAL                                    C6C8      2A      42       4   NON_BANKED  
-     D_TKL                                     C6F2      1C      28       2   NON_BANKED  
-     D_XGKL                                    C70E      39      57       2   NON_BANKED  
-     D_CLRK                                    C747      13      19       4   NON_BANKED  
-     D_CLRL                                    C75A      10      16       1   NON_BANKED  
-     D_MAXK                                    C76A       A      10       2   NON_BANKED  
-     D_NORMK                                   C774      8F     143       6   NON_BANKED  
+     D_PULK                                    C856      29      41       6   NON_BANKED  
+     D_PULL                                    C87F      25      37       5   NON_BANKED  
+     D_PSHK                                    C8A4      23      35       3   NON_BANKED  
+     D_STAL                                    C8C7      2A      42       4   NON_BANKED  
+     D_TKL                                     C8F1      1C      28       2   NON_BANKED  
+     D_XGKL                                    C90D      39      57       2   NON_BANKED  
+     D_CLRK                                    C946      13      19       4   NON_BANKED  
+     D_CLRL                                    C959      10      16       1   NON_BANKED  
+     D_MAXK                                    C969       A      10       2   NON_BANKED  
+     D_NORMK                                   C973      8F     143       6   NON_BANKED  
 - VARIABLES:
 MODULE:                 -- FADD.C.o (ansibf.lib) --
 - PROCEDURES:
-     F_ADDKL                                   C803      67     103       1   NON_BANKED  
-     _FADD                                     C86A      15      21       1   NON_BANKED  
+     F_ADDKL                                   CA02      67     103       1   NON_BANKED  
+     _FADD                                     CA69      15      21       1   NON_BANKED  
 - VARIABLES:
 MODULE:                 -- FCONV.C.o (ansibf.lib) --
 - PROCEDURES:
-     F_FRLONGK                                 C87F      1F      31       1   NON_BANKED  
-     _FSFLOAT                                  C89E      12      18       1   NON_BANKED  
+     F_FRLONGK                                 CA7E      1F      31       1   NON_BANKED  
+     _FSFLOAT                                  CA9D      12      18       1   NON_BANKED  
 - VARIABLES:
 MODULE:                 -- FMUL.C.o (ansibf.lib) --
 - PROCEDURES:
-     F_DIVKL                                   C8B0      8E     142       1   NON_BANKED  
-     F_MULKL                                   C93E      58      88       1   NON_BANKED  
-     _FMUL                                     C996      14      20       2   NON_BANKED  
-     _FDIV                                     C9AA      1E      30       1   NON_BANKED  
+     F_DIVKL                                   CAAF      8E     142       1   NON_BANKED  
+     F_MULKL                                   CB3D      58      88       1   NON_BANKED  
+     _FMUL                                     CB95      14      20       2   NON_BANKED  
+     _FDIV                                     CBA9      1E      30       1   NON_BANKED  
 - VARIABLES:
 MODULE:                 -- FREGS.C.o (ansibf.lib) --
 - PROCEDURES:
-     F_PULK                                    C9C8      15      21       4   NON_BANKED  
-     F_PULL                                    C9DD      15      21       3   NON_BANKED  
-     F_PSHK                                    C9F2      13      19       5   NON_BANKED  
-     F_XGKL                                    CA05      21      33       2   NON_BANKED  
-     F_CLRK                                    CA26       B      11       3   NON_BANKED  
-     F_MAXK                                    CA31       9       9       3   NON_BANKED  
-     F_NORMK                                   CA3A      3E      62       3   NON_BANKED  
+     F_PULK                                    CBC7      15      21       4   NON_BANKED  
+     F_PULL                                    CBDC      15      21       3   NON_BANKED  
+     F_PSHK                                    CBF1      13      19       5   NON_BANKED  
+     F_XGKL                                    CC04      21      33       2   NON_BANKED  
+     F_CLRK                                    CC25       B      11       3   NON_BANKED  
+     F_MAXK                                    CC30       9       9       3   NON_BANKED  
+     F_NORMK                                   CC39      3E      62       3   NON_BANKED  
 - VARIABLES:
 MODULE:                 -- rtshc12.c.o (ansibf.lib) --
 - PROCEDURES:
-     _LCMP                                     CA78      19      25       1   NON_BANKED  
-     _LNEG                                     CA91       D      13       1   NON_BANKED  
-     _LINC                                     CA9E       5       5       1   NON_BANKED  
-     _LMUL                                     CAA3      27      39       2   NON_BANKED  
-     _LMULS16x32                               CACA      1F      31       1   NON_BANKED  
-     _lDivMod                                  CAE9      BE     190       2   NON_BANKED  
-     _NEG_P                                    CBA7       F      15       5   NON_BANKED  
-     _LDIVS                                    CBB6      35      53       1   NON_BANKED  
-     _ILSEXT                                   CBEB       7       7       2   NON_BANKED  
-     _COPY                                     CBF2       8       8      10   NON_BANKED  
-     _CASE_CHECKED                             CBFA       B      11       4   NON_BANKED  
-     _CASE_CHECKED_BYTE                        CC05      14      20       4   NON_BANKED  
+     _LCMP                                     CC77      19      25       1   NON_BANKED  
+     _LCMP_P                                   CC90      15      21       3   NON_BANKED  
+     _LNEG                                     CCA5       D      13       2   NON_BANKED  
+     _LINC                                     CCB2       5       5       1   NON_BANKED  
+     _LMUL                                     CCB7      27      39       2   NON_BANKED  
+     _LMULS16x32                               CCDE      1F      31       1   NON_BANKED  
+     _lDivMod                                  CCFD      BE     190       4   NON_BANKED  
+     _LDIVU                                    CDBB       E      14       1   NON_BANKED  
+     _NEG_P                                    CDC9       F      15       5   NON_BANKED  
+     _LDIVS                                    CDD8      35      53       1   NON_BANKED  
+     _LMODU                                    CE0D      11      17       1   NON_BANKED  
+     _ILSEXT                                   CE1E       7       7       4   NON_BANKED  
+     _COPY                                     CE25       8       8      14   NON_BANKED  
+     _CASE_DIRECT_BYTE                         CE2D       5       5       1   NON_BANKED  
+     _CASE_CHECKED                             CE32       B      11       4   NON_BANKED  
+     _CASE_CHECKED_BYTE                        CE3D      14      20       4   NON_BANKED  
+     _CASE_SEARCH_8                            CE51      17      23       1   NON_BANKED  
+     _CASE_SEARCH_8_BYTE                       CE68      1A      26       1   NON_BANKED  
 - VARIABLES:
-     errno                                     2078       2       2       2   .common     
+     errno                                     201B       2       2       2   .common     
 MODULE:                 -- VREGS.C.o (ansibf.lib) --
 - PROCEDURES:
-     L_NEGK                                    CC19       7       7       2   NON_BANKED  
-     L_PSHK                                    CC20       8       8       1   NON_BANKED  
-     SL_PULK                                   CC28       A      10       2   NON_BANKED  
+     L_NEGK                                    CE82       7       7       2   NON_BANKED  
+     L_PSHK                                    CE89       8       8       1   NON_BANKED  
+     UL_PULK                                   CE91       3       3       1   NON_BANKED  
+     SL_PULK                                   CE94       A      10       2   NON_BANKED  
 - VARIABLES:
 
 *********************************************************************************************
@@ -933,17 +962,18 @@ MODULE STATISTIC
 ---------------------------------------------------------------------------------------------
   mc9s12dg256.c.o                            400      0      0
   isr_vectors.c.o                              0      2    126
-  main.c.o                                     0    379      0
-  serialPrint.c.o                            116    218      0
+  main.c.o                                     0    992    183
+  serialPrint.c.o                             16    380      0
   timeFunc.c.o                                 0   1057      0
   timers.c.o                                   4     48      0
   Start12.c.o                                  0     62      0
   MATH.C.o (ansibf.lib)                        0   2101     16
+  PRINTF.C.o (ansibf.lib)                      7   3060    308
   STRING.C.o (ansibf.lib)                      0     20      0
   DADD.C.o (ansibf.lib)                        0    306      0
   DANSI.C.o (ansibf.lib)                       0    281      0
   DCMP.C.o (ansibf.lib)                        0     48      0
-  DCONV.C.o (ansibf.lib)                       0    269      0
+  DCONV.C.o (ansibf.lib)                       0    289      0
   DFCONV.C.o (ansibf.lib)                      0    120      0
   DMUL.C.o (ansibf.lib)                        0    423      0
   DREGS.C.o (ansibf.lib)                       0    428      0
@@ -951,8 +981,8 @@ MODULE STATISTIC
   FCONV.C.o (ansibf.lib)                       0     49      0
   FMUL.C.o (ansibf.lib)                        0    280      0
   FREGS.C.o (ansibf.lib)                       0    176      0
-  rtshc12.c.o (ansibf.lib)                     2    417      0
-  VREGS.C.o (ansibf.lib)                       0     25      0
+  rtshc12.c.o (ansibf.lib)                     2    523      0
+  VREGS.C.o (ansibf.lib)                       0     28      0
   other                                     4096     12      2
 
 *********************************************************************************************
@@ -960,22 +990,28 @@ SECTION USE IN OBJECT-ALLOCATION SECTION
 ---------------------------------------------------------------------------------------------
 SECTION: ".text"
   main Init_sci timeFunc Init_TCNT resetOF Stop_TCNT Init fabs is_special 
-  sincos sin cos sqrt_r sqrt strlen 
+  sincos sin cos sqrt_r sqrt Ten vprintf _out deposit_char sprintf strlen 
 SECTION: ".bss"
-  overFlows 
+  overFlows pbuf 
 SECTION: ".init"
   _Startup 
 SECTION: ".rodata"
-  infinity nan_union 
+  infinity nan_union pow10 pow16 pow8 fpow10 fpow_10 
+SECTION: ".rodata1"
+  STRING.addition..2f...2f....2 STRING.multiplication....2f.3 
+  STRING.division....2f...2f..4 STRING.square.root....2f....5 
+  STRING.sin....2f...2f...2f..6 STRING.cos....2f...2f...2f..7 
 SECTION: "NON_BANKED"
   UnimplementedISR RE_ISR TOF_ISR D_ADDKL _DADD _DSUB _DINC _DNEG D_MODF 
   D_FREXP D_LDEXP modf frexp RetErrDom ldexp _DCMP D_TOLONGK D_FRLONGK _DSFLOAT 
-  _DSTRUNC _DUTRUNC D_PSHK_UNARY D_CLRK_UNARY D_MAXK_UNARY D_NORMK_UNARY D_TOFK 
-  D_FRFK _DLONG _DSHORT D_DIVKL D_MULKL _DMUL _DDIV D_PULK D_PULL D_PSHK D_STAL 
-  D_TKL D_XGKL D_CLRK D_CLRL D_MAXK D_NORMK F_ADDKL _FADD F_FRLONGK _FSFLOAT 
-  F_DIVKL F_MULKL _FMUL _FDIV F_PULK F_PULL F_PSHK F_XGKL F_CLRK F_MAXK F_NORMK 
-  _LCMP _LNEG _LINC _LMUL _LMULS16x32 _lDivMod _NEG_P _LDIVS _ILSEXT _COPY 
-  _CASE_CHECKED _CASE_CHECKED_BYTE L_NEGK L_PSHK SL_PULK 
+  _DUFLOAT _DSTRUNC _DUTRUNC D_PSHK_UNARY D_CLRK_UNARY D_MAXK_UNARY 
+  D_NORMK_UNARY D_TOFK D_FRFK _DLONG _DSHORT D_DIVKL D_MULKL _DMUL _DDIV D_PULK 
+  D_PULL D_PSHK D_STAL D_TKL D_XGKL D_CLRK D_CLRL D_MAXK D_NORMK F_ADDKL _FADD 
+  F_FRLONGK _FSFLOAT F_DIVKL F_MULKL _FMUL _FDIV F_PULK F_PULL F_PSHK F_XGKL 
+  F_CLRK F_MAXK F_NORMK _LCMP _LCMP_P _LNEG _LINC _LMUL _LMULS16x32 _lDivMod 
+  _LDIVU _NEG_P _LDIVS _LMODU _ILSEXT _COPY _CASE_DIRECT_BYTE _CASE_CHECKED 
+  _CASE_CHECKED_BYTE _CASE_SEARCH_8 _CASE_SEARCH_8_BYTE L_NEGK L_PSHK UL_PULK 
+  SL_PULK 
 SECTION: ".abs_section_8"
   _PORTE 
 SECTION: ".abs_section_9"
@@ -1661,7 +1697,7 @@ SECTION: ".abs_section_2be"
 SECTION: ".abs_section_ff80"
   _vect 
 SECTION: ".common"
-  i re_place SCIString table errno 
+  i re_place SCIString errno 
 
 *********************************************************************************************
 OBJECT LIST SORTED BY ADDRESS
@@ -1794,7 +1830,7 @@ OBJECT LIST SORTED BY ADDRESS
      _SCI0DRL                                    CF       1       1       0   .abs_section_cf
      _SCI1BD                                     D0       2       2       2   .abs_section_d0
      _SCI1CR1                                    D2       1       1       0   .abs_section_d2
-     _SCI1CR2                                    D3       1       1       8   .abs_section_d3
+     _SCI1CR2                                    D3       1       1       7   .abs_section_d3
      _SCI1SR1                                    D4       1       1       4   .abs_section_d4
      _SCI1SR2                                    D5       1       1       0   .abs_section_d5
      _SCI1DRH                                    D6       1       1       0   .abs_section_d6
@@ -2009,119 +2045,145 @@ OBJECT LIST SORTED BY ADDRESS
      _CAN4TXTBPR                                2BD       1       1       0   .abs_section_2bd
      _CAN4TXTSR                                 2BE       2       2       0   .abs_section_2be
      overFlows                                 2000       4       4      10   .bss        
-     i                                         2004       2       2      10   .common     
-     re_place                                  2006       2       2      10   .common     
-     SCIString                                 2008       C      12       5   .common     
-     table                                     2014      64     100       4   .common     
-     errno                                     2078       2       2       2   .common     
+     pbuf                                      2004       7       7      16   .bss        
+     i                                         200B       2       2      14   .common     
+     re_place                                  200D       2       2      10   .common     
+     SCIString                                 200F       C      12       5   .common     
+     errno                                     201B       2       2       2   .common     
      _Startup                                  C000      15      21       0   .init       
      infinity                                  C01F       8       8       8   .rodata     
      nan_union                                 C027       8       8       4   .rodata     
-     UnimplementedISR                          C02F       2       2      61   NON_BANKED  
-     RE_ISR                                    C031      6F     111       1   NON_BANKED  
-     TOF_ISR                                   C0A0      10      16       1   NON_BANKED  
-     D_ADDKL                                   C0B0      BC     188       1   NON_BANKED  
-     _DADD                                     C16C      11      17      17   NON_BANKED  
-     _DSUB                                     C17D      19      25       1   NON_BANKED  
-     _DINC                                     C196      35      53       2   NON_BANKED  
-     _DNEG                                     C1CB      17      23       2   NON_BANKED  
-     D_MODF                                    C1E2      5D      93       1   NON_BANKED  
-     D_FREXP                                   C23F      20      32       1   NON_BANKED  
-     D_LDEXP                                   C25F      18      24       1   NON_BANKED  
-     modf                                      C277      1F      31       1   NON_BANKED  
-     frexp                                     C296      1F      31       1   NON_BANKED  
-     RetErrDom                                 C2B5      1F      31       1   NON_BANKED  
-     ldexp                                     C2D4      27      39       3   NON_BANKED  
-     _DCMP                                     C2FB      30      48       3   NON_BANKED  
-     D_TOLONGK                                 C32B      33      51       1   NON_BANKED  
-     D_FRLONGK                                 C35E      19      25       1   NON_BANKED  
-     _DSFLOAT                                  C377      14      20       6   NON_BANKED  
-     _DSTRUNC                                  C38B      19      25       2   NON_BANKED  
-     _DUTRUNC                                  C3A4       3       3       1   NON_BANKED  
-     D_PSHK_UNARY                              C3A7      1E      30       2   NON_BANKED  
-     D_CLRK_UNARY                              C3C5       D      13       2   NON_BANKED  
-     D_MAXK_UNARY                              C3D2       A      10       1   NON_BANKED  
-     D_NORMK_UNARY                             C3DC      5C      92       2   NON_BANKED  
-     D_TOFK                                    C438      3C      60       1   NON_BANKED  
-     D_FRFK                                    C474      10      16       1   NON_BANKED  
-     _DLONG                                    C484      17      23       3   NON_BANKED  
-     _DSHORT                                   C49B      15      21       3   NON_BANKED  
-     D_DIVKL                                   C4B0      F5     245       2   NON_BANKED  
-     D_MULKL                                   C5A5      90     144       1   NON_BANKED  
-     _DMUL                                     C635      11      17       9   NON_BANKED  
-     _DDIV                                     C646      11      17       4   NON_BANKED  
-     D_PULK                                    C657      29      41       6   NON_BANKED  
-     D_PULL                                    C680      25      37       5   NON_BANKED  
-     D_PSHK                                    C6A5      23      35       3   NON_BANKED  
-     D_STAL                                    C6C8      2A      42       4   NON_BANKED  
-     D_TKL                                     C6F2      1C      28       2   NON_BANKED  
-     D_XGKL                                    C70E      39      57       2   NON_BANKED  
-     D_CLRK                                    C747      13      19       4   NON_BANKED  
-     D_CLRL                                    C75A      10      16       1   NON_BANKED  
-     D_MAXK                                    C76A       A      10       2   NON_BANKED  
-     D_NORMK                                   C774      8F     143       6   NON_BANKED  
-     F_ADDKL                                   C803      67     103       1   NON_BANKED  
-     _FADD                                     C86A      15      21       1   NON_BANKED  
-     F_FRLONGK                                 C87F      1F      31       1   NON_BANKED  
-     _FSFLOAT                                  C89E      12      18       1   NON_BANKED  
-     F_DIVKL                                   C8B0      8E     142       1   NON_BANKED  
-     F_MULKL                                   C93E      58      88       1   NON_BANKED  
-     _FMUL                                     C996      14      20       2   NON_BANKED  
-     _FDIV                                     C9AA      1E      30       1   NON_BANKED  
-     F_PULK                                    C9C8      15      21       4   NON_BANKED  
-     F_PULL                                    C9DD      15      21       3   NON_BANKED  
-     F_PSHK                                    C9F2      13      19       5   NON_BANKED  
-     F_XGKL                                    CA05      21      33       2   NON_BANKED  
-     F_CLRK                                    CA26       B      11       3   NON_BANKED  
-     F_MAXK                                    CA31       9       9       3   NON_BANKED  
-     F_NORMK                                   CA3A      3E      62       3   NON_BANKED  
-     _LCMP                                     CA78      19      25       1   NON_BANKED  
-     _LNEG                                     CA91       D      13       1   NON_BANKED  
-     _LINC                                     CA9E       5       5       1   NON_BANKED  
-     _LMUL                                     CAA3      27      39       2   NON_BANKED  
-     _LMULS16x32                               CACA      1F      31       1   NON_BANKED  
-     _lDivMod                                  CAE9      BE     190       2   NON_BANKED  
-     _NEG_P                                    CBA7       F      15       5   NON_BANKED  
-     _LDIVS                                    CBB6      35      53       1   NON_BANKED  
-     _ILSEXT                                   CBEB       7       7       2   NON_BANKED  
-     _COPY                                     CBF2       8       8      10   NON_BANKED  
-     _CASE_CHECKED                             CBFA       B      11       4   NON_BANKED  
-     _CASE_CHECKED_BYTE                        CC05      14      20       4   NON_BANKED  
-     L_NEGK                                    CC19       7       7       2   NON_BANKED  
-     L_PSHK                                    CC20       8       8       1   NON_BANKED  
-     SL_PULK                                   CC28       A      10       2   NON_BANKED  
+     pow10                                     C02F      28      40       6   .rodata     
+     pow16                                     C057      20      32       4   .rodata     
+     pow8                                      C077      2C      44       4   .rodata     
+     fpow10                                    C0A3      60      96       1   .rodata     
+     fpow_10                                   C103      60      96       1   .rodata     
+     STRING.addition..2f...2f....2             C163      1D      29       1   .rodata1    
+     STRING.multiplication....2f.3             C180      25      37       1   .rodata1    
+     STRING.division....2f...2f..4             C1A5      1F      31       1   .rodata1    
+     STRING.square.root....2f....5             C1C4      22      34       1   .rodata1    
+     STRING.sin....2f...2f...2f..6             C1E6      1A      26       1   .rodata1    
+     STRING.cos....2f...2f...2f..7             C200      1A      26       1   .rodata1    
+     UnimplementedISR                          C21A       2       2      61   NON_BANKED  
+     RE_ISR                                    C21C      6F     111       1   NON_BANKED  
+     TOF_ISR                                   C28B      10      16       1   NON_BANKED  
+     D_ADDKL                                   C29B      BC     188       1   NON_BANKED  
+     _DADD                                     C357      11      17      19   NON_BANKED  
+     _DSUB                                     C368      19      25       2   NON_BANKED  
+     _DINC                                     C381      35      53       2   NON_BANKED  
+     _DNEG                                     C3B6      17      23       3   NON_BANKED  
+     D_MODF                                    C3CD      5D      93       1   NON_BANKED  
+     D_FREXP                                   C42A      20      32       1   NON_BANKED  
+     D_LDEXP                                   C44A      18      24       1   NON_BANKED  
+     modf                                      C462      1F      31       1   NON_BANKED  
+     frexp                                     C481      1F      31       2   NON_BANKED  
+     RetErrDom                                 C4A0      1F      31       1   NON_BANKED  
+     ldexp                                     C4BF      27      39       3   NON_BANKED  
+     _DCMP                                     C4E6      30      48       5   NON_BANKED  
+     D_TOLONGK                                 C516      33      51       1   NON_BANKED  
+     D_FRLONGK                                 C549      19      25       2   NON_BANKED  
+     _DSFLOAT                                  C562      14      20       6   NON_BANKED  
+     _DUFLOAT                                  C576      14      20       2   NON_BANKED  
+     _DSTRUNC                                  C58A      19      25       2   NON_BANKED  
+     _DUTRUNC                                  C5A3       3       3       5   NON_BANKED  
+     D_PSHK_UNARY                              C5A6      1E      30       3   NON_BANKED  
+     D_CLRK_UNARY                              C5C4       D      13       2   NON_BANKED  
+     D_MAXK_UNARY                              C5D1       A      10       1   NON_BANKED  
+     D_NORMK_UNARY                             C5DB      5C      92       2   NON_BANKED  
+     D_TOFK                                    C637      3C      60       1   NON_BANKED  
+     D_FRFK                                    C673      10      16       1   NON_BANKED  
+     _DLONG                                    C683      17      23      27   NON_BANKED  
+     _DSHORT                                   C69A      15      21       3   NON_BANKED  
+     D_DIVKL                                   C6AF      F5     245       2   NON_BANKED  
+     D_MULKL                                   C7A4      90     144       1   NON_BANKED  
+     _DMUL                                     C834      11      17      15   NON_BANKED  
+     _DDIV                                     C845      11      17       4   NON_BANKED  
+     D_PULK                                    C856      29      41       6   NON_BANKED  
+     D_PULL                                    C87F      25      37       5   NON_BANKED  
+     D_PSHK                                    C8A4      23      35       3   NON_BANKED  
+     D_STAL                                    C8C7      2A      42       4   NON_BANKED  
+     D_TKL                                     C8F1      1C      28       2   NON_BANKED  
+     D_XGKL                                    C90D      39      57       2   NON_BANKED  
+     D_CLRK                                    C946      13      19       4   NON_BANKED  
+     D_CLRL                                    C959      10      16       1   NON_BANKED  
+     D_MAXK                                    C969       A      10       2   NON_BANKED  
+     D_NORMK                                   C973      8F     143       6   NON_BANKED  
+     F_ADDKL                                   CA02      67     103       1   NON_BANKED  
+     _FADD                                     CA69      15      21       1   NON_BANKED  
+     F_FRLONGK                                 CA7E      1F      31       1   NON_BANKED  
+     _FSFLOAT                                  CA9D      12      18       1   NON_BANKED  
+     F_DIVKL                                   CAAF      8E     142       1   NON_BANKED  
+     F_MULKL                                   CB3D      58      88       1   NON_BANKED  
+     _FMUL                                     CB95      14      20       2   NON_BANKED  
+     _FDIV                                     CBA9      1E      30       1   NON_BANKED  
+     F_PULK                                    CBC7      15      21       4   NON_BANKED  
+     F_PULL                                    CBDC      15      21       3   NON_BANKED  
+     F_PSHK                                    CBF1      13      19       5   NON_BANKED  
+     F_XGKL                                    CC04      21      33       2   NON_BANKED  
+     F_CLRK                                    CC25       B      11       3   NON_BANKED  
+     F_MAXK                                    CC30       9       9       3   NON_BANKED  
+     F_NORMK                                   CC39      3E      62       3   NON_BANKED  
+     _LCMP                                     CC77      19      25       1   NON_BANKED  
+     _LCMP_P                                   CC90      15      21       3   NON_BANKED  
+     _LNEG                                     CCA5       D      13       2   NON_BANKED  
+     _LINC                                     CCB2       5       5       1   NON_BANKED  
+     _LMUL                                     CCB7      27      39       2   NON_BANKED  
+     _LMULS16x32                               CCDE      1F      31       1   NON_BANKED  
+     _lDivMod                                  CCFD      BE     190       4   NON_BANKED  
+     _LDIVU                                    CDBB       E      14       1   NON_BANKED  
+     _NEG_P                                    CDC9       F      15       5   NON_BANKED  
+     _LDIVS                                    CDD8      35      53       1   NON_BANKED  
+     _LMODU                                    CE0D      11      17       1   NON_BANKED  
+     _ILSEXT                                   CE1E       7       7       4   NON_BANKED  
+     _COPY                                     CE25       8       8      14   NON_BANKED  
+     _CASE_DIRECT_BYTE                         CE2D       5       5       1   NON_BANKED  
+     _CASE_CHECKED                             CE32       B      11       4   NON_BANKED  
+     _CASE_CHECKED_BYTE                        CE3D      14      20       4   NON_BANKED  
+     _CASE_SEARCH_8                            CE51      17      23       1   NON_BANKED  
+     _CASE_SEARCH_8_BYTE                       CE68      1A      26       1   NON_BANKED  
+     L_NEGK                                    CE82       7       7       2   NON_BANKED  
+     L_PSHK                                    CE89       8       8       1   NON_BANKED  
+     UL_PULK                                   CE91       3       3       1   NON_BANKED  
+     SL_PULK                                   CE94       A      10       2   NON_BANKED  
      _vect                                     FF80      7E     126       0   .abs_section_ff80
-     main                                    308000     17B     379       3   .text       
-     Init_sci                                30817B      6B     107       2   .text       
-     timeFunc                                3081E6     421    1057     101   .text       
-     Init_TCNT                               308607       C      12       2   .text       
-     resetOF                                 308613       9       9       6   .text       
-     Stop_TCNT                               30861C       B      11       2   .text       
-     Init                                    308627      29      41       2   .text       
-     fabs                                    308650      2C      44       4   .text       
-     is_special                              30867C      59      89       6   .text       
-     sincos                                  3086D5     3AF     943      30   .text       
-     sin                                     308A84      C3     195       9   .text       
-     cos                                     308B47      AC     172       9   .text       
-     sqrt_r                                  308BF3     1F0     496      14   .text       
-     sqrt                                    308DE3      A2     162       9   .text       
-     strlen                                  308E85      14      20       2   .text       
+     main                                    308000     3E0     992      10   .text       
+     Init_sci                                3083E0     10D     269      17   .text       
+     timeFunc                                3084ED     421    1057     101   .text       
+     Init_TCNT                               30890E       C      12       2   .text       
+     resetOF                                 30891A       9       9       6   .text       
+     Stop_TCNT                               308923       B      11       2   .text       
+     Init                                    30892E      29      41       2   .text       
+     fabs                                    308957      2C      44       4   .text       
+     is_special                              308983      59      89       6   .text       
+     sincos                                  3089DC     3AF     943      30   .text       
+     sin                                     308D8B      C3     195       9   .text       
+     cos                                     308E4E      AC     172       9   .text       
+     sqrt_r                                  308EFA     1F0     496      14   .text       
+     sqrt                                    3090EA      A2     162       9   .text       
+     Ten                                     30918C      F6     246      14   .text       
+     vprintf                                 309282     AB4    2740     155   .text       
+     _out                                    309D36       C      12       2   .text       
+     deposit_char                            309D42       F      15       3   .text       
+     sprintf                                 309D51      2F      47      12   .text       
+     strlen                                  309D80      14      20       2   .text       
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
 ---------------------------------------------------------------------------------------------
 NOT USED PROCEDURES
+main.c.o:
+  tostring 
 MATH.C.o (ansibf.lib):
   copysign logb isint pow_i exp_r exp log_r log log10 pow tan SetSign atan2 
   asin acos atan sncsh sinh cosh tanh ceil floor fmod 
+PRINTF.C.o (ansibf.lib):
+  set_printf vsprintf 
 STRING.C.o (ansibf.lib):
   strerror memchr memcmp memcpy2 memcpy _memcpy_8bitCount memmove memset 
   _memset_clear_8bitCount strset strcat strncat strcpy strncpy strcmp strncmp 
   strchr strrchr strspn strcspn strpbrk strstr strtok strcoll strxfrm 
 DADD.C.o (ansibf.lib):
   _DDEC _DABS 
-DCONV.C.o (ansibf.lib):
-  _DUFLOAT 
 DREGS.C.o (ansibf.lib):
   D_TLK 
 FADD.C.o (ansibf.lib):
@@ -2132,14 +2194,13 @@ FREGS.C.o (ansibf.lib):
   F_STAL F_TLK F_TKL F_CLRL 
 rtshc12.c.o (ansibf.lib):
   _BSHL _BSHRS _BSHRU _BDIVMODU _BDIVMODS _ISHL _ISHRU _ISHRS _LSHL _LSHRU 
-  _LSHRS _LADD _LSUB _LAND _LOR _LXOR _LCMP_P _LCMP_PP _LCOM _LDEC _LMULU16x32 
-  _LDIVU _LMODU _LMODS _CASE_DIRECT _CASE_DIRECT_BYTE _CASE_SEARCH 
-  _CASE_SEARCH_BYTE _CASE_SEARCH_8 _CASE_SEARCH_8_BYTE _FCALL _FPCMP 
-VREGS.C.o (ansibf.lib):
-  UL_PULK 
+  _LSHRS _LADD _LSUB _LAND _LOR _LXOR _LCMP_PP _LCOM _LDEC _LMULU16x32 _LMODS 
+  _CASE_DIRECT _CASE_SEARCH _CASE_SEARCH_BYTE _FCALL _FPCMP 
 NOT USED VARIABLES
+main.c.o:
+  len pos num rem n str 
 serialPrint.c.o:
-  re 
+  re table 
 MATH.C.o (ansibf.lib):
   small.1 big.2 
 STRING.C.o (ansibf.lib):
@@ -2150,7 +2211,7 @@ rtshc12.c.o (ansibf.lib):
 *********************************************************************************************
 COPYDOWN SECTION
 ---------------------------------------------------------------------------------------------
-------- ROM-ADDRESS: 0xCC32 ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xCE9E ---- SIZE       2 ---
 Filling bytes inserted
  0000
 
@@ -2172,6 +2233,7 @@ RetErrDom                 USES errno infinity
 ldexp                     USES D_PULK D_LDEXP D_STAL RetErrDom 
 D_FRLONGK                 USES D_NORMK_UNARY 
 _DSFLOAT                  USES SL_PULK D_FRLONGK D_PSHK_UNARY 
+_DUFLOAT                  USES UL_PULK D_FRLONGK D_PSHK_UNARY 
 _DSTRUNC                  USES D_PULL D_TOLONGK L_PSHK 
 _DUTRUNC                  USES _DSTRUNC 
 D_MAXK_UNARY              USES D_CLRK_UNARY 
@@ -2196,15 +2258,20 @@ _FDIV                     USES F_PULL F_PULK F_DIVKL F_PSHK
 F_MAXK                    USES F_CLRK 
 F_NORMK                   USES F_MAXK 
 _LMULS16x32               USES _LNEG 
+_LDIVU                    USES _lDivMod 
 _LDIVS                    USES _NEG_P _lDivMod 
+_LMODU                    USES _lDivMod 
 L_NEGK                    USES _NEG_P 
 L_PSHK                    USES L_NEGK 
 SL_PULK                   USES L_NEGK 
 _vect                     USES UnimplementedISR RE_ISR TOF_ISR 
-main                      USES Init_TCNT timeFunc main Stop_TCNT Init_sci 
+main                      USES Init_TCNT timeFunc main Stop_TCNT _DLONG 
+                                STRING.addition..2f...2f....2 sprintf STRING.multiplication....2f.3 
+                                STRING.division....2f...2f..4 STRING.square.root....2f....5 
+                                STRING.sin....2f...2f...2f..6 STRING.cos....2f...2f...2f..7 Init_sci 
                                 _FSFLOAT _FMUL 
-Init_sci                  USES _SCI1BD _SCI1CR2 re_place i table strlen 
-                                _SCI1DRL 
+Init_sci                  USES _SCI1BD _SCI1CR2 re_place i Init_sci _SCI1DRL 
+                                strlen 
 timeFunc                  USES _CASE_CHECKED timeFunc _DSFLOAT sqrt sin cos 
                                 _LMUL _LDIVS _FADD _FMUL _FDIV _DLONG _DSHORT 
                                 _CASE_CHECKED_BYTE _DADD _DMUL _DDIV _TCNT overFlows _LMULS16x32 
@@ -2224,6 +2291,14 @@ sqrt_r                    USES sqrt_r frexp _DMUL _DADD _DDIV ldexp _COPY
                                 _ILSEXT 
 sqrt                      USES sqrt is_special _CASE_CHECKED_BYTE infinity 
                                 sqrt_r errno nan_union _COPY 
+Ten                       USES fpow10 fpow_10 Ten _DMUL _COPY 
+vprintf                   USES vprintf _CASE_SEARCH_8_BYTE _CASE_DIRECT_BYTE 
+                                _CASE_SEARCH_8 pbuf _ILSEXT _LNEG pow8 _LCMP_P pow16 pow10 
+                                _DNEG frexp Ten _DMUL _DUTRUNC _DUFLOAT _DADD _COPY 
+                                _DSUB _DCMP _LDIVU _LMODU _out 
+_out                      USES pbuf 
+deposit_char              USES pbuf 
+sprintf                   USES pbuf deposit_char vprintf 
 
 *********************************************************************************************
 DEPENDENCY TREE
@@ -2516,6 +2591,66 @@ DEPENDENCY TREE
  |  |  | 
  |  |  +- resetOF              (see above)
  |  |     
+ |  +- _DLONG               (see above)
+ |  |  
+ |  +- sprintf             
+ |  |  | 
+ |  |  +- deposit_char        
+ |  |  |    
+ |  |  +- vprintf             
+ |  |     | 
+ |  |     +- _CASE_SEARCH_8_BYTE 
+ |  |     |    
+ |  |     +- _CASE_DIRECT_BYTE   
+ |  |     |    
+ |  |     +- _CASE_SEARCH_8      
+ |  |     |    
+ |  |     +- _ILSEXT              (see above)
+ |  |     |  
+ |  |     +- _LNEG                (see above)
+ |  |     |  
+ |  |     +- _LCMP_P             
+ |  |     |    
+ |  |     +- _DNEG                (see above)
+ |  |     |  
+ |  |     +- frexp                (see above)
+ |  |     |  
+ |  |     +- Ten                 
+ |  |     |  | 
+ |  |     |  +- _DMUL                (see above)
+ |  |     |  |  
+ |  |     |  +- _COPY                (see above)
+ |  |     |     
+ |  |     +- _DMUL                (see above)
+ |  |     |  
+ |  |     +- _DUTRUNC             (see above)
+ |  |     |  
+ |  |     +- _DUFLOAT            
+ |  |     |  | 
+ |  |     |  +- UL_PULK             
+ |  |     |  |    
+ |  |     |  +- D_FRLONGK            (see above)
+ |  |     |  |  
+ |  |     |  +- D_PSHK_UNARY         (see above)
+ |  |     |     
+ |  |     +- _DADD                (see above)
+ |  |     |  
+ |  |     +- _COPY                (see above)
+ |  |     |  
+ |  |     +- _DSUB                (see above)
+ |  |     |  
+ |  |     +- _DCMP                (see above)
+ |  |     |  
+ |  |     +- _LDIVU              
+ |  |     |  | 
+ |  |     |  +- _lDivMod             (see above)
+ |  |     |     
+ |  |     +- _LMODU              
+ |  |     |  | 
+ |  |     |  +- _lDivMod             (see above)
+ |  |     |     
+ |  |     +- _out                
+ |  |          
  |  +- Init_sci            
  |  |  | 
  |  |  +- strlen              
@@ -2553,5 +2688,5 @@ STATISTIC SECTION
 ExeFile:
 --------
 Number of blocks to be downloaded: 7
-Total size of all blocks to be downloaded: 6989
+Total size of all blocks to be downloaded: 11444
 
