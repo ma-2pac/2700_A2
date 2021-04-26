@@ -52,7 +52,7 @@ Section Name                    Size  Type     From       To       Segment
 .rodata                           16     R     0xC015     0xC024   ROM_C000
 NON_BANKED                      2912     R     0xC025     0xCB84   ROM_C000
 .copy                              2     R     0xCB85     0xCB86   ROM_C000
-.text                           3144     R   0x308000   0x308C47   PAGE_30
+.text                           3158     R   0x308000   0x308C55   PAGE_30
 .stack                          4096   R/W     0x1000     0x1FFF   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
 .abs_section_9                     1   N/I        0x9        0x9   .absSeg1
@@ -401,7 +401,7 @@ NON_BANKED                      2912     R     0xC025     0xCB84   ROM_C000
 .vectSeg342_vect                   2     R     0xFFFE     0xFFFF   .vectSeg342
 
 Summary of section sizes per section type:
-READ_ONLY (R):        184F (dec:     6223)
+READ_ONLY (R):        185D (dec:     6237)
 READ_WRITE (R/W):     1006 (dec:     4102)
 NO_INIT (N/I):         190 (dec:      400)
 
@@ -459,14 +459,14 @@ MODULE:                 -- mc9s12dg256.c.o --
      _CFORC                                      41       1       1       0   .abs_section_41
      _OC7M                                       42       1       1       0   .abs_section_42
      _OC7D                                       43       1       1       0   .abs_section_43
-     _TSCR1                                      46       1       1       1   .abs_section_46
+     _TSCR1                                      46       1       1       2   .abs_section_46
      _TTOV                                       47       1       1       0   .abs_section_47
      _TCTL1                                      48       1       1       0   .abs_section_48
      _TCTL2                                      49       1       1       0   .abs_section_49
      _TCTL3                                      4A       1       1       0   .abs_section_4a
      _TCTL4                                      4B       1       1       0   .abs_section_4b
      _TIE                                        4C       1       1       0   .abs_section_4c
-     _TSCR2                                      4D       1       1       1   .abs_section_4d
+     _TSCR2                                      4D       1       1       2   .abs_section_4d
      _TFLG1                                      4E       1       1       0   .abs_section_4e
      _TFLG2                                      4F       1       1       0   .abs_section_4f
      _PACTL                                      60       1       1       0   .abs_section_60
@@ -761,11 +761,11 @@ MODULE:                 -- mc9s12dg256.c.o --
      _CAN4TXTSR                                 2BE       2       2       0   .abs_section_2be
 MODULE:                 -- main.c.o --
 - PROCEDURES:
-     main                                    308000      AE     174       3   .text       
+     main                                    308000      B5     181       2   .text       
 - VARIABLES:
 MODULE:                 -- Start12.c.o --
 - PROCEDURES:
-     Init                                    3080AE      29      41       2   .text       
+     Init                                    3080B5      29      41       2   .text       
      _Startup                                  C000       B      11       0   .init       
 - VARIABLES:
      _startupData                              C00B       6       6       3   .startData  
@@ -773,13 +773,13 @@ MODULE:                 -- Start12.c.o --
      __SEG_END_SSTACK                          2000       0       0       1               
 MODULE:                 -- MATH.C.o (ansibf.lib) --
 - PROCEDURES:
-     fabs                                    3080D7      2C      44       4   .text       
-     is_special                              308103      59      89       6   .text       
-     sincos                                  30815C     3AF     943      30   .text       
-     sin                                     30850B      C3     195       9   .text       
-     cos                                     3085CE      AC     172       9   .text       
-     sqrt_r                                  30867A     1F0     496      14   .text       
-     sqrt                                    30886A      A2     162       9   .text       
+     fabs                                    3080DE      2C      44       4   .text       
+     is_special                              30810A      59      89       6   .text       
+     sincos                                  308163     3AF     943      30   .text       
+     sin                                     308512      C3     195       9   .text       
+     cos                                     3085D5      AC     172       9   .text       
+     sqrt_r                                  308681     1F0     496      14   .text       
+     sqrt                                    308871      A2     162       9   .text       
 - VARIABLES:
      infinity                                  C015       8       8       8   .rodata     
      nan_union                                 C01D       8       8       4   .rodata     
@@ -895,13 +895,14 @@ MODULE:                 -- isr_vectors.c.o --
      _vect                                     FF80      7E     126       0   .abs_section_ff80
 MODULE:                 -- timers.c.o --
 - PROCEDURES:
-     Init_TCNT                               30890C       8       8       2   .text       
-     resetOF                                 308914       9       9       2   .text       
+     Init_TCNT                               308913       8       8       2   .text       
+     Stop_TCNT                               30891B       7       7       2   .text       
+     resetOF                                 308922       9       9       2   .text       
      TOF_ISR                                   CB75      10      16       1   NON_BANKED  
 - VARIABLES:
 MODULE:                 -- timeFunc.c.o --
 - PROCEDURES:
-     timeFunc                                30891D     32B     811      81   .text       
+     timeFunc                                30892B     32B     811      81   .text       
 - VARIABLES:
      overFlows                                 2000       4       4      10   .bss        
 
@@ -910,7 +911,7 @@ MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
   mc9s12dg256.c.o                            400      0      0
-  main.c.o                                     0    174      0
+  main.c.o                                     0    181      0
   Start12.c.o                                  0     52      0
   MATH.C.o (ansibf.lib)                        0   2101     16
   DADD.C.o (ansibf.lib)                        0    306      0
@@ -926,7 +927,7 @@ MODULE STATISTIC
   rtshc12.c.o (ansibf.lib)                     2    417      0
   VREGS.C.o (ansibf.lib)                       0     25      0
   isr_vectors.c.o                              0      2    126
-  timers.c.o                                   0     33      0
+  timers.c.o                                   0     40      0
   timeFunc.c.o                                 4    811      0
   other                                     4096     12      2
 
@@ -934,8 +935,8 @@ MODULE STATISTIC
 SECTION USE IN OBJECT-ALLOCATION SECTION
 ---------------------------------------------------------------------------------------------
 SECTION: ".text"
-  main Init fabs is_special sincos sin cos sqrt_r sqrt Init_TCNT resetOF 
-  timeFunc 
+  main Init fabs is_special sincos sin cos sqrt_r sqrt Init_TCNT Stop_TCNT 
+  resetOF timeFunc 
 SECTION: ".bss"
   overFlows 
 SECTION: ".init"
@@ -1687,14 +1688,14 @@ OBJECT LIST SORTED BY ADDRESS
      _OC7M                                       42       1       1       0   .abs_section_42
      _OC7D                                       43       1       1       0   .abs_section_43
      _TCNT                                       44       2       2       2   .abs_section_44
-     _TSCR1                                      46       1       1       1   .abs_section_46
+     _TSCR1                                      46       1       1       2   .abs_section_46
      _TTOV                                       47       1       1       0   .abs_section_47
      _TCTL1                                      48       1       1       0   .abs_section_48
      _TCTL2                                      49       1       1       0   .abs_section_49
      _TCTL3                                      4A       1       1       0   .abs_section_4a
      _TCTL4                                      4B       1       1       0   .abs_section_4b
      _TIE                                        4C       1       1       0   .abs_section_4c
-     _TSCR2                                      4D       1       1       1   .abs_section_4d
+     _TSCR2                                      4D       1       1       2   .abs_section_4d
      _TFLG1                                      4E       1       1       0   .abs_section_4e
      _TFLG2                                      4F       1       1       0   .abs_section_4f
      _TC0                                        50       2       2       0   .abs_section_50
@@ -2059,18 +2060,19 @@ OBJECT LIST SORTED BY ADDRESS
      UnimplementedISR                          CB73       2       2      62   NON_BANKED  
      TOF_ISR                                   CB75      10      16       1   NON_BANKED  
      _vect                                     FF80      7E     126       0   .abs_section_ff80
-     main                                    308000      AE     174       3   .text       
-     Init                                    3080AE      29      41       2   .text       
-     fabs                                    3080D7      2C      44       4   .text       
-     is_special                              308103      59      89       6   .text       
-     sincos                                  30815C     3AF     943      30   .text       
-     sin                                     30850B      C3     195       9   .text       
-     cos                                     3085CE      AC     172       9   .text       
-     sqrt_r                                  30867A     1F0     496      14   .text       
-     sqrt                                    30886A      A2     162       9   .text       
-     Init_TCNT                               30890C       8       8       2   .text       
-     resetOF                                 308914       9       9       2   .text       
-     timeFunc                                30891D     32B     811      81   .text       
+     main                                    308000      B5     181       2   .text       
+     Init                                    3080B5      29      41       2   .text       
+     fabs                                    3080DE      2C      44       4   .text       
+     is_special                              30810A      59      89       6   .text       
+     sincos                                  308163     3AF     943      30   .text       
+     sin                                     308512      C3     195       9   .text       
+     cos                                     3085D5      AC     172       9   .text       
+     sqrt_r                                  308681     1F0     496      14   .text       
+     sqrt                                    308871      A2     162       9   .text       
+     Init_TCNT                               308913       8       8       2   .text       
+     Stop_TCNT                               30891B       7       7       2   .text       
+     resetOF                                 308922       9       9       2   .text       
+     timeFunc                                30892B     32B     811      81   .text       
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
@@ -2154,7 +2156,7 @@ L_PSHK                    USES L_NEGK
 SL_PULK                   USES L_NEGK 
 TOF_ISR                   USES overFlows _LINC 
 _vect                     USES UnimplementedISR TOF_ISR 
-main                      USES Init_TCNT timeFunc main _FSFLOAT _FMUL 
+main                      USES Init_TCNT timeFunc Stop_TCNT _FSFLOAT _FMUL 
 Init                      USES _startupData 
 is_special                USES _LCMP 
 sincos                    USES sincos _DADD _DMUL modf _DCMP _DINC _DUTRUNC 
@@ -2168,6 +2170,7 @@ sqrt_r                    USES sqrt_r frexp _DMUL _DADD _DDIV ldexp _COPY
 sqrt                      USES sqrt is_special _CASE_CHECKED_BYTE infinity 
                                 sqrt_r errno nan_union _COPY 
 Init_TCNT                 USES _TSCR1 _TSCR2 
+Stop_TCNT                 USES _TSCR1 _TSCR2 
 resetOF                   USES overFlows 
 timeFunc                  USES _CASE_CHECKED timeFunc sqrt sin cos _LMUL 
                                 _LDIVS _ILSEXT _FADD _FMUL _FDIV _CASE_CHECKED_BYTE 
@@ -2453,6 +2456,8 @@ DEPENDENCY TREE
  |  |     |    
  |  |     +- L_PSHK               (see above)
  |  |        
+ |  +- Stop_TCNT           
+ |  |    
  |  +- _FSFLOAT             (see above)
  |  |  
  |  +- _FMUL                (see above)
@@ -2478,5 +2483,5 @@ STATISTIC SECTION
 ExeFile:
 --------
 Number of blocks to be downloaded: 6
-Total size of all blocks to be downloaded: 6223
+Total size of all blocks to be downloaded: 6237
 

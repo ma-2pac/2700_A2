@@ -6,6 +6,8 @@ extern volatile long overFlows;
 // function to initialise the timer
 void Init_TCNT (void);
 
+void Stop_TCNT (void);
+
 void resetOF (void);
 
 // Timer interrupt definition
