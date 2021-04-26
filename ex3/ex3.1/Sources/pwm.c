@@ -1,6 +1,6 @@
 #include "pwm.h"
 #include <stdio.h>
-
+     
 // include the register/pin definitions
 #include "derivative.h"      /* derivative-specific definitions */
 volatile long int Period;
