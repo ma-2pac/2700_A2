@@ -11,6 +11,13 @@ void Init_TCNT (void) {
   resetOF; // reset overflow counter
 }
 
+void Stop_TCNT (void) {
+  // set up the timer
+  TSCR1=0x00; // enable timer counter, enable fast flag clear
+  TSCR2=0x00; // enable TCNT overflow interrupt, set prescaler to 1
+  resetOF; // reset overflow counter
+}
+
 void resetOF (void) {
   overFlows = 0; // set global overFlows variable to 0 
 }

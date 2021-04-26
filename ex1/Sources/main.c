@@ -1,5 +1,6 @@
 #include <hidef.h>      /* common defines and macros */
 #include "derivative.h"      /* derivative-specific definitions */
+#include <stdio.h>
 
 #include "timers.h"
 #include "timeFunc.h"
@@ -7,11 +8,13 @@
 void main(void) {
   int i;
   long ticks;
+  int length;
   float timeInt[6];
   float timeLong[6];
   float timeFloat[6];
   float timeDouble[6];
   float timePerTick = 41.6; // time per tick in ns = 41.6ns for prescaler = 1
+  char buffer[1000];
   
   Init_TCNT(); // initialise timer
     
@@ -37,9 +40,15 @@ void main(void) {
   }
   */
   
-  asm ("swi");
+  Stop_TCNT();
+  
+  //snprintf(buffer, "Hello world");
+  
+  //serialPrint(buffer);
+  
+  //asm ("swi");
 
-	EnableInterrupts;    
+	//EnableInterrupts;    
 
 
   for(;;) {
