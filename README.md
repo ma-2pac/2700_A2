@@ -5,20 +5,20 @@ There are two major sections which are the program overview and the testing proc
 
 # Members and roles
 
-**Fergus Charles** - 
+**Fergus Charles** 
 - Lead developer for exercise 2
 - Assisted in the creation of exercise 3 and its testing
 - General debugging of overall system
 
-**Marco Tupaz** -
+**Marco Tupaz** 
 - Assisted in the creation of exercise 3 and its testing
 - General debugging of exercise 1 and 2
 
+**Darragh McMullen** 
+- Lead developer for exercise 1
 
-**Darragh McMullen** - 
-
-**Hilton Nguyen** - 
-
+**Hilton Nguyen**  
+- Assisted in creation of exercise 2
 
 # Program Overview
 
@@ -49,7 +49,13 @@ This program takes a duty cycle specified by the configuration of the DIP switch
 input here
 
 ## Exercise 2
-input here
+Successful demonstration of the code can be shown qualitatively through the board terminal.
+
+###Modular Testing
+- Start the program with the board connected
+- Type a string of characters from the keyboard. Characters should be stored in serial.
+- Press the enter key. The string that is stored is now displayed onto the terminal.
+
 
 ## Exercise 3: Module for the major project - PWM output
 
