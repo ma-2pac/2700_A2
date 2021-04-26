@@ -51,7 +51,7 @@ input here
 ## Exercise 2
 Successful demonstration of the code can be shown qualitatively through the board terminal.
 
-###Modular Testing
+### Modular Testing
 - Start the program with the board connected
 - Type a string of characters from the keyboard. Characters should be stored in serial.
 - Press the enter key. The string that is stored is now displayed onto the terminal.
