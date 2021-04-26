@@ -5,15 +5,16 @@
 //here: 
 
 /*
-typedef struct serialParams {
-  unsigned int SCI_BD;
-  unsigned char SCI_CR2;
-  unsigned char SCI_SR1;
-  unsigned char 
+typedef struct serialParams 
+{
+  
+  unsigned int SCI_BD;       // Baud rate register for any serial port
+  unsigned char SCI_CR2;     // Control register 2 for any serial port
+  unsigned char SCI_SR1;     // Status register 1 for any serial port
+  unsigned char SCI_DRL;     // Data resgister low for any serial port
+  volatile int portNumber;   // determine which port is used to receive and transmit signals
 
-
-
-} serialParam;
+}serialParam;
 */
 
 

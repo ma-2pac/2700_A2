@@ -1,5 +1,5 @@
 *** EVALUATION ***
-PROGRAM "C:\Users\marco\OneDrive\Documents\GitHub\2700_A2\ex2.2\bin\Project.absHCS12_Serial_Monitor.abs"
+PROGRAM "C:\Users\Hilton Nguyen\Documents\GitHub\2700_A2\ex2.2\bin\Project.absHCS12_Serial_Monitor.abs"
 
 *********************************************************************************************
 TARGET SECTION
@@ -22,21 +22,21 @@ serialReading.c.o                       Model: BANKED,        Lang: ANSI-C
 STARTUP SECTION
 ---------------------------------------------------------------------------------------------
 Entry point: 0xC000 (_Startup)
-_startupData is allocated at 0xC00B and uses 6 Bytes
+_startupData is allocated at 0xC015 and uses 6 Bytes
 extern struct _tagStartup {
   unsigned nofZeroOut     1
   _Range   pZeroOut       0x1100     14
-  _Copy    *toCopyDownBeg 0xC086
+  _Copy    *toCopyDownBeg 0xC090
 } _startupData;
 
 *********************************************************************************************
 SECTION-ALLOCATION SECTION
 Section Name                    Size  Type     From       To       Segment
 ---------------------------------------------------------------------------------------------
-.init                             11     R     0xC000     0xC00A   ROM_C000
-.startData                        10     R     0xC00B     0xC014   ROM_C000
-NON_BANKED                       113     R     0xC015     0xC085   ROM_C000
-.copy                              2     R     0xC086     0xC087   ROM_C000
+.init                             21     R     0xC000     0xC014   ROM_C000
+.startData                        10     R     0xC015     0xC01E   ROM_C000
+NON_BANKED                       113     R     0xC01F     0xC08F   ROM_C000
+.copy                              2     R     0xC090     0xC091   ROM_C000
 .text                             75     R   0x308000   0x30804A   PAGE_30
 .stack                           256   R/W     0x1000     0x10FF   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
@@ -385,7 +385,7 @@ NON_BANKED                       113     R     0xC015     0xC085   ROM_C000
 .vectSeg342_vect                   2     R     0xFFFE     0xFFFF   .vectSeg342
 
 Summary of section sizes per section type:
-READ_ONLY (R):         151 (dec:      337)
+READ_ONLY (R):         15B (dec:      347)
 READ_WRITE (R/W):      10E (dec:      270)
 NO_INIT (N/I):         190 (dec:      400)
 
@@ -750,20 +750,20 @@ MODULE:                 -- main.c.o --
 MODULE:                 -- Start12.c.o --
 - PROCEDURES:
      Init                                    30800F      29      41       2   .text       
-     _Startup                                  C000       B      11       0   .init       
+     _Startup                                  C000      15      21       0   .init       
 - VARIABLES:
-     _startupData                              C00B       6       6       3   .startData  
+     _startupData                              C015       6       6       3   .startData  
 - LABELS:
      __SEG_END_SSTACK                          1100       0       0       1               
 MODULE:                 -- isr_vectors.c.o --
 - PROCEDURES:
-     UnimplementedISR                          C015       2       2      61   NON_BANKED  
+     UnimplementedISR                          C01F       2       2      61   NON_BANKED  
 - VARIABLES:
      _vect                                     FF80      7C     124       0   .abs_section_ff80
 MODULE:                 -- serialReading.c.o --
 - PROCEDURES:
      Init_sci                                308038      13      19       2   .text       
-     RE_ISR                                    C017      6F     111       1   NON_BANKED  
+     RE_ISR                                    C021      6F     111       1   NON_BANKED  
 - VARIABLES:
      re_place                                  1100       2       2      10   .common     
      SCIString                                 1102       C      12       5   .common     
@@ -774,7 +774,7 @@ MODULE STATISTIC
 ---------------------------------------------------------------------------------------------
   mc9s12dg256.c.o                            400      0      0
   main.c.o                                     0     15      0
-  Start12.c.o                                  0     52      0
+  Start12.c.o                                  0     62      0
   isr_vectors.c.o                              0      2    124
   serialReading.c.o                           14    130      0
   other                                      256     12      2
@@ -1822,9 +1822,9 @@ OBJECT LIST SORTED BY ADDRESS
      _CAN4TXTSR                                 2BE       2       2       0   .abs_section_2be
      re_place                                  1100       2       2      10   .common     
      SCIString                                 1102       C      12       5   .common     
-     _Startup                                  C000       B      11       0   .init       
-     UnimplementedISR                          C015       2       2      61   NON_BANKED  
-     RE_ISR                                    C017      6F     111       1   NON_BANKED  
+     _Startup                                  C000      15      21       0   .init       
+     UnimplementedISR                          C01F       2       2      61   NON_BANKED  
+     RE_ISR                                    C021      6F     111       1   NON_BANKED  
      _vect                                     FF80      7C     124       0   .abs_section_ff80
      main                                    308000       F      15       2   .text       
      Init                                    30800F      29      41       2   .text       
@@ -1840,7 +1840,7 @@ serialReading.c.o:
 *********************************************************************************************
 COPYDOWN SECTION
 ---------------------------------------------------------------------------------------------
-------- ROM-ADDRESS: 0xC086 ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xC090 ---- SIZE       2 ---
 Filling bytes inserted
  0000
 
@@ -1882,5 +1882,5 @@ STATISTIC SECTION
 ExeFile:
 --------
 Number of blocks to be downloaded: 7
-Total size of all blocks to be downloaded: 337
+Total size of all blocks to be downloaded: 347
 
