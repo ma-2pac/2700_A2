@@ -60,9 +60,10 @@ Successful demonstration of the code can be shown qualitatively through the outp
 - Toggle switch 1 to UP. The LEDs should be on and bright
 - Toggle switch 1 to DOWN and toggle switch 2 to UP. The LEDs should be on but slightly dimmer
 - Repeat for all other switches, observing brightness decreasing with each switch
+- To observe duty cycle changes in code, set breakpoint at "switch(dip_switch){" in the Duty_Hi_Calculator() function and check that the value of dip_switch is as desired. 
 
 ### Integration Testing
 - Start program with other modules
 - Check if the LEDs are on with all switches down
-- Toggle switches and observe if brightness changes with different iterations
+- Toggle switches and observe if brightness changes with different iterations similar to modular testing
 
