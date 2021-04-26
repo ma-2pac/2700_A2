@@ -102,12 +102,8 @@ __interrupt void RE_ISR(void) {
 }
  
 
-/*
-#pragma CODE_SEG __NEAR_SEG NON_BANKED  Interrupt section for this module. Placement will be in NON_BANKED area. 
-__interrupt void TC1_ISR(void){
 
-}
-*/
+
 
   
 
@@ -116,27 +112,17 @@ __interrupt void TC1_ISR(void){
 
 // look at the isr_vectors.c for where this function is 
 //  added to the ISR vector table
+
+#pragma CODE_SEG __NEAR_SEG NON_BANKED  /*Interrupt section for this module. Placement will be in NON_BANKED area.*/ 
+__interrupt void TC1_ISR(void){
+   output_PWM(TC1);
+
+}
+
 #pragma CODE_SEG __NEAR_SEG NON_BANKED /* Interrupt section for this module. Placement will be in NON_BANKED area. */
 __interrupt void TC5_ISR(void) { 
-  //need to add an interrupt section in here that counts and resets
-   //int Hi_count = read_analog();
-   Hi_count = Duty_Hi_Calculator();
-   Lo_count = Period - Hi_count; 
-  if(HiorLo){
-   //delay??
-   //TC5 = TC5 + Lo;
-   TC5 = TC5 + Lo_count;
-   HiorLo = 0;
-   PTJ = 0x00;
-   PORTB = 0x00;
-  }
-  else{
-   //TC5 = TC5 + Hi;
-   TC5 = TC5 + Hi_count;
-   HiorLo = 1;
-   PTJ = 0x00;
-   PORTB = 0xFF;  
-  }
+  //need to add an interrupt section in here that counts and resets      
+   output_PWM(TC5);
 }
 
 long int Duty_Hi_Calculator(void){
@@ -218,8 +204,9 @@ long int Duty_Hi_Calculator(void){
 
 
 //module to run PWM for any output
-void output_PWM(int portName){
+void output_PWM(unsigned int portName){
   
+  Hi_count = Duty_Hi_Calculator();
   Lo_count= Period - Hi_count;
   
   if(HiorLo){

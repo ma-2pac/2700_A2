@@ -20,11 +20,11 @@ typedef struct{
 void Init_sci(void);
 
 //function to output a pwm signal to a given port
-void output_PWM(int portName);
+void output_PWM(unsigned int portName);
 
 // Timer interrupt definition
 
-//__interrupt void TC1_ISR(void);
+__interrupt void TC1_ISR(void);
 
 __interrupt void TC5_ISR(void);
 

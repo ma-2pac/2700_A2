@@ -27,14 +27,10 @@ void enable_ports(void){
 
 // configure port 1 for output
 void Init_TC1 (void) {
-
-   TSCR1 = 0x90; // enable TCNT and fast timer flag clear
-   TSCR2 = 0x07; // disable TCNT interrupt, set prescaler to 128
    
    //configure 01c
    TIOS = 0x20; // enable OC1 function
    TCTL2 = 0x0C; //pull PT1 to high
-   TFLG1 = 0xFF; // clear all cl flag
    TIE = 0x02; //enable interrupt of channel 1
    
    TC1 = TCNT + 100;
@@ -78,7 +74,7 @@ void Init_TC3 (void) {
 void Init_TC4 (void) {
    
 
-   //configure 05c
+   //configure 04c
    TIOS = 0x10; // enable OC5 function
    TCTL1 = 0x03; //Pull PT4 to high
    TIE = 0x10; //enable interrupt of channel 4
@@ -93,14 +89,9 @@ void Init_TC4 (void) {
 // configure port 5 for output
 void Init_TC5 (void) {
    
-   
-   TSCR1 = 0x90; // enable TCNT and fast timer flag clear
-   TSCR2 = 0x07; // disable TCNT interrupt, set prescaler to 128
-   
    //configure 05c
    TIOS = 0x20; // enable OC5 function
    TCTL1 = 0x0C; //pull pin for PT5 high
-   TFLG1 = 0xFF; // clear all cl flag
    TIE = 0x20; //enable interrupt of channel 5
    
    TC5 = TCNT + 100;

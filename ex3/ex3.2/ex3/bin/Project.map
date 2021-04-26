@@ -39,7 +39,7 @@ _startupData is allocated at 0xC00B and uses 6 Bytes
 extern struct _tagStartup {
   unsigned nofZeroOut     1
   _Range   pZeroOut       0x1100     52
-  _Copy    *toCopyDownBeg 0xC6F2
+  _Copy    *toCopyDownBeg 0xC6FF
 } _startupData;
 
 *********************************************************************************************
@@ -50,9 +50,9 @@ Section Name                    Size  Type     From       To       Segment
 .startData                        10     R     0xC00B     0xC014   ROM_C000
 .rodata                            4     R     0xC015     0xC018   ROM_C000
 .rodata1                           6     R     0xC019     0xC01E   ROM_C000
-NON_BANKED                      1747     R     0xC01F     0xC6F1   ROM_C000
-.copy                              2     R     0xC6F2     0xC6F3   ROM_C000
-.text                           3117     R   0x308000   0x308C2C   PAGE_30
+NON_BANKED                      1760     R     0xC01F     0xC6FE   ROM_C000
+.copy                              2     R     0xC6FF     0xC700   ROM_C000
+.text                           3093     R   0x308000   0x308C14   PAGE_30
 .stack                           256   R/W     0x1000     0x10FF   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
 .abs_section_9                     1   N/I        0x9        0x9   .absSeg1
@@ -401,7 +401,7 @@ NON_BANKED                      1747     R     0xC01F     0xC6F1   ROM_C000
 .vectSeg342_vect                   2     R     0xFFFE     0xFFFF   .vectSeg342
 
 Summary of section sizes per section type:
-READ_ONLY (R):        139F (dec:     5023)
+READ_ONLY (R):        1394 (dec:     5012)
 READ_WRITE (R/W):      134 (dec:      308)
 NO_INIT (N/I):         190 (dec:      400)
 
@@ -459,15 +459,15 @@ MODULE:                 -- mc9s12dg256.c.o --
      _CFORC                                      41       1       1       0   .abs_section_41
      _OC7M                                       42       1       1       0   .abs_section_42
      _OC7D                                       43       1       1       0   .abs_section_43
-     _TSCR1                                      46       1       1       3   .abs_section_46
+     _TSCR1                                      46       1       1       1   .abs_section_46
      _TTOV                                       47       1       1       0   .abs_section_47
      _TCTL1                                      48       1       1       4   .abs_section_48
      _TCTL2                                      49       1       1       6   .abs_section_49
      _TCTL3                                      4A       1       1       0   .abs_section_4a
      _TCTL4                                      4B       1       1       0   .abs_section_4b
      _TIE                                        4C       1       1       5   .abs_section_4c
-     _TSCR2                                      4D       1       1       3   .abs_section_4d
-     _TFLG1                                      4E       1       1      13   .abs_section_4e
+     _TSCR2                                      4D       1       1       1   .abs_section_4d
+     _TFLG1                                      4E       1       1      11   .abs_section_4e
      _TFLG2                                      4F       1       1       0   .abs_section_4f
      _PACTL                                      60       1       1       0   .abs_section_60
      _PAFLG                                      61       1       1       0   .abs_section_61
@@ -705,11 +705,11 @@ MODULE:                 -- mc9s12dg256.c.o --
      _PARTID                                     1A       2       2       0   .abs_section_1a
      _TCNT                                       44       2       2       5   .abs_section_44
      _TC0                                        50       2       2       0   .abs_section_50
-     _TC1                                        52       2       2       3   .abs_section_52
+     _TC1                                        52       2       2       4   .abs_section_52
      _TC2                                        54       2       2       3   .abs_section_54
      _TC3                                        56       2       2       3   .abs_section_56
      _TC4                                        58       2       2       3   .abs_section_58
-     _TC5                                        5A       2       2       7   .abs_section_5a
+     _TC5                                        5A       2       2       4   .abs_section_5a
      _TC6                                        5C       2       2       0   .abs_section_5c
      _TC7                                        5E       2       2       0   .abs_section_5e
      _PACN32                                     62       2       2       0   .abs_section_62
@@ -851,7 +851,7 @@ MODULE:                 -- VREGS.C.o (ansib.lib) --
 - VARIABLES:
 MODULE:                 -- isr_vectors.c.o --
 - PROCEDURES:
-     UnimplementedISR                          C483       2       2      60   NON_BANKED  
+     UnimplementedISR                          C483       2       2      59   NON_BANKED  
 - VARIABLES:
      _vect                                     FF80      7C     124       0   .abs_section_ff80
 MODULE:                 -- main.c.o --
@@ -861,8 +861,10 @@ MODULE:                 -- main.c.o --
 MODULE:                 -- pwm.c.o --
 - PROCEDURES:
      RE_ISR                                    C485      6F     111       1   NON_BANKED  
-     TC5_ISR                                   C4F4      4C      76       1   NON_BANKED  
-     Duty_Hi_Calculator                        C540     1B2     434      21   NON_BANKED  
+     TC1_ISR                                   C4F4       7       7       1   NON_BANKED  
+     TC5_ISR                                   C4FB       7       7       1   NON_BANKED  
+     Duty_Hi_Calculator                        C502     1B2     434      21   NON_BANKED  
+     output_PWM                                C6B4      4B      75       4   NON_BANKED  
 - VARIABLES:
      STRING..d.1                               C019       3       3       1   .rodata1    
      STRING..f.2                               C01C       3       3       1   .rodata1    
@@ -883,11 +885,11 @@ MODULE:                 -- pwm.c.o --
 MODULE:                 -- pwm_ports.c.o --
 - PROCEDURES:
      enable_ports                            308B31      20      32       2   .text       
-     Init_TC1                                308B51      32      50       2   .text       
-     Init_TC2                                308B83      26      38       2   .text       
-     Init_TC3                                308BA9      27      39       2   .text       
-     Init_TC4                                308BD0      28      40       2   .text       
-     Init_TC5                                308BF8      35      53       2   .text       
+     Init_TC1                                308B51      27      39       2   .text       
+     Init_TC2                                308B78      26      38       2   .text       
+     Init_TC3                                308B9E      27      39       2   .text       
+     Init_TC4                                308BC5      28      40       2   .text       
+     Init_TC5                                308BED      28      40       2   .text       
 - VARIABLES:
 
 *********************************************************************************************
@@ -910,8 +912,8 @@ MODULE STATISTIC
   VREGS.C.o (ansib.lib)                        0     25      0
   isr_vectors.c.o                              0      2    124
   main.c.o                                     0     29      0
-  pwm.c.o                                     50    621      6
-  pwm_ports.c.o                                0    252      0
+  pwm.c.o                                     50    634      6
+  pwm_ports.c.o                                0    228      0
   other                                      256     12      2
 
 *********************************************************************************************
@@ -933,8 +935,8 @@ SECTION: "NON_BANKED"
   F_ADDKL _FADD _FSUB _FNEG _FCMP F_TOLONGK F_FRLONGK _FSFLOAT _FSTRUNC 
   F_DIVKL F_MULKL _FMUL _FDIV F_PULK F_PULL F_PSHK F_XGKL F_CLRK F_MAXK F_NORMK 
   _LCMP_P _LNEG _LMULS16x32 _lDivMod _LDIVU _NEG_P _ILSEXT _CASE_CHECKED_BYTE 
-  _CASE_SEARCH_8 L_NEGK L_PSHK SL_PULK UnimplementedISR RE_ISR TC5_ISR 
-  Duty_Hi_Calculator 
+  _CASE_SEARCH_8 L_NEGK L_PSHK SL_PULK UnimplementedISR RE_ISR TC1_ISR TC5_ISR 
+  Duty_Hi_Calculator output_PWM 
 SECTION: ".abs_section_8"
   _PORTE 
 SECTION: ".abs_section_9"
@@ -1672,22 +1674,22 @@ OBJECT LIST SORTED BY ADDRESS
      _OC7M                                       42       1       1       0   .abs_section_42
      _OC7D                                       43       1       1       0   .abs_section_43
      _TCNT                                       44       2       2       5   .abs_section_44
-     _TSCR1                                      46       1       1       3   .abs_section_46
+     _TSCR1                                      46       1       1       1   .abs_section_46
      _TTOV                                       47       1       1       0   .abs_section_47
      _TCTL1                                      48       1       1       4   .abs_section_48
      _TCTL2                                      49       1       1       6   .abs_section_49
      _TCTL3                                      4A       1       1       0   .abs_section_4a
      _TCTL4                                      4B       1       1       0   .abs_section_4b
      _TIE                                        4C       1       1       5   .abs_section_4c
-     _TSCR2                                      4D       1       1       3   .abs_section_4d
-     _TFLG1                                      4E       1       1      13   .abs_section_4e
+     _TSCR2                                      4D       1       1       1   .abs_section_4d
+     _TFLG1                                      4E       1       1      11   .abs_section_4e
      _TFLG2                                      4F       1       1       0   .abs_section_4f
      _TC0                                        50       2       2       0   .abs_section_50
-     _TC1                                        52       2       2       3   .abs_section_52
+     _TC1                                        52       2       2       4   .abs_section_52
      _TC2                                        54       2       2       3   .abs_section_54
      _TC3                                        56       2       2       3   .abs_section_56
      _TC4                                        58       2       2       3   .abs_section_58
-     _TC5                                        5A       2       2       7   .abs_section_5a
+     _TC5                                        5A       2       2       4   .abs_section_5a
      _TC6                                        5C       2       2       0   .abs_section_5c
      _TC7                                        5E       2       2       0   .abs_section_5e
      _PACTL                                      60       1       1       0   .abs_section_60
@@ -2019,10 +2021,12 @@ OBJECT LIST SORTED BY ADDRESS
      L_NEGK                                    C46A       7       7       2   NON_BANKED  
      L_PSHK                                    C471       8       8       1   NON_BANKED  
      SL_PULK                                   C479       A      10       1   NON_BANKED  
-     UnimplementedISR                          C483       2       2      60   NON_BANKED  
+     UnimplementedISR                          C483       2       2      59   NON_BANKED  
      RE_ISR                                    C485      6F     111       1   NON_BANKED  
-     TC5_ISR                                   C4F4      4C      76       1   NON_BANKED  
-     Duty_Hi_Calculator                        C540     1B2     434      21   NON_BANKED  
+     TC1_ISR                                   C4F4       7       7       1   NON_BANKED  
+     TC5_ISR                                   C4FB       7       7       1   NON_BANKED  
+     Duty_Hi_Calculator                        C502     1B2     434      21   NON_BANKED  
+     output_PWM                                C6B4      4B      75       4   NON_BANKED  
      _vect                                     FF80      7C     124       0   .abs_section_ff80
      Init                                    308000      29      41       2   .text       
      isdigit                                 308029       E      14       4   .text       
@@ -2039,11 +2043,11 @@ OBJECT LIST SORTED BY ADDRESS
      strlen                                  308B00      14      20       4   .text       
      main                                    308B14      1D      29       2   .text       
      enable_ports                            308B31      20      32       2   .text       
-     Init_TC1                                308B51      32      50       2   .text       
-     Init_TC2                                308B83      26      38       2   .text       
-     Init_TC3                                308BA9      27      39       2   .text       
-     Init_TC4                                308BD0      28      40       2   .text       
-     Init_TC5                                308BF8      35      53       2   .text       
+     Init_TC1                                308B51      27      39       2   .text       
+     Init_TC2                                308B78      26      38       2   .text       
+     Init_TC3                                308B9E      27      39       2   .text       
+     Init_TC4                                308BC5      28      40       2   .text       
+     Init_TC5                                308BED      28      40       2   .text       
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
@@ -2077,8 +2081,6 @@ rtshc12.c.o (ansib.lib):
   _FPCMP 
 VREGS.C.o (ansib.lib):
   UL_PULK 
-pwm.c.o:
-  output_PWM 
 NOT USED VARIABLES
 CTYPE.C.o (ansib.lib):
   _ctype 
@@ -2096,7 +2098,7 @@ pwm.c.o:
 *********************************************************************************************
 COPYDOWN SECTION
 ---------------------------------------------------------------------------------------------
-------- ROM-ADDRESS: 0xC6F2 ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xC6FF ---- SIZE       2 ---
 Filling bytes inserted
  0000
 
@@ -2121,14 +2123,16 @@ L_NEGK                    USES _NEG_P
 L_PSHK                    USES L_NEGK 
 SL_PULK                   USES L_NEGK 
 RE_ISR                    USES _SCI1SR1 _SCI1CR2 _SCI1DRL re_place SCIString 
-TC5_ISR                   USES Duty_Hi_Calculator Hi_count Period Lo_count 
-                                HiorLo _TC5 _PTJ _PORTAB 
+TC1_ISR                   USES _TC1 output_PWM 
+TC5_ISR                   USES _TC5 output_PWM 
 Duty_Hi_Calculator        USES _PTH dip_switch Duty_Hi_Calculator 
                                 _CASE_SEARCH_8 Duty_Hi Percent Period SCIString strlen i 
                                 Duty_Array Int_Percent STRING..d.1 sscanf _FDIV 
                                 Frequency_Array Frequency STRING..f.2 _FSTRUNC _FSFLOAT _FMUL 
                                 _ILSEXT 
-_vect                     USES UnimplementedISR RE_ISR TC5_ISR 
+output_PWM                USES Duty_Hi_Calculator Hi_count Period Lo_count 
+                                HiorLo _PTJ _PORTAB 
+_vect                     USES UnimplementedISR RE_ISR TC5_ISR TC1_ISR 
 Init                      USES _startupData 
 vsscanf                   USES vsscanf _getNum _CASE_SEARCH_8 
                                 _CASE_CHECKED_BYTE _strtod _ILSEXT _copyList isspace _strtol 
@@ -2143,13 +2147,11 @@ _strtod                   USES isspace _strtod _CASE_CHECKED_BYTE _FCMP
 main                      USES _DDRAB _DDRJ _PTJ _DDRH enable_ports 
 enable_ports              USES _TSCR1 _TSCR2 _TFLG1 Init_TC1 Init_TC2 Init_TC3 
                                 Init_TC4 Init_TC5 
-Init_TC1                  USES _TSCR1 _TSCR2 _TIOS _TCTL2 _TFLG1 _TIE _TCNT 
-                                _TC1 
+Init_TC1                  USES _TIOS _TCTL2 _TIE _TCNT _TC1 _TFLG1 
 Init_TC2                  USES _TIOS _TCTL2 _TIE _TCNT _TC2 _TFLG1 
 Init_TC3                  USES _TIOS _TCTL2 _TIE _TCNT _TC3 _TFLG1 
 Init_TC4                  USES _TIOS _TCTL1 _TIE _TCNT _TC4 _TFLG1 
-Init_TC5                  USES _TSCR1 _TSCR2 _TIOS _TCTL1 _TFLG1 _TIE _TCNT 
-                                _TC5 
+Init_TC5                  USES _TIOS _TCTL1 _TIE _TCNT _TC5 _TFLG1 
 
 *********************************************************************************************
 DEPENDENCY TREE
@@ -2183,161 +2185,167 @@ DEPENDENCY TREE
  +- RE_ISR              
  |    
  +- TC5_ISR             
+ |  | 
+ |  +- output_PWM          
+ |     | 
+ |     +- Duty_Hi_Calculator  
+ |        | 
+ |        +- _CASE_SEARCH_8      
+ |        |    
+ |        +- strlen              
+ |        |    
+ |        +- sscanf              
+ |        |  | 
+ |        |  +- vsscanf             
+ |        |     | 
+ |        |     +- _getNum             
+ |        |     |    
+ |        |     +- _CASE_SEARCH_8       (see above)
+ |        |     |  
+ |        |     +- _CASE_CHECKED_BYTE  
+ |        |     |    
+ |        |     +- _strtod             
+ |        |     |  | 
+ |        |     |  +- isspace             
+ |        |     |  |    
+ |        |     |  +- _CASE_CHECKED_BYTE   (see above)
+ |        |     |  |  
+ |        |     |  +- _FCMP               
+ |        |     |  |    
+ |        |     |  +- _FSFLOAT            
+ |        |     |  |  | 
+ |        |     |  |  +- SL_PULK             
+ |        |     |  |  |  | 
+ |        |     |  |  |  +- L_NEGK              
+ |        |     |  |  |     | 
+ |        |     |  |  |     +- _NEG_P              
+ |        |     |  |  |          
+ |        |     |  |  +- F_FRLONGK           
+ |        |     |  |  |    
+ |        |     |  |  +- F_PSHK              
+ |        |     |  |       
+ |        |     |  +- _FSUB               
+ |        |     |  |  | 
+ |        |     |  |  +- _FADD               
+ |        |     |  |     | 
+ |        |     |  |     +- F_PULK              
+ |        |     |  |     |    
+ |        |     |  |     +- F_PULL              
+ |        |     |  |     |    
+ |        |     |  |     +- F_ADDKL             
+ |        |     |  |     |  | 
+ |        |     |  |     |  +- F_XGKL              
+ |        |     |  |     |  |    
+ |        |     |  |     |  +- F_NORMK             
+ |        |     |  |     |     | 
+ |        |     |  |     |     +- F_MAXK              
+ |        |     |  |     |        | 
+ |        |     |  |     |        +- F_CLRK              
+ |        |     |  |     |             
+ |        |     |  |     +- F_PSHK               (see above)
+ |        |     |  |        
+ |        |     |  +- _FADD                (see above)
+ |        |     |  |  
+ |        |     |  +- _ILSEXT             
+ |        |     |  |    
+ |        |     |  +- _FDIV               
+ |        |     |  |  | 
+ |        |     |  |  +- F_PULL               (see above)
+ |        |     |  |  |  
+ |        |     |  |  +- F_PULK               (see above)
+ |        |     |  |  |  
+ |        |     |  |  +- F_DIVKL             
+ |        |     |  |  |  | 
+ |        |     |  |  |  +- F_MAXK               (see above)
+ |        |     |  |  |  |  
+ |        |     |  |  |  +- F_NORMK              (see above)
+ |        |     |  |  |     
+ |        |     |  |  +- F_PSHK               (see above)
+ |        |     |  |     
+ |        |     |  +- _FMUL               
+ |        |     |  |  | 
+ |        |     |  |  +- F_PULK               (see above)
+ |        |     |  |  |  
+ |        |     |  |  +- F_PULL               (see above)
+ |        |     |  |  |  
+ |        |     |  |  +- F_MULKL             
+ |        |     |  |  |  | 
+ |        |     |  |  |  +- F_CLRK               (see above)
+ |        |     |  |  |  |  
+ |        |     |  |  |  +- F_NORMK              (see above)
+ |        |     |  |  |     
+ |        |     |  |  +- F_PSHK               (see above)
+ |        |     |  |     
+ |        |     |  +- toupper             
+ |        |     |  |    
+ |        |     |  +- _FNEG               
+ |        |     |  |    
+ |        |     |  +- isdigit             
+ |        |     |       
+ |        |     +- _ILSEXT              (see above)
+ |        |     |  
+ |        |     +- _copyList           
+ |        |     |    
+ |        |     +- isspace              (see above)
+ |        |     |  
+ |        |     +- _strtol             
+ |        |        | 
+ |        |        +- isspace              (see above)
+ |        |        |  
+ |        |        +- isdigit              (see above)
+ |        |        |  
+ |        |        +- _strtoul            
+ |        |        |  | 
+ |        |        |  +- isspace              (see above)
+ |        |        |  |  
+ |        |        |  +- _ILSEXT              (see above)
+ |        |        |  |  
+ |        |        |  +- _LDIVU              
+ |        |        |  |  | 
+ |        |        |  |  +- _lDivMod            
+ |        |        |  |       
+ |        |        |  +- _LCMP_P             
+ |        |        |  |    
+ |        |        |  +- _LMULS16x32         
+ |        |        |  |  | 
+ |        |        |  |  +- _LNEG               
+ |        |        |  |       
+ |        |        |  +- CheckCharWithBase   
+ |        |        |  |  | 
+ |        |        |  |  +- toupper              (see above)
+ |        |        |  |     
+ |        |        |  +- toupper              (see above)
+ |        |        |     
+ |        |        +- _LNEG                (see above)
+ |        |           
+ |        +- _FDIV                (see above)
+ |        |  
+ |        +- _FSTRUNC            
+ |        |  | 
+ |        |  +- F_PULK               (see above)
+ |        |  |  
+ |        |  +- F_TOLONGK           
+ |        |  |    
+ |        |  +- L_PSHK              
+ |        |     | 
+ |        |     +- L_NEGK               (see above)
+ |        |        
+ |        +- _FSFLOAT             (see above)
+ |        |  
+ |        +- _FMUL                (see above)
+ |        |  
+ |        +- _ILSEXT              (see above)
+ |           
+ +- TC1_ISR             
     | 
-    +- Duty_Hi_Calculator  
-       | 
-       +- _CASE_SEARCH_8      
-       |    
-       +- strlen              
-       |    
-       +- sscanf              
-       |  | 
-       |  +- vsscanf             
-       |     | 
-       |     +- _getNum             
-       |     |    
-       |     +- _CASE_SEARCH_8       (see above)
-       |     |  
-       |     +- _CASE_CHECKED_BYTE  
-       |     |    
-       |     +- _strtod             
-       |     |  | 
-       |     |  +- isspace             
-       |     |  |    
-       |     |  +- _CASE_CHECKED_BYTE   (see above)
-       |     |  |  
-       |     |  +- _FCMP               
-       |     |  |    
-       |     |  +- _FSFLOAT            
-       |     |  |  | 
-       |     |  |  +- SL_PULK             
-       |     |  |  |  | 
-       |     |  |  |  +- L_NEGK              
-       |     |  |  |     | 
-       |     |  |  |     +- _NEG_P              
-       |     |  |  |          
-       |     |  |  +- F_FRLONGK           
-       |     |  |  |    
-       |     |  |  +- F_PSHK              
-       |     |  |       
-       |     |  +- _FSUB               
-       |     |  |  | 
-       |     |  |  +- _FADD               
-       |     |  |     | 
-       |     |  |     +- F_PULK              
-       |     |  |     |    
-       |     |  |     +- F_PULL              
-       |     |  |     |    
-       |     |  |     +- F_ADDKL             
-       |     |  |     |  | 
-       |     |  |     |  +- F_XGKL              
-       |     |  |     |  |    
-       |     |  |     |  +- F_NORMK             
-       |     |  |     |     | 
-       |     |  |     |     +- F_MAXK              
-       |     |  |     |        | 
-       |     |  |     |        +- F_CLRK              
-       |     |  |     |             
-       |     |  |     +- F_PSHK               (see above)
-       |     |  |        
-       |     |  +- _FADD                (see above)
-       |     |  |  
-       |     |  +- _ILSEXT             
-       |     |  |    
-       |     |  +- _FDIV               
-       |     |  |  | 
-       |     |  |  +- F_PULL               (see above)
-       |     |  |  |  
-       |     |  |  +- F_PULK               (see above)
-       |     |  |  |  
-       |     |  |  +- F_DIVKL             
-       |     |  |  |  | 
-       |     |  |  |  +- F_MAXK               (see above)
-       |     |  |  |  |  
-       |     |  |  |  +- F_NORMK              (see above)
-       |     |  |  |     
-       |     |  |  +- F_PSHK               (see above)
-       |     |  |     
-       |     |  +- _FMUL               
-       |     |  |  | 
-       |     |  |  +- F_PULK               (see above)
-       |     |  |  |  
-       |     |  |  +- F_PULL               (see above)
-       |     |  |  |  
-       |     |  |  +- F_MULKL             
-       |     |  |  |  | 
-       |     |  |  |  +- F_CLRK               (see above)
-       |     |  |  |  |  
-       |     |  |  |  +- F_NORMK              (see above)
-       |     |  |  |     
-       |     |  |  +- F_PSHK               (see above)
-       |     |  |     
-       |     |  +- toupper             
-       |     |  |    
-       |     |  +- _FNEG               
-       |     |  |    
-       |     |  +- isdigit             
-       |     |       
-       |     +- _ILSEXT              (see above)
-       |     |  
-       |     +- _copyList           
-       |     |    
-       |     +- isspace              (see above)
-       |     |  
-       |     +- _strtol             
-       |        | 
-       |        +- isspace              (see above)
-       |        |  
-       |        +- isdigit              (see above)
-       |        |  
-       |        +- _strtoul            
-       |        |  | 
-       |        |  +- isspace              (see above)
-       |        |  |  
-       |        |  +- _ILSEXT              (see above)
-       |        |  |  
-       |        |  +- _LDIVU              
-       |        |  |  | 
-       |        |  |  +- _lDivMod            
-       |        |  |       
-       |        |  +- _LCMP_P             
-       |        |  |    
-       |        |  +- _LMULS16x32         
-       |        |  |  | 
-       |        |  |  +- _LNEG               
-       |        |  |       
-       |        |  +- CheckCharWithBase   
-       |        |  |  | 
-       |        |  |  +- toupper              (see above)
-       |        |  |     
-       |        |  +- toupper              (see above)
-       |        |     
-       |        +- _LNEG                (see above)
-       |           
-       +- _FDIV                (see above)
-       |  
-       +- _FSTRUNC            
-       |  | 
-       |  +- F_PULK               (see above)
-       |  |  
-       |  +- F_TOLONGK           
-       |  |    
-       |  +- L_PSHK              
-       |     | 
-       |     +- L_NEGK               (see above)
-       |        
-       +- _FSFLOAT             (see above)
-       |  
-       +- _FMUL                (see above)
-       |  
-       +- _ILSEXT              (see above)
-          
+    +- output_PWM           (see above)
+       
 *********************************************************************************************
 STATISTIC SECTION
 ---------------------------------------------------------------------------------------------
 
 ExeFile:
 --------
-Number of blocks to be downloaded: 8
-Total size of all blocks to be downloaded: 5023
+Number of blocks to be downloaded: 7
+Total size of all blocks to be downloaded: 5012
 
