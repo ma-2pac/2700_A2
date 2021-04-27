@@ -6,9 +6,10 @@ There are two major sections which are the program overview and the testing proc
 # Members and roles
 
 **Fergus Charles** 
-- Lead developer for exercise 2
-- Assisted in the creation of exercise 3 and its testing
-- General debugging of overall system
+- Assisted in the creation of exercise 3, serial ext and its testing
+- Developed core for exercise 2
+- Serial and table output for ex1
+- Building integration and General debugging of overall system
 
 **Marco Tupaz** 
 - Assisted in the creation of exercise 3 and its testing
