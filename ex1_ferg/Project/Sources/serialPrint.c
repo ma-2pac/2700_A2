@@ -11,16 +11,13 @@ unsigned char table[100];
 
 
 //initialise the serial
-void Init_sci(char* start, char* add, char* mult,char* div,char* sqrt,char* sin,char* cos, char* bar){
+void Init_sci(void){
 
   SCI1BDH = 0x00;  // Set the baud rate at 9600
   SCI1BDL = 156; 
   SCI1CR2 = 0x2c; //re te enabled 
   SCI1CR2 |= 0x20; //enable to rdte intterupt
   re_place = 0; // place holder for recieving/transmitting sci string
-  
-  //Initialise serial ex1 string as string to be printed
-  sprintf(SCIString, "%s%s%s%s%s%s%s", start,add, mult, div,sqrt,sin,cos);
   SCI1CR2 |= 0x80;
 }
 

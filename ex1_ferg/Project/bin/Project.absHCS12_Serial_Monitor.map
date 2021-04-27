@@ -40,6 +40,7 @@ rtshc12.c.o (ansibf.lib)                Model: BANKED,        Lang: ANSI-C
 VREGS.C.o (ansibf.lib)                  Model: BANKED,        Lang: ANSI-C
 pwm.c.o                                 Model: BANKED,        Lang: ANSI-C
 pwm_ports.c.o                           Model: BANKED,        Lang: ANSI-C
+asciitable.c.o                          Model: BANKED,        Lang: ANSI-C
 
 *********************************************************************************************
 STARTUP SECTION
@@ -62,7 +63,7 @@ Section Name                    Size  Type     From       To       Segment
 .rodata1                         289     R     0xC163     0xC283   ROM_C000
 NON_BANKED                      4153     R     0xC284     0xD2BC   ROM_C000
 .copy                              7     R     0xD2BD     0xD2C3   ROM_C000
-.text                          10815     R   0x308000   0x30AA3E   PAGE_30
+.text                          10977     R   0x308000   0x30AAE0   PAGE_30
 .stack                          4096   R/W     0x1000     0x1FFF   RAM
 .data                              2   R/W     0x2000     0x2001   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
@@ -412,7 +413,7 @@ NON_BANKED                      4153     R     0xC284     0xD2BC   ROM_C000
 .vectSeg342_vect                   2     R     0xFFFE     0xFFFF   .vectSeg342
 
 Summary of section sizes per section type:
-READ_ONLY (R):        3D83 (dec:    15747)
+READ_ONLY (R):        3E25 (dec:    15909)
 READ_WRITE (R/W):     1227 (dec:     4647)
 NO_INIT (N/I):         190 (dec:      400)
 
@@ -777,38 +778,30 @@ MODULE:                 -- isr_vectors.c.o --
      _vect                                     FF80      7E     126       0   .abs_section_ff80
 MODULE:                 -- main.c.o --
 - PROCEDURES:
-     main                                    308000     380     896      10   .text       
+     main                                    308000     100     256       7   .text       
 - VARIABLES:
-     STRING...op........Int......1             C163      33      51       1   .rodata1    
-     STRING.add....10.2f..10.2f..2             C196      24      36       1   .rodata1    
-     STRING.mult...10.2f..10.2f..3             C1BA      24      36       1   .rodata1    
-     STRING.div....10.2f..10.2f..4             C1DE      24      36       1   .rodata1    
-     STRING.sqrt...10.2f..10.2f..5             C202      24      36       1   .rodata1    
-     STRING.sin....10.2f..10.2f..6             C226      24      36       1   .rodata1    
-     STRING.cos....10.2f..10.2f..7             C24A      25      37       1   .rodata1    
 MODULE:                 -- serialPrint.c.o --
 - PROCEDURES:
-     Init_sci                                308380      3D      61       2   .text       
+     Init_sci                                308100      16      22       2   .text       
      RE_ISR                                    C286      96     150       1   NON_BANKED  
 - VARIABLES:
-     STRING..s.s.s.s.s.s.s.1                   C26F       F      15       1   .rodata1    
      table_transmit                            2000       2       2       3   .data       
      re_place                                  2002       2       2       9   .bss        
 MODULE:                 -- timeFunc.c.o --
 - PROCEDURES:
-     timeFunc                                3083BD     421    1057     101   .text       
+     timeFunc                                308116     421    1057     101   .text       
 - VARIABLES:
 MODULE:                 -- timers.c.o --
 - PROCEDURES:
-     Init_TCNT                               3087DE       C      12       2   .text       
-     resetOF                                 3087EA       9       9       6   .text       
-     Stop_TCNT                               3087F3       B      11       2   .text       
+     Init_TCNT                               308537       C      12       2   .text       
+     resetOF                                 308543       9       9       6   .text       
+     Stop_TCNT                               30854C       B      11       2   .text       
      TOF_ISR                                   C31C      10      16       1   NON_BANKED  
 - VARIABLES:
      overFlows                                 2004       4       4      10   .bss        
 MODULE:                 -- Start12.c.o --
 - PROCEDURES:
-     Init                                    3087FE      29      41       2   .text       
+     Init                                    308557      29      41       2   .text       
      _Startup                                  C000      15      21       0   .init       
 - VARIABLES:
      _startupData                              C015       6       6       3   .startData  
@@ -816,29 +809,29 @@ MODULE:                 -- Start12.c.o --
      __SEG_END_SSTACK                          2000       0       0       1               
 MODULE:                 -- CTYPE.C.o (ansibf.lib) --
 - PROCEDURES:
-     isdigit                                 308827       E      14      10   .text       
-     isspace                                 308835      17      23       8   .text       
-     toupper                                 30884C      14      20       6   .text       
+     isdigit                                 308580       E      14      10   .text       
+     isspace                                 30858E      17      23       8   .text       
+     toupper                                 3085A5      14      20       6   .text       
 - VARIABLES:
 MODULE:                 -- MATH.C.o (ansibf.lib) --
 - PROCEDURES:
-     fabs                                    308860      2C      44       4   .text       
-     is_special                              30888C      59      89       6   .text       
-     sincos                                  3088E5     3AF     943      30   .text       
-     sin                                     308C94      C3     195       9   .text       
-     cos                                     308D57      AC     172       9   .text       
-     sqrt_r                                  308E03     1F0     496      14   .text       
-     sqrt                                    308FF3      A2     162       9   .text       
+     fabs                                    3085B9      2C      44       4   .text       
+     is_special                              3085E5      59      89       6   .text       
+     sincos                                  30863E     3AF     943      30   .text       
+     sin                                     3089ED      C3     195       9   .text       
+     cos                                     308AB0      AC     172       9   .text       
+     sqrt_r                                  308B5C     1F0     496      14   .text       
+     sqrt                                    308D4C      A2     162       9   .text       
 - VARIABLES:
      infinity                                  C01F       8       8      12   .rodata     
      nan_union                                 C027       8       8       4   .rodata     
 MODULE:                 -- PRINTF.C.o (ansibf.lib) --
 - PROCEDURES:
-     Ten                                     309095      F6     246      14   .text       
-     vprintf                                 30918B     AB4    2740     155   .text       
-     _out                                    309C3F       C      12       2   .text       
-     deposit_char                            309C4B       F      15       3   .text       
-     sprintf                                 309C5A      2F      47      16   .text       
+     Ten                                     308DEE      F6     246      14   .text       
+     vprintf                                 308EE4     AB4    2740     155   .text       
+     _out                                    309998       C      12       2   .text       
+     deposit_char                            3099A4       F      15       3   .text       
+     sprintf                                 3099B3      2F      47      16   .text       
 - VARIABLES:
      pow10                                     C02F      28      40       6   .rodata     
      pow16                                     C057      20      32       4   .rodata     
@@ -848,21 +841,21 @@ MODULE:                 -- PRINTF.C.o (ansibf.lib) --
      pbuf                                      2008       7       7      16   .bss        
 MODULE:                 -- SCANF.C.o (ansibf.lib) --
 - PROCEDURES:
-     _getNum                                 309C89      37      55       2   .text       
-     _copyList                               309CC0      B5     181       2   .text       
-     vsscanf                                 309D75     3BA     954      50   .text       
-     sscanf                                  30A12F      11      17       4   .text       
+     _getNum                                 3099E2      37      55       2   .text       
+     _copyList                               309A19      B5     181       2   .text       
+     vsscanf                                 309ACE     3BA     954      50   .text       
+     sscanf                                  309E88      11      17       4   .text       
 - VARIABLES:
 MODULE:                 -- STDLIB.C.o (ansibf.lib) --
 - PROCEDURES:
-     CheckCharWithBase                       30A140      3A      58       2   .text       
-     _strtoul                                30A17A     173     371      11   .text       
-     _strtol                                 30A2ED      D6     214       4   .text       
-     _strtod                                 30A3C3     568    1384      60   .text       
+     CheckCharWithBase                       309E99      3A      58       2   .text       
+     _strtoul                                309ED3     173     371      11   .text       
+     _strtol                                 30A046      D6     214       4   .text       
+     _strtod                                 30A11C     568    1384      60   .text       
 - VARIABLES:
 MODULE:                 -- STRING.C.o (ansibf.lib) --
 - PROCEDURES:
-     strlen                                  30A92B      14      20       6   .text       
+     strlen                                  30A684      14      20       6   .text       
 - VARIABLES:
 MODULE:                 -- DADD.C.o (ansibf.lib) --
 - PROCEDURES:
@@ -993,8 +986,8 @@ MODULE:                 -- pwm.c.o --
      TC5_ISR                                   D0A3      4C      76       1   NON_BANKED  
      Duty_Hi_Calculator                        D0EF     1CE     462      29   NON_BANKED  
 - VARIABLES:
-     STRING..d.1                               C27E       3       3       1   .rodata1    
-     STRING..f.2                               C281       3       3       1   .rodata1    
+     STRING..d.1                               C163       3       3       1   .rodata1    
+     STRING..f.2                               C166       3       3       1   .rodata1    
      Period                                    2206       4       4      17   .common     
      Frequency                                 220A       4       4       3   .common     
      Hi_count                                  220E       4       4      30   .common     
@@ -1005,17 +998,29 @@ MODULE:                 -- pwm.c.o --
      Percent                                   221D       4       4      11   .common     
      Int_Percent                               2221       2       2       2   .common     
      Duty_Hi                                   2223       4       4       5   .common     
-     SCIString                                 200F     1F4     500      11   .bss        
 MODULE:                 -- pwm_ports.c.o --
 - PROCEDURES:
-     enable_ports                            30A93F      39      57       2   .text       
-     Init_TC1                                30A978      27      39       2   .text       
-     Init_TC2                                30A99F      26      38       2   .text       
-     Init_TC3                                30A9C5      27      39       2   .text       
-     Init_TC4                                30A9EC      28      40       2   .text       
-     Init_TC5                                30AA14      2B      43       2   .text       
+     enable_ports                            30A698      39      57       2   .text       
+     Init_TC1                                30A6D1      27      39       2   .text       
+     Init_TC2                                30A6F8      26      38       2   .text       
+     Init_TC3                                30A71E      27      39       2   .text       
+     Init_TC4                                30A745      28      40       2   .text       
+     Init_TC5                                30A76D      2B      43       2   .text       
 - VARIABLES:
-     HiorLo                                    2203       1       1      16   .bss        
+     HiorLo                                    200F       1       1      16   .bss        
+MODULE:                 -- asciitable.c.o --
+- PROCEDURES:
+     create_ascii_table                      30A798     349     841      38   .text       
+- VARIABLES:
+     STRING...op........Int......1             C169      33      51       1   .rodata1    
+     STRING.add....10.2f..10.2f..2             C19C      24      36       1   .rodata1    
+     STRING.mult...10.2f..10.2f..3             C1C0      24      36       1   .rodata1    
+     STRING.div....10.2f..10.2f..4             C1E4      24      36       1   .rodata1    
+     STRING.sqrt...10.2f..10.2f..5             C208      24      36       1   .rodata1    
+     STRING.sin....10.2f..10.2f..6             C22C      24      36       1   .rodata1    
+     STRING.cos....10.2f..10.2f..7             C250      25      37       1   .rodata1    
+     STRING..s.s.s.s.s.s.s.8                   C275       F      15       1   .rodata1    
+     SCIString                                 2010     1F4     500      11   .bss        
 
 *********************************************************************************************
 MODULE STATISTIC
@@ -1023,8 +1028,8 @@ MODULE STATISTIC
 ---------------------------------------------------------------------------------------------
   mc9s12dg256.c.o                            400      0      0
   isr_vectors.c.o                              0      2    126
-  main.c.o                                     0    896    268
-  serialPrint.c.o                              4    211     15
+  main.c.o                                     0    256      0
+  serialPrint.c.o                              4    172      0
   timeFunc.c.o                                 0   1057      0
   timers.c.o                                   4     48      0
   Start12.c.o                                  0     62      0
@@ -1047,8 +1052,9 @@ MODULE STATISTIC
   FREGS.C.o (ansibf.lib)                       0    176      0
   rtshc12.c.o (ansibf.lib)                     2    523      0
   VREGS.C.o (ansibf.lib)                       0     28      0
-  pwm.c.o                                    533    842      6
+  pwm.c.o                                     33    842      6
   pwm_ports.c.o                                1    256      0
+  asciitable.c.o                             500    841    283
   other                                     4096     12      7
 
 *********************************************************************************************
@@ -1059,20 +1065,21 @@ SECTION: ".text"
   toupper fabs is_special sincos sin cos sqrt_r sqrt Ten vprintf _out 
   deposit_char sprintf _getNum _copyList vsscanf sscanf CheckCharWithBase 
   _strtoul _strtol _strtod strlen enable_ports Init_TC1 Init_TC2 Init_TC3 
-  Init_TC4 Init_TC5 
+  Init_TC4 Init_TC5 create_ascii_table 
 SECTION: ".data"
   table_transmit 
 SECTION: ".bss"
-  re_place overFlows pbuf SCIString HiorLo 
+  re_place overFlows pbuf HiorLo SCIString 
 SECTION: ".init"
   _Startup 
 SECTION: ".rodata"
   infinity nan_union pow10 pow16 pow8 fpow10 fpow_10 
 SECTION: ".rodata1"
-  STRING...op........Int......1 STRING.add....10.2f..10.2f..2 
-  STRING.mult...10.2f..10.2f..3 STRING.div....10.2f..10.2f..4 
-  STRING.sqrt...10.2f..10.2f..5 STRING.sin....10.2f..10.2f..6 
-  STRING.cos....10.2f..10.2f..7 STRING..s.s.s.s.s.s.s.1 STRING..d.1 STRING..f.2 
+  STRING..d.1 STRING..f.2 STRING...op........Int......1 
+  STRING.add....10.2f..10.2f..2 STRING.mult...10.2f..10.2f..3 
+  STRING.div....10.2f..10.2f..4 STRING.sqrt...10.2f..10.2f..5 
+  STRING.sin....10.2f..10.2f..6 STRING.cos....10.2f..10.2f..7 
+  STRING..s.s.s.s.s.s.s.8 
 SECTION: "NON_BANKED"
   UnimplementedISR RE_ISR TOF_ISR D_ADDKL _DADD _DSUB _DINC _DNEG D_MODF 
   D_FREXP D_LDEXP modf frexp RetErrDom ldexp _DCMP D_TOLONGK D_FRLONGK _DSFLOAT 
@@ -2122,8 +2129,8 @@ OBJECT LIST SORTED BY ADDRESS
      re_place                                  2002       2       2       9   .bss        
      overFlows                                 2004       4       4      10   .bss        
      pbuf                                      2008       7       7      16   .bss        
-     SCIString                                 200F     1F4     500      11   .bss        
-     HiorLo                                    2203       1       1      16   .bss        
+     HiorLo                                    200F       1       1      16   .bss        
+     SCIString                                 2010     1F4     500      11   .bss        
      errno                                     2204       2       2       5   .common     
      Period                                    2206       4       4      17   .common     
      Frequency                                 220A       4       4       3   .common     
@@ -2143,16 +2150,16 @@ OBJECT LIST SORTED BY ADDRESS
      pow8                                      C077      2C      44       4   .rodata     
      fpow10                                    C0A3      60      96       1   .rodata     
      fpow_10                                   C103      60      96       1   .rodata     
-     STRING...op........Int......1             C163      33      51       1   .rodata1    
-     STRING.add....10.2f..10.2f..2             C196      24      36       1   .rodata1    
-     STRING.mult...10.2f..10.2f..3             C1BA      24      36       1   .rodata1    
-     STRING.div....10.2f..10.2f..4             C1DE      24      36       1   .rodata1    
-     STRING.sqrt...10.2f..10.2f..5             C202      24      36       1   .rodata1    
-     STRING.sin....10.2f..10.2f..6             C226      24      36       1   .rodata1    
-     STRING.cos....10.2f..10.2f..7             C24A      25      37       1   .rodata1    
-     STRING..s.s.s.s.s.s.s.1                   C26F       F      15       1   .rodata1    
-     STRING..d.1                               C27E       3       3       1   .rodata1    
-     STRING..f.2                               C281       3       3       1   .rodata1    
+     STRING..d.1                               C163       3       3       1   .rodata1    
+     STRING..f.2                               C166       3       3       1   .rodata1    
+     STRING...op........Int......1             C169      33      51       1   .rodata1    
+     STRING.add....10.2f..10.2f..2             C19C      24      36       1   .rodata1    
+     STRING.mult...10.2f..10.2f..3             C1C0      24      36       1   .rodata1    
+     STRING.div....10.2f..10.2f..4             C1E4      24      36       1   .rodata1    
+     STRING.sqrt...10.2f..10.2f..5             C208      24      36       1   .rodata1    
+     STRING.sin....10.2f..10.2f..6             C22C      24      36       1   .rodata1    
+     STRING.cos....10.2f..10.2f..7             C250      25      37       1   .rodata1    
+     STRING..s.s.s.s.s.s.s.8                   C275       F      15       1   .rodata1    
      UnimplementedISR                          C284       2       2      56   NON_BANKED  
      RE_ISR                                    C286      96     150       1   NON_BANKED  
      TOF_ISR                                   C31C      10      16       1   NON_BANKED  
@@ -2243,43 +2250,44 @@ OBJECT LIST SORTED BY ADDRESS
      TC5_ISR                                   D0A3      4C      76       1   NON_BANKED  
      Duty_Hi_Calculator                        D0EF     1CE     462      29   NON_BANKED  
      _vect                                     FF80      7E     126       0   .abs_section_ff80
-     main                                    308000     380     896      10   .text       
-     Init_sci                                308380      3D      61       2   .text       
-     timeFunc                                3083BD     421    1057     101   .text       
-     Init_TCNT                               3087DE       C      12       2   .text       
-     resetOF                                 3087EA       9       9       6   .text       
-     Stop_TCNT                               3087F3       B      11       2   .text       
-     Init                                    3087FE      29      41       2   .text       
-     isdigit                                 308827       E      14      10   .text       
-     isspace                                 308835      17      23       8   .text       
-     toupper                                 30884C      14      20       6   .text       
-     fabs                                    308860      2C      44       4   .text       
-     is_special                              30888C      59      89       6   .text       
-     sincos                                  3088E5     3AF     943      30   .text       
-     sin                                     308C94      C3     195       9   .text       
-     cos                                     308D57      AC     172       9   .text       
-     sqrt_r                                  308E03     1F0     496      14   .text       
-     sqrt                                    308FF3      A2     162       9   .text       
-     Ten                                     309095      F6     246      14   .text       
-     vprintf                                 30918B     AB4    2740     155   .text       
-     _out                                    309C3F       C      12       2   .text       
-     deposit_char                            309C4B       F      15       3   .text       
-     sprintf                                 309C5A      2F      47      16   .text       
-     _getNum                                 309C89      37      55       2   .text       
-     _copyList                               309CC0      B5     181       2   .text       
-     vsscanf                                 309D75     3BA     954      50   .text       
-     sscanf                                  30A12F      11      17       4   .text       
-     CheckCharWithBase                       30A140      3A      58       2   .text       
-     _strtoul                                30A17A     173     371      11   .text       
-     _strtol                                 30A2ED      D6     214       4   .text       
-     _strtod                                 30A3C3     568    1384      60   .text       
-     strlen                                  30A92B      14      20       6   .text       
-     enable_ports                            30A93F      39      57       2   .text       
-     Init_TC1                                30A978      27      39       2   .text       
-     Init_TC2                                30A99F      26      38       2   .text       
-     Init_TC3                                30A9C5      27      39       2   .text       
-     Init_TC4                                30A9EC      28      40       2   .text       
-     Init_TC5                                30AA14      2B      43       2   .text       
+     main                                    308000     100     256       7   .text       
+     Init_sci                                308100      16      22       2   .text       
+     timeFunc                                308116     421    1057     101   .text       
+     Init_TCNT                               308537       C      12       2   .text       
+     resetOF                                 308543       9       9       6   .text       
+     Stop_TCNT                               30854C       B      11       2   .text       
+     Init                                    308557      29      41       2   .text       
+     isdigit                                 308580       E      14      10   .text       
+     isspace                                 30858E      17      23       8   .text       
+     toupper                                 3085A5      14      20       6   .text       
+     fabs                                    3085B9      2C      44       4   .text       
+     is_special                              3085E5      59      89       6   .text       
+     sincos                                  30863E     3AF     943      30   .text       
+     sin                                     3089ED      C3     195       9   .text       
+     cos                                     308AB0      AC     172       9   .text       
+     sqrt_r                                  308B5C     1F0     496      14   .text       
+     sqrt                                    308D4C      A2     162       9   .text       
+     Ten                                     308DEE      F6     246      14   .text       
+     vprintf                                 308EE4     AB4    2740     155   .text       
+     _out                                    309998       C      12       2   .text       
+     deposit_char                            3099A4       F      15       3   .text       
+     sprintf                                 3099B3      2F      47      16   .text       
+     _getNum                                 3099E2      37      55       2   .text       
+     _copyList                               309A19      B5     181       2   .text       
+     vsscanf                                 309ACE     3BA     954      50   .text       
+     sscanf                                  309E88      11      17       4   .text       
+     CheckCharWithBase                       309E99      3A      58       2   .text       
+     _strtoul                                309ED3     173     371      11   .text       
+     _strtol                                 30A046      D6     214       4   .text       
+     _strtod                                 30A11C     568    1384      60   .text       
+     strlen                                  30A684      14      20       6   .text       
+     enable_ports                            30A698      39      57       2   .text       
+     Init_TC1                                30A6D1      27      39       2   .text       
+     Init_TC2                                30A6F8      26      38       2   .text       
+     Init_TC3                                30A71E      27      39       2   .text       
+     Init_TC4                                30A745      28      40       2   .text       
+     Init_TC5                                30A76D      2B      43       2   .text       
+     create_ascii_table                      30A798     349     841      38   .text       
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
@@ -2412,13 +2420,9 @@ Duty_Hi_Calculator        USES _PTH dip_switch Duty_Hi_Calculator
 _vect                     USES UnimplementedISR RE_ISR TOF_ISR TC5_ISR TC4_ISR 
                                 TC3_ISR TC2_ISR TC1_ISR 
 main                      USES Init_TCNT timeFunc main Stop_TCNT 
-                                STRING...op........Int......1 sprintf _DLONG STRING.add....10.2f..10.2f..2 
-                                STRING.mult...10.2f..10.2f..3 STRING.div....10.2f..10.2f..4 
-                                STRING.sqrt...10.2f..10.2f..5 STRING.sin....10.2f..10.2f..6 
-                                STRING.cos....10.2f..10.2f..7 strlen Init_sci _DDRAB _DDRJ _PTJ _DDRH 
-                                enable_ports _FSFLOAT _FMUL 
+                                create_ascii_table Init_sci _DDRAB _DDRJ _PTJ _DDRH enable_ports 
+                                _FSFLOAT _FMUL 
 Init_sci                  USES _SCI1BD _SCI1CR2 re_place 
-                                STRING..s.s.s.s.s.s.s.1 SCIString sprintf 
 timeFunc                  USES _CASE_CHECKED timeFunc _DSFLOAT sqrt sin cos 
                                 _LMUL _LDIVS _FADD _FMUL _FDIV _DLONG _DSHORT 
                                 _CASE_CHECKED_BYTE _DADD _DMUL _DDIV _TCNT overFlows _LMULS16x32 
@@ -2464,6 +2468,11 @@ Init_TC2                  USES _TIOS _TCTL2 _TIE _TCNT _TC2 _TFLG1
 Init_TC3                  USES _TIOS _TCTL2 _TIE _TCNT _TC3 _TFLG1 
 Init_TC4                  USES _TIOS _TCTL1 _TIE _TCNT _TC4 _TFLG1 
 Init_TC5                  USES _TIOS _TCTL1 _TIE _TCNT _TC5 _TFLG1 HiorLo 
+create_ascii_table        USES STRING...op........Int......1 sprintf _DLONG 
+                                create_ascii_table STRING.add....10.2f..10.2f..2 
+                                STRING.mult...10.2f..10.2f..3 STRING.div....10.2f..10.2f..4 
+                                STRING.sqrt...10.2f..10.2f..5 STRING.sin....10.2f..10.2f..6 
+                                STRING.cos....10.2f..10.2f..7 strlen STRING..s.s.s.s.s.s.s.8 SCIString 
 
 *********************************************************************************************
 DEPENDENCY TREE
@@ -2756,72 +2765,72 @@ DEPENDENCY TREE
  |  |  | 
  |  |  +- resetOF              (see above)
  |  |     
- |  +- sprintf             
+ |  +- create_ascii_table  
  |  |  | 
- |  |  +- deposit_char        
- |  |  |    
- |  |  +- vprintf             
- |  |     | 
- |  |     +- _CASE_SEARCH_8_BYTE 
- |  |     |    
- |  |     +- _CASE_DIRECT_BYTE   
- |  |     |    
- |  |     +- _CASE_SEARCH_8      
- |  |     |    
- |  |     +- _ILSEXT              (see above)
- |  |     |  
- |  |     +- _LNEG                (see above)
- |  |     |  
- |  |     +- _LCMP_P             
- |  |     |    
- |  |     +- _DNEG                (see above)
- |  |     |  
- |  |     +- frexp                (see above)
- |  |     |  
- |  |     +- Ten                 
- |  |     |  | 
- |  |     |  +- _DMUL                (see above)
- |  |     |  |  
- |  |     |  +- _COPY                (see above)
- |  |     |     
- |  |     +- _DMUL                (see above)
- |  |     |  
- |  |     +- _DUTRUNC             (see above)
- |  |     |  
- |  |     +- _DUFLOAT            
- |  |     |  | 
- |  |     |  +- UL_PULK             
- |  |     |  |    
- |  |     |  +- D_FRLONGK            (see above)
- |  |     |  |  
- |  |     |  +- D_PSHK_UNARY         (see above)
- |  |     |     
- |  |     +- _DADD                (see above)
- |  |     |  
- |  |     +- _COPY                (see above)
- |  |     |  
- |  |     +- _DSUB                (see above)
- |  |     |  
- |  |     +- _DCMP                (see above)
- |  |     |  
- |  |     +- _LDIVU              
- |  |     |  | 
- |  |     |  +- _lDivMod             (see above)
- |  |     |     
- |  |     +- _LMODU              
- |  |     |  | 
- |  |     |  +- _lDivMod             (see above)
- |  |     |     
- |  |     +- _out                
- |  |          
- |  +- _DLONG               (see above)
- |  |  
- |  +- strlen              
- |  |    
+ |  |  +- sprintf             
+ |  |  |  | 
+ |  |  |  +- deposit_char        
+ |  |  |  |    
+ |  |  |  +- vprintf             
+ |  |  |     | 
+ |  |  |     +- _CASE_SEARCH_8_BYTE 
+ |  |  |     |    
+ |  |  |     +- _CASE_DIRECT_BYTE   
+ |  |  |     |    
+ |  |  |     +- _CASE_SEARCH_8      
+ |  |  |     |    
+ |  |  |     +- _ILSEXT              (see above)
+ |  |  |     |  
+ |  |  |     +- _LNEG                (see above)
+ |  |  |     |  
+ |  |  |     +- _LCMP_P             
+ |  |  |     |    
+ |  |  |     +- _DNEG                (see above)
+ |  |  |     |  
+ |  |  |     +- frexp                (see above)
+ |  |  |     |  
+ |  |  |     +- Ten                 
+ |  |  |     |  | 
+ |  |  |     |  +- _DMUL                (see above)
+ |  |  |     |  |  
+ |  |  |     |  +- _COPY                (see above)
+ |  |  |     |     
+ |  |  |     +- _DMUL                (see above)
+ |  |  |     |  
+ |  |  |     +- _DUTRUNC             (see above)
+ |  |  |     |  
+ |  |  |     +- _DUFLOAT            
+ |  |  |     |  | 
+ |  |  |     |  +- UL_PULK             
+ |  |  |     |  |    
+ |  |  |     |  +- D_FRLONGK            (see above)
+ |  |  |     |  |  
+ |  |  |     |  +- D_PSHK_UNARY         (see above)
+ |  |  |     |     
+ |  |  |     +- _DADD                (see above)
+ |  |  |     |  
+ |  |  |     +- _COPY                (see above)
+ |  |  |     |  
+ |  |  |     +- _DSUB                (see above)
+ |  |  |     |  
+ |  |  |     +- _DCMP                (see above)
+ |  |  |     |  
+ |  |  |     +- _LDIVU              
+ |  |  |     |  | 
+ |  |  |     |  +- _lDivMod             (see above)
+ |  |  |     |     
+ |  |  |     +- _LMODU              
+ |  |  |     |  | 
+ |  |  |     |  +- _lDivMod             (see above)
+ |  |  |     |     
+ |  |  |     +- _out                
+ |  |  |          
+ |  |  +- _DLONG               (see above)
+ |  |  |  
+ |  |  +- strlen              
+ |  |       
  |  +- Init_sci            
- |  |  | 
- |  |  +- sprintf              (see above)
- |  |     
+ |  |    
  |  +- enable_ports        
  |  |  | 
  |  |  +- _CASE_CHECKED_BYTE   (see above)
@@ -2989,5 +2998,5 @@ STATISTIC SECTION
 ExeFile:
 --------
 Number of blocks to be downloaded: 8
-Total size of all blocks to be downloaded: 15747
+Total size of all blocks to be downloaded: 15909
 
