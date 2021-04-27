@@ -1,6 +1,6 @@
 #include "pwm.h"
 #include <stdio.h>
-
+     
 // include the register/pin definitions
 #include "derivative.h"      /* derivative-specific definitions */
 volatile long int Period;
@@ -26,6 +26,8 @@ volatile int i = 0;
 
 
 //need to creae an over flow time of one hz 
+
+/*
 
 void Init_TC5 (int param) {
 
@@ -58,6 +60,8 @@ void Init_sci(void){
   re_place = 0;
   SCI1CR2 |= 0x20; //enable to rdte intterupt  
 }
+
+*/
 
 #pragma CODE_SEG __NEAR_SEG NON_BANKED /* Interrupt section for this module. Placement will be in NON_BANKED area. */
 __interrupt void RE_ISR(void) {
@@ -101,30 +105,48 @@ __interrupt void RE_ISR(void) {
 
 
 
+  
+
+
+
 
 // look at the isr_vectors.c for where this function is 
 //  added to the ISR vector table
+
+#pragma CODE_SEG __NEAR_SEG NON_BANKED  /*Interrupt section for this module. Placement will be in NON_BANKED area.*/ 
+__interrupt void TC1_ISR(void){
+   output_PWM(TC1);
+
+}
+
 #pragma CODE_SEG __NEAR_SEG NON_BANKED /* Interrupt section for this module. Placement will be in NON_BANKED area. */
 __interrupt void TC5_ISR(void) { 
-  //need to add an interrupt section in here that counts and resets
-   //int Hi_count = read_analog();
-   Hi_count = Duty_Hi_Calculator();
-   Lo_count = Period - Hi_count; 
+  //need to add an interrupt section in here that counts and resets      
+   output_PWM(TC5);
+}
+
+
+
+//module to run PWM for any output
+void output_PWM(unsigned int portName){
+  
+  Hi_count = Duty_Hi_Calculator();
+  Lo_count= Period - Hi_count;
+  
   if(HiorLo){
    //delay??
-   //TC5 = TC5 + Lo;
-   TC5 = TC5 + Lo_count;
+   portName = portName + Hi_count;    //portName is chosen interrupt pin
    HiorLo = 0;
    PTJ = 0x00;
    PORTB = 0x00;
   }
   else{
-   //TC5 = TC5 + Hi;
-   TC5 = TC5 + Hi_count;
+   portName = portName + Lo_count;
    HiorLo = 1;
    PTJ = 0x00;
    PORTB = 0xFF;  
   }
+  
 }
 
 long int Duty_Hi_Calculator(void){
@@ -204,35 +226,6 @@ long int Duty_Hi_Calculator(void){
    return Duty_Hi;
 }
 
-//module to run PWM for any output
-int run_PWM(int Hi_count, char enable_port[5], char output_port[5]){
-  
-  //int Lo_count;
-  
-  Lo_count= Period - Hi_count;
-  
-  if(HiorLo){
-   //delay??
-   TC5 = TC5 + Hi_count;    //TC5 is chosen interrupt pin
-   HiorLo = 0;
-   PTJ = 0x00;
-   PORTB = 0x00;
-  }
-  else{
-   TC5 = TC5 + Lo_count;
-   HiorLo = 1;
-   PTJ = 0x00;
-   PORTB = 0xFF;  
-  }
-  
-}
 
 
-//might be best to use ch7
 
-// how to set break points in an interrupt routine?
-//how they tested 
-//how did they demo it 
-// 3.662109375
-//1886
-// float round to int later from input 

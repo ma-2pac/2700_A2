@@ -1,9 +1,10 @@
 #ifndef TIMER_PORT_HEADER
 #define TIMER_PORT_HEADER
 
+extern char HiorLo;
 
 // choose which ports to enable
-void enable_ports(void);
+void enable_ports(int);
 
 //initialises port 1 of timer for output
 void Init_TC1 (void);
