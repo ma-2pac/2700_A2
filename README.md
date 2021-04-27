@@ -47,7 +47,13 @@ This program takes a duty cycle specified by the configuration of the DIP switch
 # Testing Procedures
 
 ## Exercise 1
-input here
+### Modular Testing
+- Start program with board connected
+- Set breakpoint at end of first FOR loop. Check entries in Data for timeInt array that time entries have been entered.
+- Set breakpoint at end of second FOR loop. Check entries in Data for timeLong array that time entires have been entered.
+- Set breakpoint at end of third FOR loop. Check entries in Data for timeFloat array that time entires have been entered.
+- Set breakpoint at end of fourth FOR loop. Check entries in Data for timeDouble array that time entires have been entered.
+- Run code without breakpoints. Check that values from array are displayed in table sent over serial output. 
 
 ## Exercise 2
 Successful demonstration of the code can be shown qualitatively through the board terminal.
