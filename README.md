@@ -24,7 +24,7 @@ There are two major sections which are the program overview and the testing proc
 # Program Overview
 
 ## Exercise 1
-The aim of this program was to record the time taken to perform different arithmetic functions on the HCS12 using different data types (int, float, long, double). The code would run through for loops for each data type performing the following operations, addition, multiplication, division, square root, sin and cos. The time taken for each operation would be measured and then stored in a designated location in an array. Upon running all loops, the results of these tests would be outputted to serial in a table format. 
+The aim of this program was to record the time taken to perform different arithmetic functions on the HCS12 using different data types (int, float, long, double). The code would run through for loops for each data type performing the following operations, addition, multiplication, division, square root, sin and cos. The time taken for each operation would be measured and then stored in a designated location in an array. Upon running all loops, the results of these tests would be outputted to serial in a table format, built through a seperate module, which stores this result in an external a string. A flag set upon serial start up ensures that this table goes out first.  
 
 ## Exercise 2
 This program aimed to use interrupts in C to receive and transmit messages. The HCS12 would be constantly ready to receive information sent to it via the serial port from the computer. Each character typed into the terminal from the computer would trigger a receive interrupt, sending the information to the board. Upon receiving a carriage return character, it would trigger the transfer interrupt that sends the data stored on the board back to the computer terminal via serial. 
@@ -69,7 +69,8 @@ Successful demonstration of the code can be shown qualitatively through the boar
 Successful demonstration of the code can be shown qualitatively through the output of the LEDs being brighter for higher duty cycles and dimmer for lower duty cycles. 
 
 ### Modular Testing
-- Start program with no switches UP. LEDs should be off or close to off
+- Start program with no switches UP. LEDs should be very dim as this is a duty_high of 1 count.
+- If Led's 
 - Toggle switch 1 to UP. The LEDs should be on and bright
 - Toggle switch 1 to DOWN and toggle switch 2 to UP. The LEDs should be on but slightly dimmer
 - Repeat for all other switches, observing brightness decreasing with each switch
