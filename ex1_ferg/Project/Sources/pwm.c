@@ -1,96 +1,111 @@
 #include "pwm.h"
 #include <stdio.h>
 #include "serialPrint.h"
+#include "pwm_ports.h"
 
 // include the register/pin definitions
 #include "derivative.h"      /* derivative-specific definitions */
 
-volatile long int Period;
+volatile long int Period; //amount of timer ticks per period
 volatile int frequency;
-char HiorLo;
-
-
-volatile int test;
-volatile long int Hi_count;;
-volatile long int Lo_count;
-
-volatile int dip_switch;
-unsigned char Duty_Array[2];
-unsigned char Period_Array[6];
-unsigned char Frequency_Array[3];
-volatile float Percent;
 volatile float Frequency;
-volatile long int Duty_Hi;
 
-volatile int Int_Percent;
+//volatile int test;
+volatile long int Hi_count; //used to control how long the signal is high
+volatile long int Lo_count; //used to control how long the signal is low
+
+volatile int dip_switch;   //stores port h
+unsigned char Duty_Array[2]; //used for serial duty cycle
+unsigned char Period_Array[6]; //used for the period when using serial
+unsigned char Frequency_Array[3]; //used for the ferquencey when using serial
+volatile float Percent; //% of duty high
+volatile int Int_Percent; //intermediate calculation
+volatile long int Duty_Hi; //the count of the high ticks
 
 
-//need to creae an over flow time of one hz 
-
-void Init_TC5 (void) {
-
-//mainsection from book
-   TSCR1 = 0x90; // enable TCNT and fast timer flag clear
-   TSCR2 = 0x07; // disable TCNT interrupt, set prescaler to 128
-   
-
-   //configure 05c
-   TIOS = 0x20; // enable OC5 function
-   TCTL1 = 0x04; //change pin action to toggle
-   TFLG1 = 0xFF; // clear all cl flag
-   TIE = 0x20; //enable interrupt of channel 5
-   
-   TC5 = TCNT + 100;
-   while(TFLG1 & TFLG1_C5F); // wait until OC0 pin go high after counting 2100   //debug
-   TCTL1 = 0x04; // set OC5 pin action to toggle
-   HiorLo = 0;
-}
- 
-
-// look at the isr_vectors.c for where this function is 
-//  added to the ISR vector table
+//interrupt routine for timer 1
 #pragma CODE_SEG __NEAR_SEG NON_BANKED /* Interrupt section for this module. Placement will be in NON_BANKED area. */
-__interrupt void TC5_ISR(void) { 
-  //need to add an interrupt section in here that counts and resets
-   //int Hi_count = read_analog();
-   Hi_count = Duty_Hi_Calculator();
-   Lo_count = Period - Hi_count; 
+__interrupt void TC1_ISR(void) { 
+   Hi_count = Duty_Hi_Calculator(); //count high
+   Lo_count = Period - Hi_count; //count low
   if(HiorLo){
-   //delay??
-   //TC5 = TC5 + Lo;
-   TC5 = TC5 + Lo_count;
+   TC1 = TC1 + Lo_count; //add low count to be the next interrupt.
    HiorLo = 0;
-   PTJ = 0x00;
-   PORTB = 0x00;
+   PTJ = 0x00; //disable leds.
+   PORTB = 0x00; //disable leds.
   }
   else{
-   //TC5 = TC5 + Hi;
-   TC5 = TC5 + Hi_count;
-   HiorLo = 1;
+   TC1 = TC1 + Hi_count; //add high count to be the next interrupt.
+   HiorLo = 1; //toggle hiorlo
    PTJ = 0x00;
-   PORTB = 0xFF;  
+   PORTB = 0xFF; //enable leds. 
   }
 }
 
+
+//#pragma CODE_SEG __NEAR_SEG NON_BANKED /* Interrupt section for this module. Placement will be in NON_BANKED area. */
+//__interrupt void TC2_ISR(void) { 
+  //need to add an interrupt section in here that counts and resets
+//   Hi_count = Duty_Hi_Calculator();
+//   Lo_count = Period - Hi_count; 
+//  if(HiorLo){
+//   TC5 = TC5 + Lo_count;
+//   HiorLo = 0;
+//   PTJ = 0x00;
+//   PORTB = 0x00;
+//  }
+//  else{
+//   TC5 = TC5 + Hi_count;
+//   HiorLo = 1;
+//   PTJ = 0x00;
+//   PORTB = 0xFF;  
+//  }
+//}
+
+
+
+// interrupt routine for output channel 5
+#pragma CODE_SEG __NEAR_SEG NON_BANKED /* Interrupt section for this module. Placement will be in NON_BANKED area. */
+__interrupt void TC5_ISR(void) { 
+   Hi_count = Duty_Hi_Calculator(); //count high
+   Lo_count = Period - Hi_count; //count low
+  if(HiorLo){
+   TC5 = TC5 + Lo_count; //add low count to be the next interrupt.
+   HiorLo = 0;
+   PTJ = 0x00; //disable leds.
+   PORTB = 0x00; //disable leds.
+  }
+  else{
+   TC5 = TC5 + Hi_count; //add high count to be the next interrupt.
+   HiorLo = 1; //toggle hiorlo
+   PTJ = 0x00;
+   PORTB = 0xFF; //enable leds. 
+  }
+}
+
+//calculating the desired duty high 
 long int Duty_Hi_Calculator(void){
    volatile int i = 0;
-   char re[100];
-   volatile int re_place;
-   dip_switch = PTH;
+   char re[100]; //set variables for use in serial case 127
+   volatile int re_place; // ""
+   dip_switch = PTH; //load dip switch
    
-   
+   //each number on the dip switch corresponds to a % duty high, starting with PH7
+   // with the number 1, increasing these from the left, with all others 0 with show a % high.
+   //With all high but switch 1, serial can be used to set these values. 
+      
    switch(dip_switch){
-    case 0:
-      Duty_Hi = 1;
+    case 0: //no pins enables
+      Duty_Hi = 1;   
       return Duty_Hi;
       Period = 1875;
       break;
-    case 128:
+    case 128: //ph7 or pin 1 enabled, 10% duty
       Percent = 0.1;
       Period = 1875;
       break;
     case 192:
-      Percent = 0.2;
+      Percent = 0.2; //pin 1 and 2 enabled, 20% duty
       Period = 1875;
       break;
     case 224:
@@ -113,41 +128,40 @@ long int Duty_Hi_Calculator(void){
       Percent = 0.7;
       Period = 1875;
       break;
-    case 255:
+    case 255: //all pins enabled 80% duty
       Percent = 0.8;
       Period = 1875;
       break;
     
-    case 127:
-
-        if (strlen(SCIString)>0 && SCIString[0] == '!'){
+    case 127: // all enabled but pin 1, uses serial
+      //type ! followed by 2 digits for a duty cycle
+      if (strlen(SCIString)>0 && SCIString[0] == '!'){
         i = 0;
         while (SCIString[i] != 10){
           Duty_Array[i] = SCIString[i+1];
           i++;
         }
-        sscanf(Duty_Array, "%d", &Int_Percent);
-        Percent = Int_Percent/100.00;
-      }
-      
+        sscanf(Duty_Array, "%d", &Int_Percent); //scan into variable
+        Percent = Int_Percent/100.00; //convert to float
+      }  
+      //tpye @ followed by 3 digits for a change in frequency
       if (strlen(SCIString)>0 && SCIString[0] == '@'){
         i = 0;
         while (SCIString[i] != 10){
           Frequency_Array[i] = SCIString[i+1];
           i++;
         }
-        sscanf(Frequency_Array, "%f", &Frequency);
-        Period = Frequency/(10000*0.00000533);   //frquency is 
-      } 
-      
+        sscanf(Frequency_Array, "%f", &Frequency); //scan into frequency variable
+        Period = Frequency/(10000*0.00000533);   //frquency calculation based on prescaler of 128
+      }  
       break;
       
-    default:
+    default: //dip switch true value used in calculations
       Percent = ((float) dip_switch)/255.00;
       Period = 1870;
       break;
    }
-   
+   //return the duty high
    Duty_Hi = Period*Percent;
    return Duty_Hi;
 }

@@ -1,6 +1,7 @@
 #ifndef TIMER_PORT_HEADER
 #define TIMER_PORT_HEADER
 
+extern char HiorLo;
 
 // choose which ports to enable
 void enable_ports(void);

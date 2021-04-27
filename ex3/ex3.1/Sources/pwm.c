@@ -125,6 +125,30 @@ __interrupt void TC5_ISR(void) {
    output_PWM(TC5);
 }
 
+
+
+//module to run PWM for any output
+void output_PWM(unsigned int portName){
+  
+  Hi_count = Duty_Hi_Calculator();
+  Lo_count= Period - Hi_count;
+  
+  if(HiorLo){
+   //delay??
+   portName = portName + Hi_count;    //portName is chosen interrupt pin
+   HiorLo = 0;
+   PTJ = 0x00;
+   PORTB = 0x00;
+  }
+  else{
+   portName = portName + Lo_count;
+   HiorLo = 1;
+   PTJ = 0x00;
+   PORTB = 0xFF;  
+  }
+  
+}
+
 long int Duty_Hi_Calculator(void){
 
    dip_switch = PTH;
@@ -203,35 +227,5 @@ long int Duty_Hi_Calculator(void){
 }
 
 
-//module to run PWM for any output
-void output_PWM(unsigned int portName){
-  
-  Hi_count = Duty_Hi_Calculator();
-  Lo_count= Period - Hi_count;
-  
-  if(HiorLo){
-   //delay??
-   portName = portName + Hi_count;    //portName is chosen interrupt pin
-   HiorLo = 0;
-   PTJ = 0x00;
-   PORTB = 0x00;
-  }
-  else{
-   portName = portName + Lo_count;
-   HiorLo = 1;
-   PTJ = 0x00;
-   PORTB = 0xFF;  
-  }
-  
-}
 
 
-
-//might be best to use ch7
-
-// how to set break points in an interrupt routine?
-//how they tested 
-//how did they demo it 
-// 3.662109375
-//1886
-// float round to int later from input 

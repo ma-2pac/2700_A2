@@ -9,7 +9,6 @@
   returns number of clock cycles elapsed (accounting for timer overflow interrupt routine overhead)
   */
   
-
 long timeFunc(int func, int datatype){
   unsigned int time1, time2;
   long time;
@@ -19,6 +18,7 @@ long timeFunc(int func, int datatype){
   
   switch(datatype){
     
+    //int case
     case 0:{
       volatile int ai, bi, ci;
       ai = 10;
@@ -82,6 +82,7 @@ long timeFunc(int func, int datatype){
       break;
     }
     
+    //long case
     case 1:{
       volatile long al, bl, cl;
       al = 154;
@@ -145,6 +146,7 @@ long timeFunc(int func, int datatype){
     break;
     }
     
+    //float case
     case 2:{
       volatile float af, bf, cf;
       af = 536.34;
@@ -207,7 +209,7 @@ long timeFunc(int func, int datatype){
       }
     break;
     }
-    
+    //double case
     case 3:{
       double ad, bd, cd;
       ad = 135.532;

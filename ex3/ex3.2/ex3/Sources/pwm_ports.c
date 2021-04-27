@@ -11,19 +11,14 @@ void enable_ports(void){
   //mainsection from book
   TSCR1 = 0x90; // enable TCNT and fast timer flag clear
   TSCR2 = 0x07; // disable TCNT interrupt, set prescaler to 128
-  
   TFLG1 = 0xFF; // clear all cl flag
 
-  Init_TC1();
-  Init_TC2();
-  Init_TC3();
-  Init_TC4();
-  Init_TC5();
+  //Init_TC1();
+  //Init_TC2();
+  //Init_TC3();
+  //Init_TC4();
+  Init_TC5(); //enable port 5
 }
-
-
-
-
 
 // configure port 1 for output
 void Init_TC1 (void) {
@@ -36,7 +31,7 @@ void Init_TC1 (void) {
    TC1 = TCNT + 100;
    while(TFLG1 & TFLG1_C1F); // wait until OC0 pin go high after counting 2100   //debug
    TCTL2 = 0x04; // set OC1 pin action to toggle
-   TC1 = TC1 + 900;
+   TC1 = TC1 + 900;   
 
 }
 
@@ -87,8 +82,7 @@ void Init_TC4 (void) {
 }
 
 // configure port 5 for output
-void Init_TC5 (void) {
-   
+void Init_TC5 (void) {   
    //configure 05c
    TIOS = 0x20; // enable OC5 function
    TCTL1 = 0x0C; //pull pin for PT5 high
@@ -98,5 +92,5 @@ void Init_TC5 (void) {
    while(TFLG1 & TFLG1_C5F); // wait until OC0 pin go high after counting 2100   //debug
    TCTL1 = 0x04; // set OC5 pin action to toggle
    TC5 = TC5 + 900;
-
+   HiorLo = 0;
 }

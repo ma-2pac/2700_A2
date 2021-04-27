@@ -7,16 +7,27 @@
 #include "serialPrint.h"
 #include <stdio.h>
 #include <string.h>
-  
+#include "pwm_ports.h"  
 
-char str[500];
+//char str[500];
 
-void tostring(char [], int);
+//void tostring(char [], int);
 
 void main(void) {
+  
   /******/
-  //ex 1
+  //ex 1 initialisation variables
   int i;
+
+  //variables for calculations
+  long ticks;
+  float timeInt[6];
+  float timeLong[6];
+  float timeFloat[6];
+  float timeDouble[6];
+  float timePerTick = 41.6; // time per tick in ns = 41.6ns for prescaler = 1
+  
+  //variables for storing calculations for printing to serial
   char start[100];
   char add[100];
   char mult[100];
@@ -26,32 +37,26 @@ void main(void) {
   char cos[100];
   char bar[100];
   
+  //initialise timers for ex 1
+  Init_TCNT();
   
-  long ticks;
-  float timeInt[6];
-  float timeLong[6];
-  float timeFloat[6];
-  float timeDouble[6];
-  float timePerTick = 41.6; // time per tick in ns = 41.6ns for prescaler = 1
-  
-  Init_TCNT(); // initialise timer
-    
-  for(i = 0; i < 6; i++){
+  //run ex 1 calculations in main - not to disturb pwm interrupts
+  for(i = 0; i < 6; i++){ //for integers
     ticks = timeFunc(i,0);
     timeInt[i] = ticks * timePerTick;
   }
   
-  for(i = 0; i < 6; i++){
+  for(i = 0; i < 6; i++){ //for long integers
     ticks = timeFunc(i,1);
     timeLong[i] = ticks * timePerTick;
   }
   
-  for(i = 0; i < 6; i++){
+  for(i = 0; i < 6; i++){ //for floats
     ticks = timeFunc(i,2);
     timeFloat[i] = ticks * timePerTick;
   }
   
-  for(i = 0; i < 6; i++){
+  for(i = 0; i < 6; i++){ //for doubles
     ticks = timeFunc(i,3);
     timeDouble[i] = ticks * timePerTick;
   }
@@ -59,16 +64,7 @@ void main(void) {
   //stop the counter
   Stop_TCNT();
 
-  //build the table for serial
-   /* 
-    operation,int16,long32,float32,double64
-  add,int[0],long[0],float[0],double[0]
-  mult,int[1],long[1],float[1],double[1]
-  divide,int[2],long[2],float[2],double[2]
-  sqrt,int[3],long[3],float[3],double[3]
-  sin,int[4],long[4],float[4],double[4]
-  cos,int[5],long[5],float[5],double[5]
-  */
+  //copy results into strings for printing to serial
   sprintf(start, "  op|       Int|      Long|    Double|     Float\n\r");
   sprintf(add, "add | %10.2f|%10.2f|%10.2f|%10.2f\n\r",timeInt[0],timeLong[0],timeFloat[0],timeDouble[0]);
   sprintf(mult, "mult| %10.2f|%10.2f|%10.2f|%10.2f\n\r",timeInt[1],timeLong[1],timeFloat[1],timeDouble[1]);  
@@ -77,38 +73,32 @@ void main(void) {
   sprintf(sin, "sin | %10.2f|%10.2f|%10.2f|%10.2f\n\r",timeInt[4],timeLong[4],timeFloat[4],timeDouble[4]);
   sprintf(cos, "cos | %10.2f|%10.2f|%10.2f|%10.2f\n\r!",timeInt[5],timeLong[5],timeFloat[5],timeDouble[5]);
   
+  //create ascii bar for table
   for(i=0; i<(strlen(add)-2);i++){
     bar[i] = '-';
   }
   bar[i] = 10;
   bar[i+1] = 13;
   
-  //function that builds serial table 
   
-  //initialise serial and print table for ex 1
-  //use marcos code
-  
-  /**/
-  //ex 2
+  /******/
+  //ex 2 and ex1 serial
+  //initilise serial
   Init_sci(start, add, mult, div, sqrt, sin, cos, bar);
   
   
   
-   /*****/
-   //ex3 
-   //start with my code which I know works 
-   //then add marcos. 
-    
-  //initialise timer output channels 
+  /*****/
+  //ex3 
   
-  //enable led 
+  //enable leds for pwm visualisation 
   DDRB = 0xFF;
   DDRJ = 0xF;
   PTJ = 0x00; 
   DDRH = 0x00;
   
-  Init_TC5();
-  
+  //function called to initialise timers and output compare chanels ;
+  enable_ports();
   
   
   //enble interrupts
