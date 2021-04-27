@@ -36,6 +36,7 @@ void serialPrint(char* string){
   * End of SCI Setup
   *****************************************************************/
   
+  // loop over elements in string
   for(i = 0; i < 512; i++){
     SCI1DRL = string[i]; /* Send first byte */
     while ((SCI1SR1 & 0x80) == 0) ; /* Wait for TDRE flag */

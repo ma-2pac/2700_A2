@@ -16,20 +16,21 @@ long timeFunc(int func, int datatype){
   long OFticks = 65536;
   int OFinterruptTicks = 24;
   
-  
+  // switch statement for datatype
   switch(datatype){
-    
     case 0:{
+      // create volatile integers for use by math operations
       volatile int ai, bi, ci;
       ai = 10;
       bi = 5;
+      // switch statement for math operatio
       switch(func){
-    
         case 0:{
-          resetOF();
-          time1 = TCNT;
-          ci = bi + ai;
-          time2 = TCNT;
+          resetOF();    // reset overflow counter
+          time1 = TCNT; // save initial time
+          ci = bi + ai; // run function
+          time2 = TCNT; // save final time
+          // compute time elapsed
           time = (time2 - time1) + (overFlows * OFticks) - (overFlows * OFinterruptTicks);
         break;
         }
@@ -271,7 +272,7 @@ long timeFunc(int func, int datatype){
     break;
     }
   }
-  
+  // return time (ticks) elapsed by function
   return time;
   
 }
