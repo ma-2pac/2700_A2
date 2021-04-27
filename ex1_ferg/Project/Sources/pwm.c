@@ -43,25 +43,63 @@ __interrupt void TC1_ISR(void) {
 }
 
 
-//#pragma CODE_SEG __NEAR_SEG NON_BANKED /* Interrupt section for this module. Placement will be in NON_BANKED area. */
-//__interrupt void TC2_ISR(void) { 
-  //need to add an interrupt section in here that counts and resets
-//   Hi_count = Duty_Hi_Calculator();
-//   Lo_count = Period - Hi_count; 
-//  if(HiorLo){
-//   TC5 = TC5 + Lo_count;
-//   HiorLo = 0;
-//   PTJ = 0x00;
-//   PORTB = 0x00;
-//  }
-//  else{
-//   TC5 = TC5 + Hi_count;
-//   HiorLo = 1;
-//   PTJ = 0x00;
-//   PORTB = 0xFF;  
-//  }
-//}
+// interrupt routine for output channel 5
+#pragma CODE_SEG __NEAR_SEG NON_BANKED /* Interrupt section for this module. Placement will be in NON_BANKED area. */
+__interrupt void TC2_ISR(void) { 
+   Hi_count = Duty_Hi_Calculator(); //count high
+   Lo_count = Period - Hi_count; //count low
+  if(HiorLo){
+   TC2 = TC2 + Lo_count; //add low count to be the next interrupt.
+   HiorLo = 0;
+   PTJ = 0x00; //disable leds.
+   PORTB = 0x00; //disable leds.
+  }
+  else{
+   TC2 = TC2 + Hi_count; //add high count to be the next interrupt.
+   HiorLo = 1; //toggle hiorlo
+   PTJ = 0x00;
+   PORTB = 0xFF; //enable leds. 
+  }
+}
 
+
+// interrupt routine for output channel 5
+#pragma CODE_SEG __NEAR_SEG NON_BANKED /* Interrupt section for this module. Placement will be in NON_BANKED area. */
+__interrupt void TC3_ISR(void) { 
+   Hi_count = Duty_Hi_Calculator(); //count high
+   Lo_count = Period - Hi_count; //count low
+  if(HiorLo){
+   TC3 = TC3 + Lo_count; //add low count to be the next interrupt.
+   HiorLo = 0;
+   PTJ = 0x00; //disable leds.
+   PORTB = 0x00; //disable leds.
+  }
+  else{
+   TC3 = TC3 + Hi_count; //add high count to be the next interrupt.
+   HiorLo = 1; //toggle hiorlo
+   PTJ = 0x00;
+   PORTB = 0xFF; //enable leds. 
+  }
+}
+
+// interrupt routine for output channel 5
+#pragma CODE_SEG __NEAR_SEG NON_BANKED /* Interrupt section for this module. Placement will be in NON_BANKED area. */
+__interrupt void TC4_ISR(void) { 
+   Hi_count = Duty_Hi_Calculator(); //count high
+   Lo_count = Period - Hi_count; //count low
+  if(HiorLo){
+   TC4 = TC4 + Lo_count; //add low count to be the next interrupt.
+   HiorLo = 0;
+   PTJ = 0x00; //disable leds.
+   PORTB = 0x00; //disable leds.
+  }
+  else{
+   TC4 = TC4 + Hi_count; //add high count to be the next interrupt.
+   HiorLo = 1; //toggle hiorlo
+   PTJ = 0x00;
+   PORTB = 0xFF; //enable leds. 
+  }
+}
 
 
 // interrupt routine for output channel 5

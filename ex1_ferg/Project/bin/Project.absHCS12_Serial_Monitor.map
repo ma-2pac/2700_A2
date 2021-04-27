@@ -49,7 +49,7 @@ _startupData is allocated at 0xC015 and uses 6 Bytes
 extern struct _tagStartup {
   unsigned nofZeroOut     1
   _Range   pZeroOut       0x2000     551
-  _Copy    *toCopyDownBeg 0xD1D9
+  _Copy    *toCopyDownBeg 0xD2BD
 } _startupData;
 
 *********************************************************************************************
@@ -60,9 +60,9 @@ Section Name                    Size  Type     From       To       Segment
 .startData                        10     R     0xC015     0xC01E   ROM_C000
 .rodata                          324     R     0xC01F     0xC162   ROM_C000
 .rodata1                         289     R     0xC163     0xC283   ROM_C000
-NON_BANKED                      3925     R     0xC284     0xD1D8   ROM_C000
-.copy                              7     R     0xD1D9     0xD1DF   ROM_C000
-.text                          10611     R   0x308000   0x30A972   PAGE_30
+NON_BANKED                      4153     R     0xC284     0xD2BC   ROM_C000
+.copy                              7     R     0xD2BD     0xD2C3   ROM_C000
+.text                          10815     R   0x308000   0x30AA3E   PAGE_30
 .stack                          4096   R/W     0x1000     0x1FFF   RAM
 .data                              2   R/W     0x2000     0x2001   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
@@ -412,7 +412,7 @@ NON_BANKED                      3925     R     0xC284     0xD1D8   ROM_C000
 .vectSeg342_vect                   2     R     0xFFFE     0xFFFF   .vectSeg342
 
 Summary of section sizes per section type:
-READ_ONLY (R):        3BD3 (dec:    15315)
+READ_ONLY (R):        3D83 (dec:    15747)
 READ_WRITE (R/W):     1227 (dec:     4647)
 NO_INIT (N/I):         190 (dec:      400)
 
@@ -466,19 +466,19 @@ MODULE:                 -- mc9s12dg256.c.o --
      _RTICTL                                     3B       1       1       0   .abs_section_3b
      _COPCTL                                     3C       1       1       0   .abs_section_3c
      _ARMCOP                                     3F       1       1       0   .abs_section_3f
-     _TIOS                                       40       1       1       1   .abs_section_40
+     _TIOS                                       40       1       1       5   .abs_section_40
      _CFORC                                      41       1       1       0   .abs_section_41
      _OC7M                                       42       1       1       0   .abs_section_42
      _OC7D                                       43       1       1       0   .abs_section_43
      _TSCR1                                      46       1       1       3   .abs_section_46
      _TTOV                                       47       1       1       0   .abs_section_47
-     _TCTL1                                      48       1       1       2   .abs_section_48
-     _TCTL2                                      49       1       1       0   .abs_section_49
+     _TCTL1                                      48       1       1       4   .abs_section_48
+     _TCTL2                                      49       1       1       6   .abs_section_49
      _TCTL3                                      4A       1       1       0   .abs_section_4a
      _TCTL4                                      4B       1       1       0   .abs_section_4b
-     _TIE                                        4C       1       1       1   .abs_section_4c
+     _TIE                                        4C       1       1       5   .abs_section_4c
      _TSCR2                                      4D       1       1       3   .abs_section_4d
-     _TFLG1                                      4E       1       1       3   .abs_section_4e
+     _TFLG1                                      4E       1       1      11   .abs_section_4e
      _TFLG2                                      4F       1       1       0   .abs_section_4f
      _PACTL                                      60       1       1       0   .abs_section_60
      _PAFLG                                      61       1       1       0   .abs_section_61
@@ -646,7 +646,7 @@ MODULE:                 -- mc9s12dg256.c.o --
      _PPSH                                      265       1       1       0   .abs_section_265
      _PIEH                                      266       1       1       0   .abs_section_266
      _PIFH                                      267       1       1       0   .abs_section_267
-     _PTJ                                       268       1       1       5   .abs_section_268
+     _PTJ                                       268       1       1      11   .abs_section_268
      _PTIJ                                      269       1       1       0   .abs_section_269
      _DDRJ                                      26A       1       1       1   .abs_section_26a
      _RDRJ                                      26B       1       1       0   .abs_section_26b
@@ -711,15 +711,15 @@ MODULE:                 -- mc9s12dg256.c.o --
      _CAN4TXDSR7                                2BB       1       1       0   .abs_section_2bb
      _CAN4TXDLR                                 2BC       1       1       0   .abs_section_2bc
      _CAN4TXTBPR                                2BD       1       1       0   .abs_section_2bd
-     _PORTAB                                      0       2       2       4   .abs_section_0
+     _PORTAB                                      0       2       2      10   .abs_section_0
      _DDRAB                                       2       2       2       1   .abs_section_2
      _PARTID                                     1A       2       2       0   .abs_section_1a
-     _TCNT                                       44       2       2       3   .abs_section_44
+     _TCNT                                       44       2       2       7   .abs_section_44
      _TC0                                        50       2       2       0   .abs_section_50
-     _TC1                                        52       2       2       4   .abs_section_52
-     _TC2                                        54       2       2       0   .abs_section_54
-     _TC3                                        56       2       2       0   .abs_section_56
-     _TC4                                        58       2       2       0   .abs_section_58
+     _TC1                                        52       2       2       7   .abs_section_52
+     _TC2                                        54       2       2       7   .abs_section_54
+     _TC3                                        56       2       2       7   .abs_section_56
+     _TC4                                        58       2       2       7   .abs_section_58
      _TC5                                        5A       2       2       7   .abs_section_5a
      _TC6                                        5C       2       2       0   .abs_section_5c
      _TC7                                        5E       2       2       0   .abs_section_5e
@@ -772,12 +772,12 @@ MODULE:                 -- mc9s12dg256.c.o --
      _CAN4TXTSR                                 2BE       2       2       0   .abs_section_2be
 MODULE:                 -- isr_vectors.c.o --
 - PROCEDURES:
-     UnimplementedISR                          C284       2       2      59   NON_BANKED  
+     UnimplementedISR                          C284       2       2      56   NON_BANKED  
 - VARIABLES:
      _vect                                     FF80      7E     126       0   .abs_section_ff80
 MODULE:                 -- main.c.o --
 - PROCEDURES:
-     main                                    308000     379     889      10   .text       
+     main                                    308000     380     896      10   .text       
 - VARIABLES:
      STRING...op........Int......1             C163      33      51       1   .rodata1    
      STRING.add....10.2f..10.2f..2             C196      24      36       1   .rodata1    
@@ -788,7 +788,7 @@ MODULE:                 -- main.c.o --
      STRING.cos....10.2f..10.2f..7             C24A      25      37       1   .rodata1    
 MODULE:                 -- serialPrint.c.o --
 - PROCEDURES:
-     Init_sci                                308379      3D      61       2   .text       
+     Init_sci                                308380      3D      61       2   .text       
      RE_ISR                                    C286      96     150       1   NON_BANKED  
 - VARIABLES:
      STRING..s.s.s.s.s.s.s.1                   C26F       F      15       1   .rodata1    
@@ -796,19 +796,19 @@ MODULE:                 -- serialPrint.c.o --
      re_place                                  2002       2       2       9   .bss        
 MODULE:                 -- timeFunc.c.o --
 - PROCEDURES:
-     timeFunc                                3083B6     421    1057     101   .text       
+     timeFunc                                3083BD     421    1057     101   .text       
 - VARIABLES:
 MODULE:                 -- timers.c.o --
 - PROCEDURES:
-     Init_TCNT                               3087D7       C      12       2   .text       
-     resetOF                                 3087E3       9       9       6   .text       
-     Stop_TCNT                               3087EC       B      11       2   .text       
+     Init_TCNT                               3087DE       C      12       2   .text       
+     resetOF                                 3087EA       9       9       6   .text       
+     Stop_TCNT                               3087F3       B      11       2   .text       
      TOF_ISR                                   C31C      10      16       1   NON_BANKED  
 - VARIABLES:
      overFlows                                 2004       4       4      10   .bss        
 MODULE:                 -- Start12.c.o --
 - PROCEDURES:
-     Init                                    3087F7      29      41       2   .text       
+     Init                                    3087FE      29      41       2   .text       
      _Startup                                  C000      15      21       0   .init       
 - VARIABLES:
      _startupData                              C015       6       6       3   .startData  
@@ -816,29 +816,29 @@ MODULE:                 -- Start12.c.o --
      __SEG_END_SSTACK                          2000       0       0       1               
 MODULE:                 -- CTYPE.C.o (ansibf.lib) --
 - PROCEDURES:
-     isdigit                                 308820       E      14      10   .text       
-     isspace                                 30882E      17      23       8   .text       
-     toupper                                 308845      14      20       6   .text       
+     isdigit                                 308827       E      14      10   .text       
+     isspace                                 308835      17      23       8   .text       
+     toupper                                 30884C      14      20       6   .text       
 - VARIABLES:
 MODULE:                 -- MATH.C.o (ansibf.lib) --
 - PROCEDURES:
-     fabs                                    308859      2C      44       4   .text       
-     is_special                              308885      59      89       6   .text       
-     sincos                                  3088DE     3AF     943      30   .text       
-     sin                                     308C8D      C3     195       9   .text       
-     cos                                     308D50      AC     172       9   .text       
-     sqrt_r                                  308DFC     1F0     496      14   .text       
-     sqrt                                    308FEC      A2     162       9   .text       
+     fabs                                    308860      2C      44       4   .text       
+     is_special                              30888C      59      89       6   .text       
+     sincos                                  3088E5     3AF     943      30   .text       
+     sin                                     308C94      C3     195       9   .text       
+     cos                                     308D57      AC     172       9   .text       
+     sqrt_r                                  308E03     1F0     496      14   .text       
+     sqrt                                    308FF3      A2     162       9   .text       
 - VARIABLES:
      infinity                                  C01F       8       8      12   .rodata     
      nan_union                                 C027       8       8       4   .rodata     
 MODULE:                 -- PRINTF.C.o (ansibf.lib) --
 - PROCEDURES:
-     Ten                                     30908E      F6     246      14   .text       
-     vprintf                                 309184     AB4    2740     155   .text       
-     _out                                    309C38       C      12       2   .text       
-     deposit_char                            309C44       F      15       3   .text       
-     sprintf                                 309C53      2F      47      16   .text       
+     Ten                                     309095      F6     246      14   .text       
+     vprintf                                 30918B     AB4    2740     155   .text       
+     _out                                    309C3F       C      12       2   .text       
+     deposit_char                            309C4B       F      15       3   .text       
+     sprintf                                 309C5A      2F      47      16   .text       
 - VARIABLES:
      pow10                                     C02F      28      40       6   .rodata     
      pow16                                     C057      20      32       4   .rodata     
@@ -848,21 +848,21 @@ MODULE:                 -- PRINTF.C.o (ansibf.lib) --
      pbuf                                      2008       7       7      16   .bss        
 MODULE:                 -- SCANF.C.o (ansibf.lib) --
 - PROCEDURES:
-     _getNum                                 309C82      37      55       2   .text       
-     _copyList                               309CB9      B5     181       2   .text       
-     vsscanf                                 309D6E     3BA     954      50   .text       
-     sscanf                                  30A128      11      17       4   .text       
+     _getNum                                 309C89      37      55       2   .text       
+     _copyList                               309CC0      B5     181       2   .text       
+     vsscanf                                 309D75     3BA     954      50   .text       
+     sscanf                                  30A12F      11      17       4   .text       
 - VARIABLES:
 MODULE:                 -- STDLIB.C.o (ansibf.lib) --
 - PROCEDURES:
-     CheckCharWithBase                       30A139      3A      58       2   .text       
-     _strtoul                                30A173     173     371      11   .text       
-     _strtol                                 30A2E6      D6     214       4   .text       
-     _strtod                                 30A3BC     568    1384      60   .text       
+     CheckCharWithBase                       30A140      3A      58       2   .text       
+     _strtoul                                30A17A     173     371      11   .text       
+     _strtol                                 30A2ED      D6     214       4   .text       
+     _strtod                                 30A3C3     568    1384      60   .text       
 - VARIABLES:
 MODULE:                 -- STRING.C.o (ansibf.lib) --
 - PROCEDURES:
-     strlen                                  30A924      14      20       6   .text       
+     strlen                                  30A92B      14      20       6   .text       
 - VARIABLES:
 MODULE:                 -- DADD.C.o (ansibf.lib) --
 - PROCEDURES:
@@ -972,7 +972,7 @@ MODULE:                 -- rtshc12.c.o (ansibf.lib) --
      _COPY                                     CEFA       8       8      16   NON_BANKED  
      _CASE_DIRECT_BYTE                         CF02       5       5       1   NON_BANKED  
      _CASE_CHECKED                             CF07       B      11       4   NON_BANKED  
-     _CASE_CHECKED_BYTE                        CF12      14      20       7   NON_BANKED  
+     _CASE_CHECKED_BYTE                        CF12      14      20       8   NON_BANKED  
      _CASE_SEARCH_8                            CF26      17      23       3   NON_BANKED  
      _CASE_SEARCH_8_BYTE                       CF3D      1A      26       1   NON_BANKED  
 - VARIABLES:
@@ -987,15 +987,18 @@ MODULE:                 -- VREGS.C.o (ansibf.lib) --
 MODULE:                 -- pwm.c.o --
 - PROCEDURES:
      TC1_ISR                                   CF73      4C      76       1   NON_BANKED  
-     TC5_ISR                                   CFBF      4C      76       1   NON_BANKED  
-     Duty_Hi_Calculator                        D00B     1CE     462      23   NON_BANKED  
+     TC2_ISR                                   CFBF      4C      76       1   NON_BANKED  
+     TC3_ISR                                   D00B      4C      76       1   NON_BANKED  
+     TC4_ISR                                   D057      4C      76       1   NON_BANKED  
+     TC5_ISR                                   D0A3      4C      76       1   NON_BANKED  
+     Duty_Hi_Calculator                        D0EF     1CE     462      29   NON_BANKED  
 - VARIABLES:
      STRING..d.1                               C27E       3       3       1   .rodata1    
      STRING..f.2                               C281       3       3       1   .rodata1    
-     Period                                    2206       4       4      11   .common     
+     Period                                    2206       4       4      17   .common     
      Frequency                                 220A       4       4       3   .common     
-     Hi_count                                  220E       4       4      12   .common     
-     Lo_count                                  2212       4       4       6   .common     
+     Hi_count                                  220E       4       4      30   .common     
+     Lo_count                                  2212       4       4      15   .common     
      dip_switch                                2216       2       2       3   .common     
      Duty_Array                                2218       2       2       2   .common     
      Frequency_Array                           221A       3       3       2   .common     
@@ -1005,10 +1008,14 @@ MODULE:                 -- pwm.c.o --
      SCIString                                 200F     1F4     500      11   .bss        
 MODULE:                 -- pwm_ports.c.o --
 - PROCEDURES:
-     enable_ports                            30A938      10      16       2   .text       
-     Init_TC5                                30A948      2B      43       2   .text       
+     enable_ports                            30A93F      39      57       2   .text       
+     Init_TC1                                30A978      27      39       2   .text       
+     Init_TC2                                30A99F      26      38       2   .text       
+     Init_TC3                                30A9C5      27      39       2   .text       
+     Init_TC4                                30A9EC      28      40       2   .text       
+     Init_TC5                                30AA14      2B      43       2   .text       
 - VARIABLES:
-     HiorLo                                    2203       1       1       7   .bss        
+     HiorLo                                    2203       1       1      16   .bss        
 
 *********************************************************************************************
 MODULE STATISTIC
@@ -1016,7 +1023,7 @@ MODULE STATISTIC
 ---------------------------------------------------------------------------------------------
   mc9s12dg256.c.o                            400      0      0
   isr_vectors.c.o                              0      2    126
-  main.c.o                                     0    889    268
+  main.c.o                                     0    896    268
   serialPrint.c.o                              4    211     15
   timeFunc.c.o                                 0   1057      0
   timers.c.o                                   4     48      0
@@ -1040,8 +1047,8 @@ MODULE STATISTIC
   FREGS.C.o (ansibf.lib)                       0    176      0
   rtshc12.c.o (ansibf.lib)                     2    523      0
   VREGS.C.o (ansibf.lib)                       0     28      0
-  pwm.c.o                                    533    614      6
-  pwm_ports.c.o                                1     59      0
+  pwm.c.o                                    533    842      6
+  pwm_ports.c.o                                1    256      0
   other                                     4096     12      7
 
 *********************************************************************************************
@@ -1051,7 +1058,8 @@ SECTION: ".text"
   main Init_sci timeFunc Init_TCNT resetOF Stop_TCNT Init isdigit isspace 
   toupper fabs is_special sincos sin cos sqrt_r sqrt Ten vprintf _out 
   deposit_char sprintf _getNum _copyList vsscanf sscanf CheckCharWithBase 
-  _strtoul _strtol _strtod strlen enable_ports Init_TC5 
+  _strtoul _strtol _strtod strlen enable_ports Init_TC1 Init_TC2 Init_TC3 
+  Init_TC4 Init_TC5 
 SECTION: ".data"
   table_transmit 
 SECTION: ".bss"
@@ -1075,8 +1083,8 @@ SECTION: "NON_BANKED"
   F_PULL F_PSHK F_XGKL F_CLRK F_MAXK F_NORMK _LCMP _LCMP_P _LNEG _LINC _LMUL 
   _LMULS16x32 _lDivMod _LDIVU _NEG_P _LDIVS _LMODU _ILSEXT _COPY 
   _CASE_DIRECT_BYTE _CASE_CHECKED _CASE_CHECKED_BYTE _CASE_SEARCH_8 
-  _CASE_SEARCH_8_BYTE L_NEGK L_PSHK UL_PULK SL_PULK TC1_ISR TC5_ISR 
-  Duty_Hi_Calculator 
+  _CASE_SEARCH_8_BYTE L_NEGK L_PSHK UL_PULK SL_PULK TC1_ISR TC2_ISR TC3_ISR 
+  TC4_ISR TC5_ISR Duty_Hi_Calculator 
 SECTION: ".abs_section_8"
   _PORTE 
 SECTION: ".abs_section_9"
@@ -1769,7 +1777,7 @@ SECTION: ".common"
 OBJECT LIST SORTED BY ADDRESS
      Name                                      Addr   hSize   dSize     Ref    Section   RLIB
 ---------------------------------------------------------------------------------------------
-     _PORTAB                                      0       2       2       4   .abs_section_0
+     _PORTAB                                      0       2       2      10   .abs_section_0
      _DDRAB                                       2       2       2       1   .abs_section_2
      _PORTE                                       8       1       1       0   .abs_section_8
      _DDRE                                        9       1       1       0   .abs_section_9
@@ -1809,26 +1817,26 @@ OBJECT LIST SORTED BY ADDRESS
      _RTICTL                                     3B       1       1       0   .abs_section_3b
      _COPCTL                                     3C       1       1       0   .abs_section_3c
      _ARMCOP                                     3F       1       1       0   .abs_section_3f
-     _TIOS                                       40       1       1       1   .abs_section_40
+     _TIOS                                       40       1       1       5   .abs_section_40
      _CFORC                                      41       1       1       0   .abs_section_41
      _OC7M                                       42       1       1       0   .abs_section_42
      _OC7D                                       43       1       1       0   .abs_section_43
-     _TCNT                                       44       2       2       3   .abs_section_44
+     _TCNT                                       44       2       2       7   .abs_section_44
      _TSCR1                                      46       1       1       3   .abs_section_46
      _TTOV                                       47       1       1       0   .abs_section_47
-     _TCTL1                                      48       1       1       2   .abs_section_48
-     _TCTL2                                      49       1       1       0   .abs_section_49
+     _TCTL1                                      48       1       1       4   .abs_section_48
+     _TCTL2                                      49       1       1       6   .abs_section_49
      _TCTL3                                      4A       1       1       0   .abs_section_4a
      _TCTL4                                      4B       1       1       0   .abs_section_4b
-     _TIE                                        4C       1       1       1   .abs_section_4c
+     _TIE                                        4C       1       1       5   .abs_section_4c
      _TSCR2                                      4D       1       1       3   .abs_section_4d
-     _TFLG1                                      4E       1       1       3   .abs_section_4e
+     _TFLG1                                      4E       1       1      11   .abs_section_4e
      _TFLG2                                      4F       1       1       0   .abs_section_4f
      _TC0                                        50       2       2       0   .abs_section_50
-     _TC1                                        52       2       2       4   .abs_section_52
-     _TC2                                        54       2       2       0   .abs_section_54
-     _TC3                                        56       2       2       0   .abs_section_56
-     _TC4                                        58       2       2       0   .abs_section_58
+     _TC1                                        52       2       2       7   .abs_section_52
+     _TC2                                        54       2       2       7   .abs_section_54
+     _TC3                                        56       2       2       7   .abs_section_56
+     _TC4                                        58       2       2       7   .abs_section_58
      _TC5                                        5A       2       2       7   .abs_section_5a
      _TC6                                        5C       2       2       0   .abs_section_5c
      _TC7                                        5E       2       2       0   .abs_section_5e
@@ -2043,7 +2051,7 @@ OBJECT LIST SORTED BY ADDRESS
      _PPSH                                      265       1       1       0   .abs_section_265
      _PIEH                                      266       1       1       0   .abs_section_266
      _PIFH                                      267       1       1       0   .abs_section_267
-     _PTJ                                       268       1       1       5   .abs_section_268
+     _PTJ                                       268       1       1      11   .abs_section_268
      _PTIJ                                      269       1       1       0   .abs_section_269
      _DDRJ                                      26A       1       1       1   .abs_section_26a
      _RDRJ                                      26B       1       1       0   .abs_section_26b
@@ -2115,12 +2123,12 @@ OBJECT LIST SORTED BY ADDRESS
      overFlows                                 2004       4       4      10   .bss        
      pbuf                                      2008       7       7      16   .bss        
      SCIString                                 200F     1F4     500      11   .bss        
-     HiorLo                                    2203       1       1       7   .bss        
+     HiorLo                                    2203       1       1      16   .bss        
      errno                                     2204       2       2       5   .common     
-     Period                                    2206       4       4      11   .common     
+     Period                                    2206       4       4      17   .common     
      Frequency                                 220A       4       4       3   .common     
-     Hi_count                                  220E       4       4      12   .common     
-     Lo_count                                  2212       4       4       6   .common     
+     Hi_count                                  220E       4       4      30   .common     
+     Lo_count                                  2212       4       4      15   .common     
      dip_switch                                2216       2       2       3   .common     
      Duty_Array                                2218       2       2       2   .common     
      Frequency_Array                           221A       3       3       2   .common     
@@ -2145,7 +2153,7 @@ OBJECT LIST SORTED BY ADDRESS
      STRING..s.s.s.s.s.s.s.1                   C26F       F      15       1   .rodata1    
      STRING..d.1                               C27E       3       3       1   .rodata1    
      STRING..f.2                               C281       3       3       1   .rodata1    
-     UnimplementedISR                          C284       2       2      59   NON_BANKED  
+     UnimplementedISR                          C284       2       2      56   NON_BANKED  
      RE_ISR                                    C286      96     150       1   NON_BANKED  
      TOF_ISR                                   C31C      10      16       1   NON_BANKED  
      D_ADDKL                                   C32C      BC     188       1   NON_BANKED  
@@ -2221,7 +2229,7 @@ OBJECT LIST SORTED BY ADDRESS
      _COPY                                     CEFA       8       8      16   NON_BANKED  
      _CASE_DIRECT_BYTE                         CF02       5       5       1   NON_BANKED  
      _CASE_CHECKED                             CF07       B      11       4   NON_BANKED  
-     _CASE_CHECKED_BYTE                        CF12      14      20       7   NON_BANKED  
+     _CASE_CHECKED_BYTE                        CF12      14      20       8   NON_BANKED  
      _CASE_SEARCH_8                            CF26      17      23       3   NON_BANKED  
      _CASE_SEARCH_8_BYTE                       CF3D      1A      26       1   NON_BANKED  
      L_NEGK                                    CF57       7       7       2   NON_BANKED  
@@ -2229,42 +2237,49 @@ OBJECT LIST SORTED BY ADDRESS
      UL_PULK                                   CF66       3       3       1   NON_BANKED  
      SL_PULK                                   CF69       A      10       2   NON_BANKED  
      TC1_ISR                                   CF73      4C      76       1   NON_BANKED  
-     TC5_ISR                                   CFBF      4C      76       1   NON_BANKED  
-     Duty_Hi_Calculator                        D00B     1CE     462      23   NON_BANKED  
+     TC2_ISR                                   CFBF      4C      76       1   NON_BANKED  
+     TC3_ISR                                   D00B      4C      76       1   NON_BANKED  
+     TC4_ISR                                   D057      4C      76       1   NON_BANKED  
+     TC5_ISR                                   D0A3      4C      76       1   NON_BANKED  
+     Duty_Hi_Calculator                        D0EF     1CE     462      29   NON_BANKED  
      _vect                                     FF80      7E     126       0   .abs_section_ff80
-     main                                    308000     379     889      10   .text       
-     Init_sci                                308379      3D      61       2   .text       
-     timeFunc                                3083B6     421    1057     101   .text       
-     Init_TCNT                               3087D7       C      12       2   .text       
-     resetOF                                 3087E3       9       9       6   .text       
-     Stop_TCNT                               3087EC       B      11       2   .text       
-     Init                                    3087F7      29      41       2   .text       
-     isdigit                                 308820       E      14      10   .text       
-     isspace                                 30882E      17      23       8   .text       
-     toupper                                 308845      14      20       6   .text       
-     fabs                                    308859      2C      44       4   .text       
-     is_special                              308885      59      89       6   .text       
-     sincos                                  3088DE     3AF     943      30   .text       
-     sin                                     308C8D      C3     195       9   .text       
-     cos                                     308D50      AC     172       9   .text       
-     sqrt_r                                  308DFC     1F0     496      14   .text       
-     sqrt                                    308FEC      A2     162       9   .text       
-     Ten                                     30908E      F6     246      14   .text       
-     vprintf                                 309184     AB4    2740     155   .text       
-     _out                                    309C38       C      12       2   .text       
-     deposit_char                            309C44       F      15       3   .text       
-     sprintf                                 309C53      2F      47      16   .text       
-     _getNum                                 309C82      37      55       2   .text       
-     _copyList                               309CB9      B5     181       2   .text       
-     vsscanf                                 309D6E     3BA     954      50   .text       
-     sscanf                                  30A128      11      17       4   .text       
-     CheckCharWithBase                       30A139      3A      58       2   .text       
-     _strtoul                                30A173     173     371      11   .text       
-     _strtol                                 30A2E6      D6     214       4   .text       
-     _strtod                                 30A3BC     568    1384      60   .text       
-     strlen                                  30A924      14      20       6   .text       
-     enable_ports                            30A938      10      16       2   .text       
-     Init_TC5                                30A948      2B      43       2   .text       
+     main                                    308000     380     896      10   .text       
+     Init_sci                                308380      3D      61       2   .text       
+     timeFunc                                3083BD     421    1057     101   .text       
+     Init_TCNT                               3087DE       C      12       2   .text       
+     resetOF                                 3087EA       9       9       6   .text       
+     Stop_TCNT                               3087F3       B      11       2   .text       
+     Init                                    3087FE      29      41       2   .text       
+     isdigit                                 308827       E      14      10   .text       
+     isspace                                 308835      17      23       8   .text       
+     toupper                                 30884C      14      20       6   .text       
+     fabs                                    308860      2C      44       4   .text       
+     is_special                              30888C      59      89       6   .text       
+     sincos                                  3088E5     3AF     943      30   .text       
+     sin                                     308C94      C3     195       9   .text       
+     cos                                     308D57      AC     172       9   .text       
+     sqrt_r                                  308E03     1F0     496      14   .text       
+     sqrt                                    308FF3      A2     162       9   .text       
+     Ten                                     309095      F6     246      14   .text       
+     vprintf                                 30918B     AB4    2740     155   .text       
+     _out                                    309C3F       C      12       2   .text       
+     deposit_char                            309C4B       F      15       3   .text       
+     sprintf                                 309C5A      2F      47      16   .text       
+     _getNum                                 309C89      37      55       2   .text       
+     _copyList                               309CC0      B5     181       2   .text       
+     vsscanf                                 309D75     3BA     954      50   .text       
+     sscanf                                  30A12F      11      17       4   .text       
+     CheckCharWithBase                       30A140      3A      58       2   .text       
+     _strtoul                                30A17A     173     371      11   .text       
+     _strtol                                 30A2ED      D6     214       4   .text       
+     _strtod                                 30A3C3     568    1384      60   .text       
+     strlen                                  30A92B      14      20       6   .text       
+     enable_ports                            30A93F      39      57       2   .text       
+     Init_TC1                                30A978      27      39       2   .text       
+     Init_TC2                                30A99F      26      38       2   .text       
+     Init_TC3                                30A9C5      27      39       2   .text       
+     Init_TC4                                30A9EC      28      40       2   .text       
+     Init_TC5                                30AA14      2B      43       2   .text       
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
@@ -2299,8 +2314,6 @@ rtshc12.c.o (ansibf.lib):
   _BSHL _BSHRS _BSHRU _BDIVMODU _BDIVMODS _ISHL _ISHRU _ISHRS _LSHL _LSHRU 
   _LSHRS _LADD _LSUB _LAND _LOR _LXOR _LCMP_PP _LCOM _LDEC _LMULU16x32 _LMODS 
   _CASE_DIRECT _CASE_SEARCH _CASE_SEARCH_BYTE _FCALL _FPCMP 
-pwm_ports.c.o:
-  Init_TC1 Init_TC2 Init_TC3 Init_TC4 
 NOT USED VARIABLES
 serialPrint.c.o:
   end_string i table 
@@ -2320,13 +2333,13 @@ pwm.c.o:
 *********************************************************************************************
 COPYDOWN SECTION
 ---------------------------------------------------------------------------------------------
-------- ROM-ADDRESS: 0xD1D9 ---- SIZE       4 ---
+------- ROM-ADDRESS: 0xD2BD ---- SIZE       4 ---
 Filling bytes inserted
  00012001
-------- ROM-ADDRESS: 0xD1DD ---- RAM-ADDRESS: 0x2001 ---- SIZE       1 ---
+------- ROM-ADDRESS: 0xD2C1 ---- RAM-ADDRESS: 0x2001 ---- SIZE       1 ---
 Name of initialized Object : table_transmit:1
  01
-------- ROM-ADDRESS: 0xD1DE ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xD2C2 ---- SIZE       2 ---
 Filling bytes inserted
  0000
 
@@ -2383,6 +2396,12 @@ L_PSHK                    USES L_NEGK
 SL_PULK                   USES L_NEGK 
 TC1_ISR                   USES Duty_Hi_Calculator Hi_count Period Lo_count 
                                 HiorLo _TC1 _PTJ _PORTAB 
+TC2_ISR                   USES Duty_Hi_Calculator Hi_count Period Lo_count 
+                                HiorLo _TC2 _PTJ _PORTAB 
+TC3_ISR                   USES Duty_Hi_Calculator Hi_count Period Lo_count 
+                                HiorLo _TC3 _PTJ _PORTAB 
+TC4_ISR                   USES Duty_Hi_Calculator Hi_count Period Lo_count 
+                                HiorLo _TC4 _PTJ _PORTAB 
 TC5_ISR                   USES Duty_Hi_Calculator Hi_count Period Lo_count 
                                 HiorLo _TC5 _PTJ _PORTAB 
 Duty_Hi_Calculator        USES _PTH dip_switch Duty_Hi_Calculator 
@@ -2390,7 +2409,8 @@ Duty_Hi_Calculator        USES _PTH dip_switch Duty_Hi_Calculator
                                 Duty_Array Int_Percent STRING..d.1 sscanf _FDIV 
                                 Frequency_Array Frequency STRING..f.2 _DLONG _DDIV _DSTRUNC 
                                 _FSFLOAT _FMUL _FSTRUNC _ILSEXT 
-_vect                     USES UnimplementedISR RE_ISR TOF_ISR TC5_ISR TC1_ISR 
+_vect                     USES UnimplementedISR RE_ISR TOF_ISR TC5_ISR TC4_ISR 
+                                TC3_ISR TC2_ISR TC1_ISR 
 main                      USES Init_TCNT timeFunc main Stop_TCNT 
                                 STRING...op........Int......1 sprintf _DLONG STRING.add....10.2f..10.2f..2 
                                 STRING.mult...10.2f..10.2f..3 STRING.div....10.2f..10.2f..4 
@@ -2437,7 +2457,12 @@ _strtol                   USES _strtol isspace isdigit _strtoul errno _LNEG
 _strtod                   USES _strtod isspace isdigit _CASE_CHECKED_BYTE 
                                 _DCMP _DMUL _DSFLOAT _DSUB _DADD _ILSEXT _DDIV 
                                 toupper infinity errno _DNEG _COPY 
-enable_ports              USES _TSCR1 _TSCR2 _TFLG1 Init_TC5 
+enable_ports              USES _TSCR1 _TSCR2 _TFLG1 _CASE_CHECKED_BYTE 
+                                Init_TC1 Init_TC2 Init_TC3 Init_TC4 Init_TC5 
+Init_TC1                  USES _TIOS _TCTL2 _TIE _TCNT _TC1 _TFLG1 
+Init_TC2                  USES _TIOS _TCTL2 _TIE _TCNT _TC2 _TFLG1 
+Init_TC3                  USES _TIOS _TCTL2 _TIE _TCNT _TC3 _TFLG1 
+Init_TC4                  USES _TIOS _TCTL1 _TIE _TCNT _TC4 _TFLG1 
 Init_TC5                  USES _TIOS _TCTL1 _TIE _TCNT _TC5 _TFLG1 HiorLo 
 
 *********************************************************************************************
@@ -2799,6 +2824,16 @@ DEPENDENCY TREE
  |  |     
  |  +- enable_ports        
  |  |  | 
+ |  |  +- _CASE_CHECKED_BYTE   (see above)
+ |  |  |  
+ |  |  +- Init_TC1            
+ |  |  |    
+ |  |  +- Init_TC2            
+ |  |  |    
+ |  |  +- Init_TC3            
+ |  |  |    
+ |  |  +- Init_TC4            
+ |  |  |    
  |  |  +- Init_TC5            
  |  |       
  |  +- _FSFLOAT            
@@ -2931,6 +2966,18 @@ DEPENDENCY TREE
  |     |     
  |     +- _ILSEXT              (see above)
  |        
+ +- TC4_ISR             
+ |  | 
+ |  +- Duty_Hi_Calculator   (see above)
+ |     
+ +- TC3_ISR             
+ |  | 
+ |  +- Duty_Hi_Calculator   (see above)
+ |     
+ +- TC2_ISR             
+ |  | 
+ |  +- Duty_Hi_Calculator   (see above)
+ |     
  +- TC1_ISR             
     | 
     +- Duty_Hi_Calculator   (see above)
@@ -2942,5 +2989,5 @@ STATISTIC SECTION
 ExeFile:
 --------
 Number of blocks to be downloaded: 8
-Total size of all blocks to be downloaded: 15315
+Total size of all blocks to be downloaded: 15747
 

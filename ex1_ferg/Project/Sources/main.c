@@ -14,6 +14,9 @@
 //void tostring(char [], int);
 
 void main(void) {
+  //select port for pwm
+  int port;
+  
   
   /******/
   //ex 1 initialisation variables
@@ -98,7 +101,8 @@ void main(void) {
   DDRH = 0x00;
   
   //function called to initialise timers and output compare chanels ;
-  enable_ports();
+  port =4;
+  enable_ports(port);
   
   
   //enble interrupts
